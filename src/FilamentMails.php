@@ -2,6 +2,4 @@
 
 namespace Vormkracht10\FilamentMails;
 
-class FilamentMails
-{
-}
+class FilamentMails {}

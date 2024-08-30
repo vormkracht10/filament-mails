@@ -86,7 +86,7 @@ class FilamentMailsServiceProvider extends PackageServiceProvider
         }
 
         // Testing
-        Testable::mixin(new TestsFilamentMails());
+        Testable::mixin(new TestsFilamentMails);
     }
 
     protected function getAssetPackageName(): ?string
