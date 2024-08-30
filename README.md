@@ -30,14 +30,14 @@ composer require vormkracht10/filament-mails
 You can publish and run the migrations with:
 
 ```bash
-php artisan vendor:publish --tag="filament-mails-migrations"
+php artisan vendor:publish --tag="mails-migrations"
 php artisan migrate
 ```
 
 You can publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag="filament-mails-config"
+php artisan vendor:publish --tag="mails-config"
 ```
 
 Optionally, you can publish the views using
@@ -80,9 +80,9 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-- [Baspa](https://github.com/vormkracht10)
-- [Mark van Eijk](https://github.com/markvaneijk)
-- [All Contributors](../../contributors)
+-   [Baspa](https://github.com/vormkracht10)
+-   [Mark van Eijk](https://github.com/markvaneijk)
+-   [All Contributors](../../contributors)
 
 ## License
 

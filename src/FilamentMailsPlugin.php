@@ -2,8 +2,9 @@
 
 namespace Vormkracht10\FilamentMails;
 
-use Filament\Contracts\Plugin;
 use Filament\Panel;
+use Filament\Contracts\Plugin;
+use Vormkracht10\FilamentMails\Resources\MailResource;
 
 class FilamentMailsPlugin implements Plugin
 {
@@ -14,7 +15,10 @@ class FilamentMailsPlugin implements Plugin
 
     public function register(Panel $panel): void
     {
-        //
+        $panel
+            ->resources([
+                MailResource::class,
+            ]);
     }
 
     public function boot(Panel $panel): void
