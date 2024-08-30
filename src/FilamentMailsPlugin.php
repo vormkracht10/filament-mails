@@ -2,9 +2,11 @@
 
 namespace Vormkracht10\FilamentMails;
 
-use Filament\Contracts\Plugin;
 use Filament\Panel;
+use Filament\Contracts\Plugin;
+use Filament\Support\Colors\Color;
 use Vormkracht10\FilamentMails\Resources\MailResource;
+use Vormkracht10\FilamentMails\Widgets\BouncerateWidget;
 
 class FilamentMailsPlugin implements Plugin
 {
@@ -18,7 +20,14 @@ class FilamentMailsPlugin implements Plugin
         $panel
             ->resources([
                 MailResource::class,
-            ]);
+            ])
+            ->colors([
+                'clicked' => Color::Purple,
+            ])
+            ->widgets([
+                BouncerateWidget::class,
+            ])
+            ->discoverWidgets(in: __DIR__ . '/Widgets', for: 'App\\Filament\\Widgets');
     }
 
     public function boot(Panel $panel): void
