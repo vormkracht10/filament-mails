@@ -1,4 +1,4 @@
-# This is my package filament-mails
+# Filament Mails
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/vormkracht10/filament-mails.svg?style=flat-square)](https://packagist.org/packages/vormkracht10/filament-mails)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/vormkracht10/filament-mails/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/vormkracht10/filament-mails/actions?query=workflow%3Arun-tests+branch%3Amain)
