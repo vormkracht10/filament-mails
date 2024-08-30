@@ -2,8 +2,6 @@
 
 namespace Vormkracht10\FilamentMails\Resources;
 
-use Filament\Forms;
-use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Infolists\Infolist;
@@ -21,6 +19,7 @@ use Filament\Infolists\Components\Tabs\Tab;
 use Vormkracht10\FilamentMails\Models\Mail;
 use Filament\Infolists\Components\TextEntry;
 use Vormkracht10\FilamentMails\Resources\MailResource\Pages\ListMails;
+use Vormkracht10\Mails\Models\Mail;
 
 class MailResource extends Resource
 {
@@ -30,7 +29,7 @@ class MailResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'subject';
 
-    protected static bool $isScopedToTenant  = false;
+    protected static bool $isScopedToTenant = false;
 
     public static function getNavigationLabel(): string
     {

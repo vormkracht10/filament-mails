@@ -10,7 +10,6 @@ use Vormkracht10\FilamentMails\Models\Mail;
 
 class ListMails extends ListRecords
 {
-
     protected static string $resource = MailResource::class;
 
     public function getTitle(): string
