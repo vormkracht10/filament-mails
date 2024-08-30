@@ -5,20 +5,14 @@ namespace Vormkracht10\FilamentMails\Resources;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Tables;
+use Filament\Infolists\Components\Grid;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\Tabs;
+use Filament\Infolists\Components\Tabs\Tab;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
-use Filament\Infolists\Components\Grid;
-use Filament\Infolists\Components\Tabs;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\ViewAction;
-use Filament\Tables\Actions\ActionGroup;
-use Filament\Forms\Components\FileUpload;
-use Filament\Tables\Actions\DeleteAction;
-use Illuminate\Database\Eloquent\Builder;
-use Filament\Infolists\Components\Section;
-use Filament\Infolists\Components\Tabs\Tab;
 use Vormkracht10\FilamentMails\Models\Mail;
-use Filament\Infolists\Components\TextEntry;
 use Vormkracht10\FilamentMails\Resources\MailResource\Pages\ListMails;
 
 class MailResource extends Resource
@@ -234,7 +228,6 @@ class MailResource extends Resource
         ];
     }
 
-
     private static function formatEmailAddress($state): string
     {
         if (empty($state)) {
@@ -243,7 +236,7 @@ class MailResource extends Resource
 
         $data = json_decode($state, true);
 
-        if (!is_array($data)) {
+        if (! is_array($data)) {
             return (string) $state; // Return the original state if it's not valid JSON
         }
 
