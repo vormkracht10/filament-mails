@@ -7,7 +7,6 @@ use Vormkracht10\FilamentMails\Resources\MailResource;
 
 class ListMails extends ListRecords
 {
-
     protected static string $resource = MailResource::class;
 
     public function getTitle(): string

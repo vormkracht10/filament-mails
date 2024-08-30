@@ -2,19 +2,11 @@
 
 namespace Vormkracht10\FilamentMails\Resources;
 
-use Filament\Forms;
-use Filament\Tables;
 use Filament\Forms\Form;
-use Filament\Tables\Table;
 use Filament\Resources\Resource;
-use Vormkracht10\Mails\Models\Mail;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\ViewAction;
-use Filament\Tables\Actions\ActionGroup;
-use Filament\Forms\Components\FileUpload;
-use Filament\Tables\Actions\DeleteAction;
-use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Table;
 use Vormkracht10\FilamentMails\Resources\MailResource\Pages\ListMails;
+use Vormkracht10\Mails\Models\Mail;
 
 class MailResource extends Resource
 {
@@ -24,7 +16,7 @@ class MailResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'subject';
 
-    protected static bool $isScopedToTenant  = false;
+    protected static bool $isScopedToTenant = false;
 
     public static function getNavigationLabel(): string
     {
@@ -59,7 +51,7 @@ class MailResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-            // 
+            //
         ]);
     }
 

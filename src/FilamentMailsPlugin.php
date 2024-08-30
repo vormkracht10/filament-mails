@@ -2,8 +2,8 @@
 
 namespace Vormkracht10\FilamentMails;
 
-use Filament\Panel;
 use Filament\Contracts\Plugin;
+use Filament\Panel;
 use Vormkracht10\FilamentMails\Resources\MailResource;
 
 class FilamentMailsPlugin implements Plugin
