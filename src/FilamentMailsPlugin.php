@@ -33,7 +33,7 @@ class FilamentMailsPlugin implements Plugin
         Filament::serving(function () use ($panel) {
             Filament::registerNavigationItems([
                 NavigationItem::make()
-                    ->group(__('Test'))
+                    ->group(__('Mails'))
                     ->label('Mails')
                     ->url(fn(): string => MailResource::getUrl('index'))
                     ->icon('heroicon-o-envelope')
