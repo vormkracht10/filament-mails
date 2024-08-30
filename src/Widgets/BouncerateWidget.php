@@ -12,34 +12,34 @@ class BouncerateWidget extends BaseWidget
 
     protected function getStats(): array
     {
-        $bouncedMails = Mail::where(fn ($query) => $query->softBounced()->orWhere(fn ($query) => $query->hardBounced()))->count();
+        $bouncedMails = Mail::where(fn($query) => $query->softBounced()->orWhere(fn($query) => $query->hardBounced()))->count();
         $openedMails = Mail::opened()->count();
+        $deliveredMails = Mail::delivered()->count();
         $clickedMails = Mail::clicked()->count();
 
         $mailCount = Mail::count();
 
-        $widgets[] = Stat::make(__('Bounced'), $bouncedMails)
+        $widgets[] = Stat::make(__('Bounced'), number_format(($bouncedMails / $mailCount) * 100, 1) . '%')
             ->label(__('Bounced'))
             ->description($bouncedMails . ' ' . __('of') . ' ' . $mailCount . ' ' . __('emails'))
-            ->descriptionIcon('heroicon-m-arrow-trending-up')
-            ->chart([7, 2, 10, 3, 22, 4, 17])
             ->color('danger')
             ->url(route('filament.admin.resources.mails.index', ['activeTab' => 'bounced']));
 
-        $widgets[] = Stat::make(__('Opened'), $openedMails)
+        $widgets[] = Stat::make(__('Opened'), number_format(($openedMails / $mailCount) * 100, 1) . '%')
             ->label(__('Opened'))
             ->description($openedMails . ' ' . __('of') . ' ' . $mailCount . ' ' . __('emails'))
-            ->descriptionIcon('heroicon-m-arrow-trending-up')
-            ->chart([7, 2, 10, 3, 22, 4, 17])
             ->color('success')
             ->url(route('filament.admin.resources.mails.index', ['activeTab' => 'opened']));
 
-        $widgets[] = Stat::make(__('Clicked'), $clickedMails)
+        $widgets[] = Stat::make(__('Clicked'), number_format(($clickedMails / $mailCount) * 100, 1) . '%')
             ->label(__('Clicked'))
             ->description($clickedMails . ' ' . __('of') . ' ' . $mailCount . ' ' . __('emails'))
-            ->descriptionIcon('heroicon-m-arrow-trending-up')
-            ->chart([7, 2, 10, 3, 22, 4, 17])
             ->color('clicked');
+
+        $widgets[] = Stat::make(__('Delivered'), number_format(($deliveredMails / $mailCount) * 100, 1) . '%')
+            ->label(__('Delivered'))
+            ->description($deliveredMails . ' ' . __('of') . ' ' . $mailCount . ' ' . __('emails'))
+            ->color('success');
 
         return $widgets;
     }

@@ -2,10 +2,14 @@
 
 namespace Vormkracht10\FilamentMails;
 
-use Filament\Contracts\Plugin;
 use Filament\Panel;
+use Filament\Contracts\Plugin;
+use Filament\Facades\Filament;
 use Filament\Support\Colors\Color;
+use Filament\Navigation\NavigationItem;
+use Vormkracht10\FilamentMails\Models\Mail;
 use Vormkracht10\FilamentMails\Resources\MailResource;
+use Vormkracht10\FilamentMails\Resources\EventResource;
 use Vormkracht10\FilamentMails\Widgets\BouncerateWidget;
 
 class FilamentMailsPlugin implements Plugin
@@ -32,7 +36,7 @@ class FilamentMailsPlugin implements Plugin
 
     public function boot(Panel $panel): void
     {
-        //
+        // 
     }
 
     public static function make(): static

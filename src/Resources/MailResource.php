@@ -2,17 +2,19 @@
 
 namespace Vormkracht10\FilamentMails\Resources;
 
-use Filament\Infolists\Components\Grid;
-use Filament\Infolists\Components\Section;
-use Filament\Infolists\Components\Tabs;
-use Filament\Infolists\Components\Tabs\Tab;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Infolist;
-use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Infolists\Infolist;
+use Filament\Resources\Resource;
+use Filament\Resources\Pages\Page;
+use Filament\Infolists\Components\Grid;
+use Filament\Infolists\Components\Tabs;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\Tabs\Tab;
 use Vormkracht10\FilamentMails\Models\Mail;
+use Filament\Infolists\Components\TextEntry;
 use Vormkracht10\FilamentMails\Resources\MailResource\Pages\ListMails;
+use Vormkracht10\FilamentMails\Resources\MailResource\Pages\ListEvents;
 
 class MailResource extends Resource
 {
@@ -68,22 +70,22 @@ class MailResource extends Resource
                                     ->label(__('Subject')),
                                 TextEntry::make('from')
                                     ->label(__('From'))
-                                    ->formatStateUsing(fn ($state) => self::formatEmailAddress($state)),
+                                    ->formatStateUsing(fn($state) => self::formatEmailAddress($state)),
                                 TextEntry::make('to')
                                     ->label(__('Recipient'))
-                                    ->formatStateUsing(fn ($state) => self::formatEmailAddress($state)),
+                                    ->formatStateUsing(fn($state) => self::formatEmailAddress($state)),
                                 TextEntry::make('cc')
                                     ->label(__('CC'))
                                     ->default('-')
-                                    ->formatStateUsing(fn ($state) => self::formatEmailAddress($state)),
+                                    ->formatStateUsing(fn($state) => self::formatEmailAddress($state)),
                                 TextEntry::make('bcc')
                                     ->label(__('BCC'))
                                     ->default('-')
-                                    ->formatStateUsing(fn ($state) => self::formatEmailAddress($state)),
+                                    ->formatStateUsing(fn($state) => self::formatEmailAddress($state)),
                                 TextEntry::make('reply_to')
                                     ->default('-')
                                     ->label(__('Reply To'))
-                                    ->formatStateUsing(fn ($state) => self::formatEmailAddress($state)),
+                                    ->formatStateUsing(fn($state) => self::formatEmailAddress($state)),
                             ]),
                     ]),
                 Section::make('Content')
@@ -173,7 +175,7 @@ class MailResource extends Resource
                     ->label(__('Status'))
                     ->sortable()
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'Hard Bounced' => 'danger',
                         'Soft Bounced' => 'warning',
                         'Complained' => 'danger',
@@ -192,7 +194,7 @@ class MailResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('to')
                     ->label(__('Recipient'))
-                    ->formatStateUsing(fn ($state) => self::formatEmailAddressForTable($state))
+                    ->formatStateUsing(fn($state) => self::formatEmailAddressForTable($state))
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('sent_at')
