@@ -12,7 +12,7 @@ class BouncerateWidget extends BaseWidget
 
     protected function getStats(): array
     {
-        $bouncedMails = Mail::where(fn($query) => $query->softBounced()->orWhere(fn($query) => $query->hardBounced()))->count();
+        $bouncedMails = Mail::where(fn ($query) => $query->softBounced()->orWhere(fn ($query) => $query->hardBounced()))->count();
         $openedMails = Mail::opened()->count();
         $deliveredMails = Mail::delivered()->count();
         $clickedMails = Mail::clicked()->count();

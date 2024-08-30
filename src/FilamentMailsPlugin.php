@@ -2,14 +2,13 @@
 
 namespace Vormkracht10\FilamentMails;
 
-use Filament\Panel;
 use Filament\Contracts\Plugin;
 use Filament\Facades\Filament;
-use Filament\Support\Colors\Color;
 use Filament\Navigation\NavigationItem;
-use Vormkracht10\FilamentMails\Resources\MailResource;
+use Filament\Panel;
+use Filament\Support\Colors\Color;
 use Vormkracht10\FilamentMails\Resources\EventResource;
-use Vormkracht10\FilamentMails\Widgets\BouncerateWidget;
+use Vormkracht10\FilamentMails\Resources\MailResource;
 
 class FilamentMailsPlugin implements Plugin
 {
@@ -35,16 +34,16 @@ class FilamentMailsPlugin implements Plugin
                 NavigationItem::make()
                     ->group(__('Mails'))
                     ->label('Mails')
-                    ->url(fn(): string => MailResource::getUrl('index'))
+                    ->url(fn (): string => MailResource::getUrl('index'))
                     ->icon('heroicon-o-envelope')
-                    ->isActiveWhen(fn(): bool => request()->routeIs('filament.' . $panel->getId() . '.resources.mails.*'))
+                    ->isActiveWhen(fn (): bool => request()->routeIs('filament.' . $panel->getId() . '.resources.mails.*'))
                     ->childItems([
                         NavigationItem::make()
                             ->label('Events')
-                            ->url(fn(): string => EventResource::getUrl('index'))
+                            ->url(fn (): string => EventResource::getUrl('index'))
                             ->icon('heroicon-o-calendar')
-                            ->isActiveWhen(fn(): bool => request()->routeIs('filament.' . $panel->getId() . '.resources.events.*'))
-                    ])
+                            ->isActiveWhen(fn (): bool => request()->routeIs('filament.' . $panel->getId() . '.resources.events.*')),
+                    ]),
             ]);
         });
     }

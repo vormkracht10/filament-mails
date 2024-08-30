@@ -2,12 +2,10 @@
 
 namespace Vormkracht10\FilamentMails\Resources;
 
-use Filament\Tables;
-use Filament\Tables\Table;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
-use Filament\Resources\Pages\Page;
-use Vormkracht10\FilamentMails\Resources\MailResource\Pages\ListMails;
+use Filament\Tables;
+use Filament\Tables\Table;
 use Vormkracht10\FilamentMails\Resources\EventResource\Pages\ListEvents;
 use Vormkracht10\Mails\Models\MailEvent;
 
