@@ -19,6 +19,10 @@ Filament Mails can collect everything you might want to track about the mails th
 
 Email as a protocol is very error prone. Succesfull email delivery is not guaranteed in any way, so it is best to monitor your email sending realtime. Using external services like Postmark, Mailgun or Resend email gets better by offering things like logging and delivery feedback, but it still needs your attention and can fail silently but horendously. Therefore we created Laravel Mails that fills in all the gaps.
 
+The package is built on top of [Laravel Mails](https://github.com/vormkracht10/laravel-mails).
+
+![Filament Mails](./docs/list.png)
+
 ## Installation
 
 You can install the package via composer:
@@ -46,19 +50,35 @@ Optionally, you can publish the views using
 php artisan vendor:publish --tag="filament-mails-views"
 ```
 
-This is the contents of the published config file:
+Then add the plugin to your `PanelProvider`
 
 ```php
-return [
-];
+use Vormkracht10\FilamentMails\FilamentMails;
+
+public function panel(Panel $panel): Panel
+{
+    return $panel
+        ->plugin(FilamentMailsPlugin::make());
+}
 ```
+
+### Features and screenshots
+
+#### List with all sent emails and statistics
+
+![Filament Mails](./docs/list.png)
+
+#### Preview email
+
+![Filament Mails](./docs/view.png)
+
+#### View relevant information
+
+![Filament Mails](./docs/slideover.png)
 
 ## Usage
 
-```php
-$filamentMails = new Vormkracht10\FilamentMails();
-echo $filamentMails->echoPhrase('Hello, Vormkracht10!');
-```
+..
 
 ## Testing
 
