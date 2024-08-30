@@ -2,8 +2,8 @@
 
 namespace Vormkracht10\FilamentMails;
 
-use Filament\Panel;
 use Filament\Contracts\Plugin;
+use Filament\Panel;
 use Filament\Support\Colors\Color;
 use Vormkracht10\FilamentMails\Resources\MailResource;
 use Vormkracht10\FilamentMails\Widgets\BouncerateWidget;
