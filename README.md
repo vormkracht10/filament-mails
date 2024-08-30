@@ -70,7 +70,7 @@ public function panel(Panel $panel): Panel
 
 #### Preview email
 
-![Filament Mails](./docs/view.png)
+![Filament Mails](./docs/preview.png)
 
 #### View relevant information
 
