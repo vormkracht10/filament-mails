@@ -26,6 +26,8 @@ class MailResource extends Resource
 
     protected static bool $isScopedToTenant = false;
 
+    protected static bool $shouldRegisterNavigation = false;
+
     public static function getNavigationLabel(): string
     {
         return __('Mails');
@@ -36,19 +38,9 @@ class MailResource extends Resource
         return __('Mail');
     }
 
-    public static function getNavigationGroup(): ?string
-    {
-        return __('Mails');
-    }
-
     public static function getNavigationIcon(): string
     {
         return 'heroicon-o-envelope';
-    }
-
-    public static function shouldRegisterNavigation(): bool
-    {
-        return true;
     }
 
     public function getTitle(): string
