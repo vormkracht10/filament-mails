@@ -4,6 +4,7 @@ namespace Vormkracht10\FilamentMails\Resources;
 
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Tables;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Infolists\Components\Grid;
@@ -19,7 +20,6 @@ use Filament\Infolists\Components\Tabs\Tab;
 use Vormkracht10\FilamentMails\Models\Mail;
 use Filament\Infolists\Components\TextEntry;
 use Vormkracht10\FilamentMails\Resources\MailResource\Pages\ListMails;
-use Vormkracht10\Mails\Models\Mail;
 
 class MailResource extends Resource
 {
