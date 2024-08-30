@@ -39,8 +39,7 @@ class BouncerateWidget extends BaseWidget
             ->description($clickedMails . ' ' . __('of') . ' ' . $mailCount . ' ' . __('emails'))
             ->descriptionIcon('heroicon-m-arrow-trending-up')
             ->chart([7, 2, 10, 3, 22, 4, 17])
-            ->color('clicked')
-            ->url(route('filament.admin.resources.mails.index', ['activeTab' => 'clicked']));
+            ->color('clicked');
 
         return $widgets;
     }
