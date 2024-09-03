@@ -34,17 +34,17 @@ class ListMails extends ListRecords
                 ->label(__('Sent'))
                 ->icon('heroicon-o-paper-airplane')
                 ->badge(Mail::sent()->count())
-                ->modifyQueryUsing(fn(Builder $query) => $query->sent()),
+                ->modifyQueryUsing(fn (Builder $query) => $query->sent()),
             'delivered' => Tab::make()
                 ->label(__('Delivered'))
                 ->icon('heroicon-o-check-circle')
                 ->badge(Mail::delivered()->count())
-                ->modifyQueryUsing(fn(Builder $query) => $query->delivered()),
+                ->modifyQueryUsing(fn (Builder $query) => $query->delivered()),
             'bounced' => Tab::make()
                 ->label(__('Bounced'))
                 ->icon('heroicon-o-x-circle')
-                ->badge(fn() => Mail::softBounced()->count() + Mail::hardBounced()->count())
-                ->modifyQueryUsing(fn(Builder $query) => $query->where(function ($query) {
+                ->badge(fn () => Mail::softBounced()->count() + Mail::hardBounced()->count())
+                ->modifyQueryUsing(fn (Builder $query) => $query->where(function ($query) {
                     $query->softBounced()->orWhere(function ($query) {
                         $query->hardBounced();
                     });
@@ -53,7 +53,7 @@ class ListMails extends ListRecords
                 ->label(__('Unsent'))
                 ->icon('heroicon-o-x-circle')
                 ->badge(Mail::unsent()->count())
-                ->modifyQueryUsing(fn(Builder $query) => $query->unsent()),
+                ->modifyQueryUsing(fn (Builder $query) => $query->unsent()),
         ];
     }
 
