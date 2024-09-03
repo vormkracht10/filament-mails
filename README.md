@@ -53,7 +53,7 @@ php artisan vendor:publish --tag="filament-mails-views"
 Then add the plugin to your `PanelProvider`
 
 ```php
-use Vormkracht10\FilamentMails\FilamentMails;
+use Vormkracht10\FilamentMails\FilamentMailsPlugin;
 
 public function panel(Panel $panel): Panel
 {
