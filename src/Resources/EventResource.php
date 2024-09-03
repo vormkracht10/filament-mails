@@ -7,6 +7,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Vormkracht10\FilamentMails\Resources\EventResource\Pages\ListEvents;
+use Vormkracht10\Mails\Enums\WebhookEventType;
 use Vormkracht10\Mails\Models\MailEvent;
 
 class EventResource extends Resource
@@ -56,7 +57,34 @@ class EventResource extends Resource
     {
         return $table
             ->defaultSort('created_at', 'desc')
-            ->columns([])
+            // ->defaultGroup('mail_id')
+            ->columns([
+                Tables\Columns\TextColumn::make('type')
+                    ->label(__('Type'))
+                    ->sortable()
+                    ->badge()
+                    ->color(fn(WebhookEventType $state): string => match ($state) {
+                        WebhookEventType::DELIVERY => 'success',
+                        WebhookEventType::CLICK => 'clicked',
+                        WebhookEventType::OPEN => 'success',
+                        WebhookEventType::BOUNCE => 'danger',
+                        WebhookEventType::COMPLAINT => 'danger',
+                        default => 'gray',
+                    })
+                    ->formatStateUsing(function (WebhookEventType $state) {
+                        return ucfirst($state->value);
+                    })
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('mail_id')
+                    ->label(__('Mail ID'))
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('mail.subject')
+                    ->label(__('Subject'))
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('occurred_at')
+                    ->label(__('Occured At'))
+                    ->dateTime(),
+            ])
             ->filters([
                 //
             ])
