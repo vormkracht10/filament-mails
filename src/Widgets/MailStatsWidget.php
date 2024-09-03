@@ -6,13 +6,13 @@ use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Vormkracht10\FilamentMails\Models\Mail;
 
-class BouncerateWidget extends BaseWidget
+class MailStatsWidget extends BaseWidget
 {
     protected static ?int $sort = 0;
 
     protected function getStats(): array
     {
-        $bouncedMails = Mail::where(fn ($query) => $query->softBounced()->orWhere(fn ($query) => $query->hardBounced()))->count();
+        $bouncedMails = Mail::where(fn($query) => $query->softBounced()->orWhere(fn($query) => $query->hardBounced()))->count();
         $openedMails = Mail::opened()->count();
         $deliveredMails = Mail::delivered()->count();
         $clickedMails = Mail::clicked()->count();
