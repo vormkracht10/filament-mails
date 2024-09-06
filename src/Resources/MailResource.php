@@ -129,28 +129,36 @@ class MailResource extends Resource
                                     ->label(__('Clicks')),
                                 TextEntry::make('sent_at')
                                     ->label(__('Sent At'))
-                                    ->dateTime('d-m-Y H:i'),
+                                    ->since()
+                                    ->dateTimeTooltip('d-m-Y H:i'),
                                 TextEntry::make('resent_at')
-                                    ->label(__('Resent At'))
-                                    ->dateTime('d-m-Y H:i'),
+                                    ->since()
+                                    ->dateTimeTooltip('d-m-Y H:i')
+                                    ->label(__('Resent At')),
                                 TextEntry::make('delivered_at')
                                     ->label(__('Delivered At'))
-                                    ->dateTime('d-m-Y H:i'),
+                                    ->since()
+                                    ->dateTimeTooltip('d-m-Y H:i'),
                                 TextEntry::make('last_opened_at')
                                     ->label(__('Last Opened At'))
-                                    ->dateTime('d-m-Y H:i'),
+                                    ->since()
+                                    ->dateTimeTooltip('d-m-Y H:i'),
                                 TextEntry::make('last_clicked_at')
                                     ->label(__('Last Clicked At'))
-                                    ->dateTime('d-m-Y H:i'),
+                                    ->since()
+                                    ->dateTimeTooltip('d-m-Y H:i'),
                                 TextEntry::make('complained_at')
                                     ->label(__('Complained At'))
-                                    ->dateTime('d-m-Y H:i'),
+                                    ->since()
+                                    ->dateTimeTooltip('d-m-Y H:i'),
                                 TextEntry::make('soft_bounced_at')
                                     ->label(__('Soft Bounced At'))
-                                    ->dateTime('d-m-Y H:i'),
+                                    ->since()
+                                    ->dateTimeTooltip('d-m-Y H:i'),
                                 TextEntry::make('hard_bounced_at')
                                     ->label(__('Hard Bounced At'))
-                                    ->dateTime('d-m-Y H:i'),
+                                    ->since()
+                                    ->dateTimeTooltip('d-m-Y H:i'),
                             ]),
                     ])->columnSpanFull(),
             ]);
@@ -198,6 +206,8 @@ class MailResource extends Resource
                 Tables\Columns\TextColumn::make('sent_at')
                     ->label(__('Sent At'))
                     ->dateTime('d-m-Y H:i')
+                    ->since()
+                    ->tooltip(fn(Mail $record) => $record->sent_at?->format('d-m-Y H:i'))
                     ->sortable()
                     ->searchable(),
             ])

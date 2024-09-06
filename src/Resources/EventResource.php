@@ -75,8 +75,9 @@ class EventResource extends Resource
                                 TextEntry::make('mail.subject')
                                     ->label(__('Mail Subject')),
                                 TextEntry::make('occurred_at')
-                                    ->label(__('Occurred At'))
-                                    ->dateTime(),
+                                    ->since()
+                                    ->dateTimeTooltip('d-m-Y H:i')
+                                    ->label(__('Occurred At')),
                             ]),
 
                     ]),
@@ -168,8 +169,12 @@ class EventResource extends Resource
                     ->label(__('Subject'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('occurred_at')
-                    ->label(__('Occured At'))
-                    ->dateTime(),
+                    ->label(__('Occurred At'))
+                    ->dateTime('d-m-Y H:i')
+                    ->since()
+                    ->tooltip(fn(MailEvent $record) => $record->occurred_at?->format('d-m-Y H:i'))
+                    ->sortable()
+                    ->searchable(),
             ])
             ->filters([
                 //
