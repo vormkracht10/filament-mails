@@ -32,7 +32,10 @@ class MailStatsWidget extends BaseWidget
             ->label(__('Opened'))
             ->description($openedMails . ' ' . __('of') . ' ' . $mailCount . ' ' . __('emails'))
             ->color('success')
-            ->url(route('filament.' . filament()->getCurrentPanel()?->getId() . '.resources.mails.index', ['activeTab' => 'opened']));
+            ->url(route('filament.' . filament()->getCurrentPanel()?->getId() . '.resources.mails.index', [
+                'activeTab' => 'opened',
+                'tenant' => filament()->getTenant()?->id
+            ]));
 
         $widgets[] = Stat::make(__('Clicked'), number_format(($clickedMails / $mailCount) * 100, 1) . '%')
             ->label(__('Clicked'))
@@ -43,7 +46,10 @@ class MailStatsWidget extends BaseWidget
             ->label(__('Bounced'))
             ->description($bouncedMails . ' ' . __('of') . ' ' . $mailCount . ' ' . __('emails'))
             ->color('danger')
-            ->url(route('filament.' . filament()->getCurrentPanel()?->getId() . '.resources.mails.index', ['activeTab' => 'bounced']));
+            ->url(route('filament.' . filament()->getCurrentPanel()?->getId() . '.resources.mails.index', [
+                'activeTab' => 'bounced',
+                'tenant' => filament()->getTenant()?->id
+            ]));
 
         return $widgets;
     }
