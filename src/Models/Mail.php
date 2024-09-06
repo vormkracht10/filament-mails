@@ -32,23 +32,23 @@ class Mail extends BaseModel
     public function getStatusAttribute(): string
     {
         if ($this->hard_bounced_at) {
-            return 'Hard Bounced';
+            return __('Hard Bounced');
         } elseif ($this->soft_bounced_at) {
-            return 'Soft Bounced';
+            return __('Soft Bounced');
         } elseif ($this->complained_at) {
-            return 'Complained';
+            return __('Complained');
         } elseif ($this->last_clicked_at) {
-            return 'Clicked';
+            return __('Clicked');
         } elseif ($this->last_opened_at) {
-            return 'Opened';
+            return __('Opened');
         } elseif ($this->delivered_at) {
-            return 'Delivered';
+            return __('Delivered');
         } elseif ($this->resent_at) {
-            return 'Resent';
+            return __('Resent');
         } elseif ($this->sent_at) {
-            return 'Sent';
+            return __('Sent');
         } else {
-            return 'Unsent';
+            return __('Unsent');
         }
     }
 }

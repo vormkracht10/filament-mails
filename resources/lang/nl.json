@@ -57,5 +57,8 @@
     "Clicked": "Geklikt",
     "Delivered": "Afgeleverd",
     "of": "van",
-    "emails": "e-mails"
+    "emails": "e-mails",
+    "Resent": "Opnieuw verzonden",
+    "Sent": "Verzonden",
+    "Unsent": "Niet verzonden"
 }
