@@ -9,7 +9,6 @@ use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Illuminate\Support\Collection;
 use Filament\Tables\Actions\Action;
-use Filament\Support\Enums\MaxWidth;
 use Filament\Infolists\Components\Grid;
 use Filament\Infolists\Components\Tabs;
 use Filament\Forms\Components\TextInput;
@@ -22,7 +21,6 @@ use Filament\Infolists\Components\TextEntry;
 use Vormkracht10\Mails\Enums\WebhookEventType;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Mails\Resources\MailResource\Pages\ViewMail;
-use Filament\Infolists\Components\TextEntry\TextEntrySize;
 use Vormkracht10\FilamentMails\Resources\MailResource\Pages\ListMails;
 
 class MailResource extends Resource
@@ -81,22 +79,22 @@ class MailResource extends Resource
                                                     ->label(__('Subject')),
                                                 TextEntry::make('from')
                                                     ->label(__('From'))
-                                                    ->formatStateUsing(fn ($state) => self::formatEmailAddress($state)),
+                                                    ->formatStateUsing(fn($state) => self::formatEmailAddress($state)),
                                                 TextEntry::make('to')
                                                     ->label(__('Recipient'))
-                                                    ->formatStateUsing(fn ($state) => self::formatEmailAddress($state)),
+                                                    ->formatStateUsing(fn($state) => self::formatEmailAddress($state)),
                                                 TextEntry::make('cc')
                                                     ->label(__('CC'))
                                                     ->default('-')
-                                                    ->formatStateUsing(fn ($state) => self::formatEmailAddress($state)),
+                                                    ->formatStateUsing(fn($state) => self::formatEmailAddress($state)),
                                                 TextEntry::make('bcc')
                                                     ->label(__('BCC'))
                                                     ->default('-')
-                                                    ->formatStateUsing(fn ($state) => self::formatEmailAddress($state)),
+                                                    ->formatStateUsing(fn($state) => self::formatEmailAddress($state)),
                                                 TextEntry::make('reply_to')
                                                     ->default('-')
                                                     ->label(__('Reply To'))
-                                                    ->formatStateUsing(fn ($state) => self::formatEmailAddress($state)),
+                                                    ->formatStateUsing(fn($state) => self::formatEmailAddress($state)),
                                             ]),
                                     ]),
                                 Tab::make(__('Statistics'))
@@ -149,7 +147,7 @@ class MailResource extends Resource
                                                 TextEntry::make('type')
                                                     ->label(__('Type'))
                                                     ->badge()
-                                                    ->color(fn (WebhookEventType $state): string => match ($state) {
+                                                    ->color(fn(WebhookEventType $state): string => match ($state) {
                                                         WebhookEventType::DELIVERY => 'success',
                                                         WebhookEventType::CLICK => 'info',
                                                         WebhookEventType::OPEN => 'success',
@@ -180,7 +178,7 @@ class MailResource extends Resource
                                         TextEntry::make('html')
                                             ->hiddenLabel()
                                             ->label(__('HTML Content'))
-                                            ->formatStateUsing(fn (string $state, Mail $record): View => view(
+                                            ->formatStateUsing(fn(string $state, Mail $record): View => view(
                                                 'filament-mails::mails.preview',
                                                 ['html' => $state, 'mail' => $record],
                                             ))
@@ -223,7 +221,7 @@ class MailResource extends Resource
                     ->label(__('Status'))
                     ->sortable()
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'Hard Bounced' => 'danger',
                         'Soft Bounced' => 'warning',
                         'Complained' => 'danger',
@@ -239,24 +237,29 @@ class MailResource extends Resource
                     ->label(__('Subject'))
                     ->sortable()
                     ->searchable(),
+                Tables\Columns\IconColumn::make('attachments')
+                    ->label('')
+                    ->alignLeft()
+                    ->getStateUsing(fn(Mail $record) => $record->attachments->count() > 0)
+                    ->icon(fn(string $state): string => $state ? 'heroicon-o-paper-clip' : ''),
                 Tables\Columns\TextColumn::make('to')
                     ->label(__('Recipient'))
-                    ->formatStateUsing(fn ($state) => self::formatEmailAddressForTable($state))
+                    ->formatStateUsing(fn($state) => self::formatEmailAddressForTable($state))
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('opens')
                     ->label(__('Opens'))
-                    ->tooltip(fn (Mail $record) => __('Last opened at :date', ['date' => $record->last_opened_at?->format('d-m-Y H:i')]))
+                    ->tooltip(fn(Mail $record) => __('Last opened at :date', ['date' => $record->last_opened_at?->format('d-m-Y H:i')]))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('clicks')
                     ->label(__('Clicks'))
-                    ->tooltip(fn (Mail $record) => __('Last clicked at :date', ['date' => $record->last_clicked_at?->format('d-m-Y H:i')]))
+                    ->tooltip(fn(Mail $record) => __('Last clicked at :date', ['date' => $record->last_clicked_at?->format('d-m-Y H:i')]))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('sent_at')
                     ->label(__('Sent At'))
                     ->dateTime('d-m-Y H:i')
                     ->since()
-                    ->tooltip(fn (Mail $record) => $record->sent_at?->format('d-m-Y H:i'))
+                    ->tooltip(fn(Mail $record) => $record->sent_at?->format('d-m-Y H:i'))
                     ->sortable()
                     ->searchable(),
             ])
