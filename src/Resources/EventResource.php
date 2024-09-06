@@ -23,7 +23,14 @@ class EventResource extends Resource
 
     protected static bool $isScopedToTenant = false;
 
-    protected static bool $shouldRegisterNavigation = false;
+    protected static bool $shouldRegisterNavigation = true;
+
+    protected static ?string $navigationParentItem = 'Mails';
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Mails');
+    }
 
     public static function getNavigationLabel(): string
     {
@@ -35,14 +42,10 @@ class EventResource extends Resource
         return __('Events');
     }
 
+
     public static function getNavigationIcon(): string
     {
         return 'heroicon-o-calendar';
-    }
-
-    public static function shouldRegisterNavigation(): bool
-    {
-        return false;
     }
 
     public function getTitle(): string

@@ -29,23 +29,7 @@ class FilamentMailsPlugin implements Plugin
 
     public function boot(Panel $panel): void
     {
-        Filament::serving(function () use ($panel) {
-            Filament::registerNavigationItems([
-                NavigationItem::make()
-                    ->group(__('Mails'))
-                    ->label('Mails')
-                    ->url(fn (): string => MailResource::getUrl('index'))
-                    ->icon('heroicon-o-envelope')
-                    ->isActiveWhen(fn (): bool => request()->routeIs('filament.' . $panel->getId() . '.resources.mails.*'))
-                    ->childItems([
-                        NavigationItem::make()
-                            ->label('Events')
-                            ->url(fn (): string => EventResource::getUrl('index'))
-                            ->icon('heroicon-o-calendar')
-                            ->isActiveWhen(fn (): bool => request()->routeIs('filament.' . $panel->getId() . '.resources.events.*')),
-                    ]),
-            ]);
-        });
+        //   
     }
 
     public static function make(): static
