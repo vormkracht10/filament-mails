@@ -344,7 +344,7 @@ class MailResource extends Resource
                         $cc = explode(',', $data['cc']);
                         $bcc = explode(',', $data['bcc']);
 
-                        (new ResendMail())->handle($record, $to, $cc, $bcc);
+                        (new ResendMail)->handle($record, $to, $cc, $bcc);
 
                         Notification::make()
                             ->title(__('Mail will be resent in the background'))
@@ -366,7 +366,7 @@ class MailResource extends Resource
                                 $to = json_decode($record->to, true) ?? [];
                                 $cc = json_decode($record->cc, true) ?? [];
                                 $bcc = json_decode($record->bcc, true) ?? [];
-                                (new ResendMail())->handle($record, $to, $cc, $bcc);
+                                (new ResendMail)->handle($record, $to, $cc, $bcc);
                             }
 
                             Notification::make()
