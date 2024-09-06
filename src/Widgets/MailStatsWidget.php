@@ -19,6 +19,12 @@ class MailStatsWidget extends BaseWidget
 
         $mailCount = Mail::count();
 
+        if ($mailCount === 0) {
+            return [
+
+            ];
+        }
+
         $widgets[] = Stat::make(__('Delivered'), number_format(($deliveredMails / $mailCount) * 100, 1) . '%')
             ->label(__('Delivered'))
             ->description($deliveredMails . ' ' . __('of') . ' ' . $mailCount . ' ' . __('emails'))
