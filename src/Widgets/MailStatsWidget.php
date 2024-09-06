@@ -34,7 +34,7 @@ class MailStatsWidget extends BaseWidget
             ->color('success')
             ->url(route('filament.' . filament()->getCurrentPanel()?->getId() . '.resources.mails.index', [
                 'activeTab' => 'opened',
-                'tenant' => filament()->getTenant()?->id
+                'tenant' => filament()->getTenant()?->id,
             ]));
 
         $widgets[] = Stat::make(__('Clicked'), number_format(($clickedMails / $mailCount) * 100, 1) . '%')
@@ -48,7 +48,7 @@ class MailStatsWidget extends BaseWidget
             ->color('danger')
             ->url(route('filament.' . filament()->getCurrentPanel()?->getId() . '.resources.mails.index', [
                 'activeTab' => 'bounced',
-                'tenant' => filament()->getTenant()?->id
+                'tenant' => filament()->getTenant()?->id,
             ]));
 
         return $widgets;
