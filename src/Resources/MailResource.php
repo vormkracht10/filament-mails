@@ -187,6 +187,7 @@ class MailResource extends Resource
                                         TextEntry::make('html')
                                             ->hiddenLabel()
                                             ->label(__('HTML Content'))
+                                            ->extraAttributes(['class' => 'overflow-x-auto'])
                                             ->formatStateUsing(fn(string $state, Mail $record): View => view(
                                                 'filament-mails::mails.preview',
                                                 ['html' => $state, 'mail' => $record],
@@ -196,6 +197,7 @@ class MailResource extends Resource
                                     ->schema([
                                         TextEntry::make('html')
                                             ->hiddenLabel()
+                                            ->extraAttributes(['class' => 'overflow-x-auto'])
                                             ->formatStateUsing(fn(string $state, Mail $record): View => view(
                                                 'filament-mails::mails.html',
                                                 ['html' => $state, 'mail' => $record],
