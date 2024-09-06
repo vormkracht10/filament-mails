@@ -64,7 +64,7 @@ class EventResource extends Resource
                                 TextEntry::make('type')
                                     ->label(__('Type'))
                                     ->badge()
-                                    ->color(fn (WebhookEventType $state): string => match ($state) {
+                                    ->color(fn(WebhookEventType $state): string => match ($state) {
                                         WebhookEventType::DELIVERY => 'success',
                                         WebhookEventType::CLICK => 'info',
                                         WebhookEventType::OPEN => 'success',
@@ -105,7 +105,7 @@ class EventResource extends Resource
                                     ->default(__('Unknown'))
                                     ->label(__('User Agent'))
                                     ->limit(50)
-                                    ->tooltip(fn ($state) => $state),
+                                    ->tooltip(fn($state) => $state),
                             ]),
                     ]),
                 Section::make(__('Location'))
@@ -124,13 +124,14 @@ class EventResource extends Resource
                     ]),
                 Section::make(__('Additional Information'))
                     ->icon('heroicon-o-information-circle')
+                    ->collapsible()
                     ->schema([
                         Grid::make(2)
                             ->schema([
                                 TextEntry::make('link')
                                     ->default(__('Unknown'))
                                     ->label(__('Link'))
-                                    ->url(fn ($state) => $state)
+                                    ->url(fn($state) => $state)
                                     ->openUrlInNewTab(),
                                 TextEntry::make('tag')
                                     ->default(__('Unknown'))
@@ -146,13 +147,12 @@ class EventResource extends Resource
     {
         return $table
             ->defaultSort('created_at', 'desc')
-            // ->defaultGroup('mail_id')
             ->columns([
                 Tables\Columns\TextColumn::make('type')
                     ->label(__('Type'))
                     ->sortable()
                     ->badge()
-                    ->color(fn (WebhookEventType $state): string => match ($state) {
+                    ->color(fn(WebhookEventType $state): string => match ($state) {
                         WebhookEventType::DELIVERY => 'success',
                         WebhookEventType::CLICK => 'clicked',
                         WebhookEventType::OPEN => 'success',
@@ -163,9 +163,6 @@ class EventResource extends Resource
                     ->formatStateUsing(function (WebhookEventType $state) {
                         return ucfirst($state->value);
                     })
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('mail_id')
-                    ->label(__('Mail ID'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('mail.subject')
                     ->label(__('Subject'))
