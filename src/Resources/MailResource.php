@@ -187,6 +187,14 @@ class MailResource extends Resource
                     ->formatStateUsing(fn($state) => self::formatEmailAddressForTable($state))
                     ->sortable()
                     ->searchable(),
+                Tables\Columns\TextColumn::make('opens')
+                    ->label(__('Opens'))
+                    ->tooltip(fn(Mail $record) => __('Last opened at :date', ['date' => $record->last_opened_at?->format('d-m-Y H:i')]))
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('clicks')
+                    ->label(__('Clicks'))
+                    ->tooltip(fn(Mail $record) => __('Last clicked at :date', ['date' => $record->last_clicked_at?->format('d-m-Y H:i')]))
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('sent_at')
                     ->label(__('Sent At'))
                     ->dateTime('d-m-Y H:i')
