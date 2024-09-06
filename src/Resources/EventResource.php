@@ -46,6 +46,11 @@ class EventResource extends Resource
         return __('Events');
     }
 
+    public static function getPluralModelLabel(): string
+    {
+        return __('Events');
+    }
+
     public static function getNavigationIcon(): string
     {
         return 'heroicon-o-calendar';
@@ -75,7 +80,6 @@ class EventResource extends Resource
                                         WebhookEventType::OPEN => 'success',
                                         WebhookEventType::BOUNCE => 'danger',
                                         WebhookEventType::COMPLAINT => 'danger',
-                                        default => 'gray',
                                     })
                                     ->formatStateUsing(function (WebhookEventType $state) {
                                         return ucfirst($state->value);
@@ -195,21 +199,23 @@ class EventResource extends Resource
                         WebhookEventType::OPEN => 'success',
                         WebhookEventType::BOUNCE => 'danger',
                         WebhookEventType::COMPLAINT => 'danger',
-                        default => 'gray',
                     })
                     ->formatStateUsing(function (WebhookEventType $state) {
                         return ucfirst($state->value);
                     })
                     ->searchable(),
                 Tables\Columns\TextColumn::make('mail.subject')
-                    ->url(fn (MailEvent $record) => route('filament.' . filament()->getCurrentPanel()?->getId() . '.resources.mails.view', $record->mail))
+                    ->url(fn (MailEvent $record) => route('filament.' . filament()->getCurrentPanel()?->getId() . '.resources.mails.view', [
+                        'record' => $record->mail,
+                        'tenant' => filament()->getTenant()?->id,
+                    ]))
                     ->label(__('Subject'))
                     ->searchable(['subject', 'payload']),
                 Tables\Columns\TextColumn::make('occurred_at')
                     ->label(__('Occurred At'))
                     ->dateTime('d-m-Y H:i')
                     ->since()
-                    ->tooltip(fn (MailEvent $record) => $record->occurred_at?->format('d-m-Y H:i'))
+                    ->tooltip(fn (MailEvent $record) => $record->occurred_at->format('d-m-Y H:i'))
                     ->sortable()
                     ->searchable(),
             ])
