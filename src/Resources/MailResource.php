@@ -272,6 +272,7 @@ class MailResource extends Resource
                     }),
                 Tables\Columns\TextColumn::make('subject')
                     ->label(__('Subject'))
+                    ->limit(35)
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\IconColumn::make('attachments')
@@ -281,6 +282,7 @@ class MailResource extends Resource
                     ->icon(fn(string $state): string => $state ? 'heroicon-o-paper-clip' : ''),
                 Tables\Columns\TextColumn::make('to')
                     ->label(__('Recipient'))
+                    ->limit(50)
                     ->formatStateUsing(fn($state) => self::formatEmailAddressForTable($state))
                     ->sortable()
                     ->searchable(),
