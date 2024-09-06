@@ -71,11 +71,14 @@ class EventResource extends Resource
                                     ->badge()
                                     ->color(fn(WebhookEventType $state): string => match ($state) {
                                         WebhookEventType::DELIVERY => 'success',
-                                        WebhookEventType::CLICK => 'info',
+                                        WebhookEventType::CLICK => 'clicked',
                                         WebhookEventType::OPEN => 'success',
                                         WebhookEventType::BOUNCE => 'danger',
                                         WebhookEventType::COMPLAINT => 'danger',
                                         default => 'gray',
+                                    })
+                                    ->formatStateUsing(function (WebhookEventType $state) {
+                                        return ucfirst($state->value);
                                     }),
                                 TextEntry::make('mail.subject')
                                     ->label(__('Mail')),

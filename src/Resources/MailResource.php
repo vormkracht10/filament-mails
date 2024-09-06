@@ -152,11 +152,14 @@ class MailResource extends Resource
                                                     ->url(fn(MailEvent $record) => route('filament.' . filament()->getCurrentPanel()?->getId() . '.resources.mails.events.view', $record))
                                                     ->color(fn(WebhookEventType $state): string => match ($state) {
                                                         WebhookEventType::DELIVERY => 'success',
-                                                        WebhookEventType::CLICK => 'info',
+                                                        WebhookEventType::CLICK => 'clicked',
                                                         WebhookEventType::OPEN => 'success',
                                                         WebhookEventType::BOUNCE => 'danger',
                                                         WebhookEventType::COMPLAINT => 'danger',
                                                         default => 'gray',
+                                                    })
+                                                    ->formatStateUsing(function (WebhookEventType $state) {
+                                                        return ucfirst($state->value);
                                                     }),
                                                 TextEntry::make('occurred_at')
                                                     ->url(fn(MailEvent $record) => route('filament.' . filament()->getCurrentPanel()?->getId() . '.resources.mails.events.view', $record))
