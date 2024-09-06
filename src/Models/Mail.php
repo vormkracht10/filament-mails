@@ -43,12 +43,12 @@ class Mail extends BaseModel
             return 'Opened';
         } elseif ($this->delivered_at) {
             return 'Delivered';
-        } elseif ($this->sent_at) {
-            return 'Sent';
         } elseif ($this->resent_at) {
             return 'Resent';
+        } elseif ($this->sent_at) {
+            return 'Sent';
         } else {
-            return 'Pending';
+            return 'Unsent';
         }
     }
 }
