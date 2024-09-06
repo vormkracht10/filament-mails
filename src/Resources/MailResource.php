@@ -2,16 +2,19 @@
 
 namespace Vormkracht10\FilamentMails\Resources;
 
-use Filament\Infolists\Components\Grid;
-use Filament\Infolists\Components\Section;
-use Filament\Infolists\Components\Tabs;
-use Filament\Infolists\Components\Tabs\Tab;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Infolist;
-use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Infolists\Infolist;
+use Filament\Resources\Resource;
+use Filament\Infolists\Components\Grid;
+use Filament\Infolists\Components\Tabs;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\Tabs\Tab;
 use Vormkracht10\FilamentMails\Models\Mail;
+use Filament\Infolists\Components\TextEntry;
+use Vormkracht10\Mails\Enums\WebhookEventType;
+use Filament\Infolists\Components\RepeatableEntry;
 use Vormkracht10\FilamentMails\Resources\MailResource\Pages\ListMails;
 
 class MailResource extends Resource
@@ -51,32 +54,105 @@ class MailResource extends Resource
         return $infolist
             ->schema([
                 Section::make('General')
+                    ->icon('heroicon-o-envelope')
                     ->collapsible()
                     ->schema([
-                        Grid::make(2)
+                        Tabs::make('')
                             ->schema([
-                                TextEntry::make('subject')
-                                    ->columnSpanFull()
-                                    ->label(__('Subject')),
-                                TextEntry::make('from')
-                                    ->label(__('From'))
-                                    ->formatStateUsing(fn($state) => self::formatEmailAddress($state)),
-                                TextEntry::make('to')
-                                    ->label(__('Recipient'))
-                                    ->formatStateUsing(fn($state) => self::formatEmailAddress($state)),
-                                TextEntry::make('cc')
-                                    ->label(__('CC'))
-                                    ->default('-')
-                                    ->formatStateUsing(fn($state) => self::formatEmailAddress($state)),
-                                TextEntry::make('bcc')
-                                    ->label(__('BCC'))
-                                    ->default('-')
-                                    ->formatStateUsing(fn($state) => self::formatEmailAddress($state)),
-                                TextEntry::make('reply_to')
-                                    ->default('-')
-                                    ->label(__('Reply To'))
-                                    ->formatStateUsing(fn($state) => self::formatEmailAddress($state)),
-                            ]),
+                                Tab::make(__('Sender Information'))
+                                    ->schema([
+                                        Grid::make(2)
+                                            ->schema([
+                                                TextEntry::make('subject')
+                                                    ->columnSpanFull()
+                                                    ->label(__('Subject')),
+                                                TextEntry::make('from')
+                                                    ->label(__('From'))
+                                                    ->formatStateUsing(fn($state) => self::formatEmailAddress($state)),
+                                                TextEntry::make('to')
+                                                    ->label(__('Recipient'))
+                                                    ->formatStateUsing(fn($state) => self::formatEmailAddress($state)),
+                                                TextEntry::make('cc')
+                                                    ->label(__('CC'))
+                                                    ->default('-')
+                                                    ->formatStateUsing(fn($state) => self::formatEmailAddress($state)),
+                                                TextEntry::make('bcc')
+                                                    ->label(__('BCC'))
+                                                    ->default('-')
+                                                    ->formatStateUsing(fn($state) => self::formatEmailAddress($state)),
+                                                TextEntry::make('reply_to')
+                                                    ->default('-')
+                                                    ->label(__('Reply To'))
+                                                    ->formatStateUsing(fn($state) => self::formatEmailAddress($state)),
+                                            ]),
+                                    ]),
+                                Tab::make(__('Statistics'))
+                                    ->schema([
+                                        Grid::make(2)
+                                            ->schema([
+                                                TextEntry::make('opens')
+                                                    ->label(__('Opens')),
+                                                TextEntry::make('clicks')
+                                                    ->label(__('Clicks')),
+                                                TextEntry::make('sent_at')
+                                                    ->label(__('Sent At'))
+                                                    ->since()
+                                                    ->dateTimeTooltip('d-m-Y H:i'),
+                                                TextEntry::make('resent_at')
+                                                    ->since()
+                                                    ->dateTimeTooltip('d-m-Y H:i')
+                                                    ->label(__('Resent At')),
+                                                TextEntry::make('delivered_at')
+                                                    ->label(__('Delivered At'))
+                                                    ->since()
+                                                    ->dateTimeTooltip('d-m-Y H:i'),
+                                                TextEntry::make('last_opened_at')
+                                                    ->label(__('Last Opened At'))
+                                                    ->since()
+                                                    ->dateTimeTooltip('d-m-Y H:i'),
+                                                TextEntry::make('last_clicked_at')
+                                                    ->label(__('Last Clicked At'))
+                                                    ->since()
+                                                    ->dateTimeTooltip('d-m-Y H:i'),
+                                                TextEntry::make('complained_at')
+                                                    ->label(__('Complained At'))
+                                                    ->since()
+                                                    ->dateTimeTooltip('d-m-Y H:i'),
+                                                TextEntry::make('soft_bounced_at')
+                                                    ->label(__('Soft Bounced At'))
+                                                    ->since()
+                                                    ->dateTimeTooltip('d-m-Y H:i'),
+                                                TextEntry::make('hard_bounced_at')
+                                                    ->label(__('Hard Bounced At'))
+                                                    ->since()
+                                                    ->dateTimeTooltip('d-m-Y H:i'),
+                                            ]),
+                                    ]),
+                                Tab::make(__('Events'))
+                                    ->schema([
+                                        RepeatableEntry::make('events')
+                                            ->hiddenLabel()
+                                            ->schema([
+                                                TextEntry::make('type')
+                                                    ->label(__('Type'))
+                                                    ->badge()
+                                                    ->color(fn(WebhookEventType $state): string => match ($state) {
+                                                        WebhookEventType::DELIVERY => 'success',
+                                                        WebhookEventType::CLICK => 'info',
+                                                        WebhookEventType::OPEN => 'success',
+                                                        WebhookEventType::BOUNCE => 'danger',
+                                                        WebhookEventType::COMPLAINT => 'danger',
+                                                        default => 'gray',
+                                                    }),
+                                                TextEntry::make('occurred_at')
+                                                    ->since()
+                                                    ->dateTimeTooltip('d-m-Y H:i')
+                                                    ->label(__('Occurred At')),
+                                            ])
+                                            ->columns(2)
+                                    ]),
+                            ])
+
                     ]),
                 Section::make('Content')
                     ->icon('heroicon-o-document')
@@ -116,51 +192,7 @@ class MailResource extends Resource
                                     ]),
                             ])->columnSpanFull(),
                     ])
-                    ->columnSpanFull(), // Add this line
-                Section::make('Statistics')
-                    ->collapsible()
-                    ->icon('heroicon-o-chart-bar')
-                    ->schema([
-                        Grid::make(2)
-                            ->schema([
-                                TextEntry::make('opens')
-                                    ->label(__('Opens')),
-                                TextEntry::make('clicks')
-                                    ->label(__('Clicks')),
-                                TextEntry::make('sent_at')
-                                    ->label(__('Sent At'))
-                                    ->since()
-                                    ->dateTimeTooltip('d-m-Y H:i'),
-                                TextEntry::make('resent_at')
-                                    ->since()
-                                    ->dateTimeTooltip('d-m-Y H:i')
-                                    ->label(__('Resent At')),
-                                TextEntry::make('delivered_at')
-                                    ->label(__('Delivered At'))
-                                    ->since()
-                                    ->dateTimeTooltip('d-m-Y H:i'),
-                                TextEntry::make('last_opened_at')
-                                    ->label(__('Last Opened At'))
-                                    ->since()
-                                    ->dateTimeTooltip('d-m-Y H:i'),
-                                TextEntry::make('last_clicked_at')
-                                    ->label(__('Last Clicked At'))
-                                    ->since()
-                                    ->dateTimeTooltip('d-m-Y H:i'),
-                                TextEntry::make('complained_at')
-                                    ->label(__('Complained At'))
-                                    ->since()
-                                    ->dateTimeTooltip('d-m-Y H:i'),
-                                TextEntry::make('soft_bounced_at')
-                                    ->label(__('Soft Bounced At'))
-                                    ->since()
-                                    ->dateTimeTooltip('d-m-Y H:i'),
-                                TextEntry::make('hard_bounced_at')
-                                    ->label(__('Hard Bounced At'))
-                                    ->since()
-                                    ->dateTimeTooltip('d-m-Y H:i'),
-                            ]),
-                    ])->columnSpanFull(),
+                    ->columnSpanFull(),
             ]);
     }
 
