@@ -2,18 +2,18 @@
 
 namespace Vormkracht10\FilamentMails\Resources;
 
-use Filament\Forms\Components\Repeater;
-use Filament\Infolists\Components\Grid;
-use Filament\Infolists\Components\RepeatableEntry;
-use Filament\Infolists\Components\Section;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Infolist;
-use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Vormkracht10\FilamentMails\Resources\EventResource\Pages\ListEvents;
-use Vormkracht10\Mails\Enums\WebhookEventType;
+use Filament\Infolists\Infolist;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\Repeater;
+use Filament\Infolists\Components\Grid;
 use Vormkracht10\Mails\Models\MailEvent;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\TextEntry;
+use Vormkracht10\Mails\Enums\WebhookEventType;
+use Filament\Mails\Resources\EventResource\Pages\ViewEvent;
+use Vormkracht10\FilamentMails\Resources\EventResource\Pages\ListEvents;
 
 class EventResource extends Resource
 {
@@ -174,7 +174,8 @@ class EventResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->recordAction(null)
+            ->recordAction('view')
+            ->recordUrl(null)
             ->defaultSort('created_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('type')
@@ -226,6 +227,7 @@ class EventResource extends Resource
     {
         return [
             'index' => ListEvents::route('/'),
+            'view' => ViewEvent::route('/{record}/view'),
         ];
     }
 }
