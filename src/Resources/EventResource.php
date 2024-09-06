@@ -3,7 +3,6 @@
 namespace Vormkracht10\FilamentMails\Resources;
 
 use Filament\Infolists\Components\Grid;
-use Filament\Infolists\Components\KeyValueEntry;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
@@ -64,7 +63,7 @@ class EventResource extends Resource
                                 TextEntry::make('type')
                                     ->label(__('Type'))
                                     ->badge()
-                                    ->color(fn(WebhookEventType $state): string => match ($state) {
+                                    ->color(fn (WebhookEventType $state): string => match ($state) {
                                         WebhookEventType::DELIVERY => 'success',
                                         WebhookEventType::CLICK => 'info',
                                         WebhookEventType::OPEN => 'success',
@@ -106,7 +105,7 @@ class EventResource extends Resource
                                     ->default(__('Unknown'))
                                     ->label(__('User Agent'))
                                     ->limit(50)
-                                    ->tooltip(fn($state) => $state),
+                                    ->tooltip(fn ($state) => $state),
                             ]),
                     ]),
                 Section::make(__('Location'))
@@ -132,7 +131,7 @@ class EventResource extends Resource
                                 TextEntry::make('link')
                                     ->default(__('Unknown'))
                                     ->label(__('Link'))
-                                    ->url(fn($state) => $state)
+                                    ->url(fn ($state) => $state)
                                     ->openUrlInNewTab(),
                                 TextEntry::make('tag')
                                     ->default(__('Unknown'))
@@ -145,7 +144,7 @@ class EventResource extends Resource
                                     ->columnSpanFull()
                                     ->copyable()
                                     ->copyMessage(__('Copied'))
-                                    ->copyMessageDuration(1500)
+                                    ->copyMessageDuration(1500),
                             ]),
                     ]),
             ]);
@@ -161,7 +160,7 @@ class EventResource extends Resource
                     ->label(__('Type'))
                     ->sortable()
                     ->badge()
-                    ->color(fn(WebhookEventType $state): string => match ($state) {
+                    ->color(fn (WebhookEventType $state): string => match ($state) {
                         WebhookEventType::DELIVERY => 'success',
                         WebhookEventType::CLICK => 'clicked',
                         WebhookEventType::OPEN => 'success',
