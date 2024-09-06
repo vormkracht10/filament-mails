@@ -75,7 +75,6 @@ class EventResource extends Resource
                                         WebhookEventType::OPEN => 'success',
                                         WebhookEventType::BOUNCE => 'danger',
                                         WebhookEventType::COMPLAINT => 'danger',
-                                        default => 'gray',
                                     })
                                     ->formatStateUsing(function (WebhookEventType $state) {
                                         return ucfirst($state->value);
@@ -155,7 +154,6 @@ class EventResource extends Resource
                                     ->copyable()
                                     ->copyMessage(__('Copied'))
                                     ->copyMessageDuration(1500),
-
                                 TextEntry::make('payload')
                                     ->label(__('Metadata'))
                                     ->formatStateUsing(function ($state) {
@@ -196,7 +194,6 @@ class EventResource extends Resource
                         WebhookEventType::OPEN => 'success',
                         WebhookEventType::BOUNCE => 'danger',
                         WebhookEventType::COMPLAINT => 'danger',
-                        default => 'gray',
                     })
                     ->formatStateUsing(function (WebhookEventType $state) {
                         return ucfirst($state->value);
@@ -205,12 +202,12 @@ class EventResource extends Resource
                 Tables\Columns\TextColumn::make('mail.subject')
                     ->url(fn (MailEvent $record) => route('filament.' . filament()->getCurrentPanel()?->getId() . '.resources.mails.view', $record->mail))
                     ->label(__('Subject'))
-                    ->searchable(),
+                    ->searchable(['subject', 'payload']),
                 Tables\Columns\TextColumn::make('occurred_at')
                     ->label(__('Occurred At'))
                     ->dateTime('d-m-Y H:i')
                     ->since()
-                    ->tooltip(fn (MailEvent $record) => $record->occurred_at?->format('d-m-Y H:i'))
+                    ->tooltip(fn(MailEvent $record) => $record->occurred_at->format('d-m-Y H:i'))
                     ->sortable()
                     ->searchable(),
             ])

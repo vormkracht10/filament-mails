@@ -62,21 +62,21 @@ public function panel(Panel $panel): Panel
 }
 ```
 
-### Features and screenshots
+## Features and screenshots
 
-#### List with all sent emails and statistics
+### List with all sent emails and statistics
 
 The package provides a clear overview of all emails, including statistics and the ability to filter the data.
 
 ![Filament Mails](https://github.com/vormkracht10/filament-mails/blob/main/docs/mails-list.png)
 
-#### Resending emails
+### Resending emails
 
 You can resend emails to the same or another recipient(s). This is useful when your email has bounced and you want to resend it.
 
 ![Filament Mails](https://github.com/vormkracht10/filament-mails/blob/main/docs/mail-resend.png)
 
-#### Information
+### Information
 
 You can view all relevant information about the email, such as the subject, the body, the attachments, the from address, the to address(es), the cc address(es), the bcc address(es), the reply to address, metadata and much more.
 
@@ -88,7 +88,7 @@ You can view all relevant information about the email, such as the subject, the 
 
 ![Filament Mails](https://github.com/vormkracht10/filament-mails/blob/main/docs/mail-attachments.png)
 
-#### Preview email
+### Preview email
 
 The package provides a preview of the email. This is useful to quickly check if the email is correct.
 
@@ -98,7 +98,7 @@ We also provide the raw HTML and plain text of the email.
 
 ![Filament Mails](https://github.com/vormkracht10/filament-mails/blob/main/docs/mail-raw-html.png)
 
-#### Events
+### Events
 
 The package also logs all events that are fired when an email is sent. This is useful to track the email sending process.
 

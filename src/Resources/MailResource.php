@@ -156,7 +156,6 @@ class MailResource extends Resource
                                                         WebhookEventType::OPEN => 'success',
                                                         WebhookEventType::BOUNCE => 'danger',
                                                         WebhookEventType::COMPLAINT => 'danger',
-                                                        default => 'gray',
                                                     })
                                                     ->formatStateUsing(function (WebhookEventType $state) {
                                                         return ucfirst($state->value);
@@ -274,7 +273,7 @@ class MailResource extends Resource
                     ->label(__('Subject'))
                     ->limit(35)
                     ->sortable()
-                    ->searchable(),
+                    ->searchable(['subject', 'html', 'text']),
                 Tables\Columns\IconColumn::make('attachments')
                     ->label('')
                     ->alignLeft()
@@ -341,6 +340,9 @@ class MailResource extends Resource
                         ];
                     })
                     ->action(function (Mail $record, array $data) {
+                        $to = json_decode($data['to'], true) ?? [];
+                        $cc = json_decode($data['cc'], true) ?? [];
+                        $bcc = json_decode($data['bcc'], true) ?? [];
 
                         ResendMailJob::dispatch($record, $to, $cc, $bcc);
 

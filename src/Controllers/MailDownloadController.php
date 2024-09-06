@@ -11,6 +11,7 @@ class MailDownloadController extends Controller
 {
     public function __invoke(Request $request)
     {
+        /** @var MailAttachment $attachment */
         $attachment = MailAttachment::find($request->attachment);
 
         $file = Storage::disk($attachment->disk)->get($attachment->uuid);
