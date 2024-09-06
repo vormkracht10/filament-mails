@@ -17,7 +17,7 @@ class EventResource extends Resource
 {
     protected static ?string $model = MailEvent::class;
 
-    protected static ?string $slug = 'events';
+    protected static ?string $slug = 'mails/events';
 
     protected static ?string $recordTitleAttribute = 'subject';
 
@@ -178,6 +178,7 @@ class EventResource extends Resource
                     })
                     ->searchable(),
                 Tables\Columns\TextColumn::make('mail.subject')
+                    ->url(fn (MailEvent $record) => route('filament.admin.resources.mails.view', $record->mail))
                     ->label(__('Subject'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('occurred_at')

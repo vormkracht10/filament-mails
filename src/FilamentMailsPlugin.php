@@ -2,9 +2,10 @@
 
 namespace Vormkracht10\FilamentMails;
 
-use Filament\Contracts\Plugin;
 use Filament\Panel;
+use Filament\Contracts\Plugin;
 use Filament\Support\Colors\Color;
+use Filament\Support\Enums\MaxWidth;
 
 class FilamentMailsPlugin implements Plugin
 {

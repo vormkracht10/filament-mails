@@ -2,24 +2,28 @@
 
 namespace Vormkracht10\FilamentMails\Resources;
 
-use Filament\Forms\Components\TextInput;
-use Filament\Infolists\Components\Grid;
-use Filament\Infolists\Components\RepeatableEntry;
-use Filament\Infolists\Components\Section;
-use Filament\Infolists\Components\Tabs;
-use Filament\Infolists\Components\Tabs\Tab;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Infolist;
-use Filament\Notifications\Notification;
-use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Actions\Action;
+use Illuminate\View\View;
 use Filament\Tables\Table;
+use Filament\Infolists\Infolist;
+use Filament\Resources\Resource;
 use Illuminate\Support\Collection;
-use Vormkracht10\FilamentMails\Models\Mail;
-use Vormkracht10\FilamentMails\Resources\MailResource\Pages\ListMails;
-use Vormkracht10\Mails\Enums\WebhookEventType;
+use Filament\Tables\Actions\Action;
+use Filament\Support\Enums\MaxWidth;
+use Filament\Infolists\Components\Grid;
+use Filament\Infolists\Components\Tabs;
+use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
+use Filament\Infolists\Components\Section;
 use Vormkracht10\Mails\Jobs\ResendMailJob;
+use Filament\Infolists\Components\Tabs\Tab;
+use Vormkracht10\FilamentMails\Models\Mail;
+use Filament\Infolists\Components\TextEntry;
+use Vormkracht10\Mails\Enums\WebhookEventType;
+use Filament\Infolists\Components\RepeatableEntry;
+use Filament\Mails\Resources\MailResource\Pages\ViewMail;
+use Filament\Infolists\Components\TextEntry\TextEntrySize;
+use Vormkracht10\FilamentMails\Resources\MailResource\Pages\ListMails;
 
 class MailResource extends Resource
 {
@@ -176,7 +180,10 @@ class MailResource extends Resource
                                         TextEntry::make('html')
                                             ->hiddenLabel()
                                             ->label(__('HTML Content'))
-                                            ->html()
+                                            ->formatStateUsing(fn (string $state, Mail $record): View => view(
+                                                'filament-mails::mails.preview',
+                                                ['html' => $state, 'mail' => $record],
+                                            ))
                                             ->columnSpanFull(),
                                     ])->columnSpanFull(),
                                 Tab::make('HTML')
@@ -208,6 +215,8 @@ class MailResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->recordAction('view')
+            ->recordUrl(null)
             ->defaultSort('created_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('status')
@@ -330,6 +339,7 @@ class MailResource extends Resource
     {
         return [
             'index' => ListMails::route('/'),
+            'view' => ViewMail::route('/{record}/view'),
         ];
     }
 
