@@ -21,8 +21,8 @@ use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Vormkracht10\FilamentMails\Models\Mail;
 use Vormkracht10\FilamentMails\Resources\MailResource\Pages\ListMails;
+use Vormkracht10\Mails\Actions\ResendMail;
 use Vormkracht10\Mails\Enums\WebhookEventType;
-use Vormkracht10\Mails\Jobs\ResendMailJob;
 use Vormkracht10\Mails\Models\MailEvent;
 
 class MailResource extends Resource
@@ -340,11 +340,11 @@ class MailResource extends Resource
                         ];
                     })
                     ->action(function (Mail $record, array $data) {
-                        $to = json_decode($data['to'], true) ?? [];
-                        $cc = json_decode($data['cc'], true) ?? [];
-                        $bcc = json_decode($data['bcc'], true) ?? [];
+                        $to = explode(',', $data['to']);
+                        $cc = explode(',', $data['cc']);
+                        $bcc = explode(',', $data['bcc']);
 
-                        ResendMailJob::dispatch($record, $to, $cc, $bcc);
+                        (new ResendMail())->handle($record, $to, $cc, $bcc);
 
                         Notification::make()
                             ->title(__('Mail will be resent in the background'))
@@ -366,7 +366,7 @@ class MailResource extends Resource
                                 $to = json_decode($record->to, true) ?? [];
                                 $cc = json_decode($record->cc, true) ?? [];
                                 $bcc = json_decode($record->bcc, true) ?? [];
-                                ResendMailJob::dispatch($record, $to, $cc, $bcc);
+                                (new ResendMail())->handle($record, $to, $cc, $bcc);
                             }
 
                             Notification::make()
