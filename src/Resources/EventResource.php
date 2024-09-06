@@ -75,7 +75,6 @@ class EventResource extends Resource
                                         WebhookEventType::OPEN => 'success',
                                         WebhookEventType::BOUNCE => 'danger',
                                         WebhookEventType::COMPLAINT => 'danger',
-                                        default => 'gray',
                                     })
                                     ->formatStateUsing(function (WebhookEventType $state) {
                                         return ucfirst($state->value);
@@ -195,7 +194,6 @@ class EventResource extends Resource
                         WebhookEventType::OPEN => 'success',
                         WebhookEventType::BOUNCE => 'danger',
                         WebhookEventType::COMPLAINT => 'danger',
-                        default => 'gray',
                     })
                     ->formatStateUsing(function (WebhookEventType $state) {
                         return ucfirst($state->value);
@@ -209,7 +207,7 @@ class EventResource extends Resource
                     ->label(__('Occurred At'))
                     ->dateTime('d-m-Y H:i')
                     ->since()
-                    ->tooltip(fn(MailEvent $record) => $record->occurred_at?->format('d-m-Y H:i'))
+                    ->tooltip(fn(MailEvent $record) => $record->occurred_at->format('d-m-Y H:i'))
                     ->sortable()
                     ->searchable(),
             ])
