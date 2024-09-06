@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Filament\Mails\Resources\MailResource\Pages;
 

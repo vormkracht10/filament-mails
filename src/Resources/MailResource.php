@@ -12,16 +12,16 @@ use Filament\Tables\Actions\Action;
 use Filament\Infolists\Components\Grid;
 use Filament\Infolists\Components\Tabs;
 use Filament\Forms\Components\TextInput;
-use Filament\Notifications\Notification;
-use Filament\Infolists\Components\Section;
-use Vormkracht10\Mails\Jobs\ResendMailJob;
-use Filament\Infolists\Components\Tabs\Tab;
-use Vormkracht10\FilamentMails\Models\Mail;
-use Filament\Infolists\Components\TextEntry;
-use Vormkracht10\Mails\Enums\WebhookEventType;
 use Filament\Infolists\Components\RepeatableEntry;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\Tabs\Tab;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Mails\Resources\MailResource\Pages\ViewMail;
+use Filament\Notifications\Notification;
+use Vormkracht10\FilamentMails\Models\Mail;
 use Vormkracht10\FilamentMails\Resources\MailResource\Pages\ListMails;
+use Vormkracht10\Mails\Enums\WebhookEventType;
+use Vormkracht10\Mails\Jobs\ResendMailJob;
 
 class MailResource extends Resource
 {
