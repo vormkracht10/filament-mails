@@ -64,7 +64,7 @@ class EventResource extends Resource
                                 TextEntry::make('type')
                                     ->label(__('Type'))
                                     ->badge()
-                                    ->color(fn(WebhookEventType $state): string => match ($state) {
+                                    ->color(fn (WebhookEventType $state): string => match ($state) {
                                         WebhookEventType::DELIVERY => 'success',
                                         WebhookEventType::CLICK => 'info',
                                         WebhookEventType::OPEN => 'success',
@@ -106,7 +106,7 @@ class EventResource extends Resource
                                     ->default(__('Unknown'))
                                     ->label(__('User Agent'))
                                     ->limit(50)
-                                    ->tooltip(fn($state) => $state),
+                                    ->tooltip(fn ($state) => $state),
                             ]),
                     ]),
                 Section::make(__('Location'))
@@ -132,7 +132,7 @@ class EventResource extends Resource
                                 TextEntry::make('link')
                                     ->default(__('Unknown'))
                                     ->label(__('Link'))
-                                    ->url(fn($state) => $state)
+                                    ->url(fn ($state) => $state)
                                     ->openUrlInNewTab(),
                                 TextEntry::make('tag')
                                     ->default(__('Unknown'))
@@ -153,7 +153,7 @@ class EventResource extends Resource
                     ->label(__('Type'))
                     ->sortable()
                     ->badge()
-                    ->color(fn(WebhookEventType $state): string => match ($state) {
+                    ->color(fn (WebhookEventType $state): string => match ($state) {
                         WebhookEventType::DELIVERY => 'success',
                         WebhookEventType::CLICK => 'clicked',
                         WebhookEventType::OPEN => 'success',
