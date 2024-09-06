@@ -1,20 +1,26 @@
 <?php
 
-namespace VendorName\Skeleton;
+namespace Vormkracht10\FilamentMails;
 
 use Filament\Contracts\Plugin;
 use Filament\Panel;
+use Filament\Support\Colors\Color;
 
-class SkeletonPlugin implements Plugin
+class FilamentMailsPlugin implements Plugin
 {
     public function getId(): string
     {
-        return 'skeleton';
+        return 'filament-mails';
     }
 
     public function register(Panel $panel): void
     {
-        //
+        $panel
+            ->colors([
+                'clicked' => Color::Purple,
+            ])
+            ->discoverResources(in: __DIR__ . '/Resources', for: 'Vormkracht10\\FilamentMails\\Resources')
+            ->discoverWidgets(in: __DIR__ . '/Widgets', for: 'Vormkracht10\\FilamentMails\\Widgets');
     }
 
     public function boot(Panel $panel): void
