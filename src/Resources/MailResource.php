@@ -207,7 +207,7 @@ class MailResource extends Resource
                     ->label(__('Sent At'))
                     ->dateTime('d-m-Y H:i')
                     ->since()
-                    ->tooltip(fn(Mail $record) => $record->sent_at?->format('d-m-Y H:i'))
+                    ->tooltip(fn (Mail $record) => $record->sent_at?->format('d-m-Y H:i'))
                     ->sortable()
                     ->searchable(),
             ])
