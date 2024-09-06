@@ -149,7 +149,7 @@ class MailResource extends Resource
                                                 TextEntry::make('type')
                                                     ->label(__('Type'))
                                                     ->badge()
-                                                    ->url(fn(MailEvent $record) => route('filament.admin.resources.mails.events.view', $record))
+                                                    ->url(fn(MailEvent $record) => route('filament.' . filament()->getCurrentPanel()?->getId() . '.resources.mails.events.view', $record))
                                                     ->color(fn(WebhookEventType $state): string => match ($state) {
                                                         WebhookEventType::DELIVERY => 'success',
                                                         WebhookEventType::CLICK => 'info',
@@ -159,7 +159,7 @@ class MailResource extends Resource
                                                         default => 'gray',
                                                     }),
                                                 TextEntry::make('occurred_at')
-                                                    ->url(fn(MailEvent $record) => route('filament.admin.resources.mails.events.view', $record))
+                                                    ->url(fn(MailEvent $record) => route('filament.' . filament()->getCurrentPanel()?->getId() . '.resources.mails.events.view', $record))
                                                     ->since()
                                                     ->dateTimeTooltip('d-m-Y H:i')
                                                     ->label(__('Occurred At')),

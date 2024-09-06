@@ -12,7 +12,7 @@ class MailStatsWidget extends BaseWidget
 
     protected function getStats(): array
     {
-        $bouncedMails = Mail::where(fn ($query) => $query->softBounced()->orWhere(fn ($query) => $query->hardBounced()))->count();
+        $bouncedMails = Mail::where(fn($query) => $query->softBounced()->orWhere(fn($query) => $query->hardBounced()))->count();
         $openedMails = Mail::opened()->count();
         $deliveredMails = Mail::delivered()->count();
         $clickedMails = Mail::clicked()->count();
@@ -20,9 +20,7 @@ class MailStatsWidget extends BaseWidget
         $mailCount = Mail::count();
 
         if ($mailCount === 0) {
-            return [
-
-            ];
+            return [];
         }
 
         $widgets[] = Stat::make(__('Delivered'), number_format(($deliveredMails / $mailCount) * 100, 1) . '%')
@@ -34,7 +32,7 @@ class MailStatsWidget extends BaseWidget
             ->label(__('Opened'))
             ->description($openedMails . ' ' . __('of') . ' ' . $mailCount . ' ' . __('emails'))
             ->color('success')
-            ->url(route('filament.admin.resources.mails.index', ['activeTab' => 'opened']));
+            ->url(route('filament.' . filament()->getCurrentPanel()?->getId() . '.resources.mails.index', ['activeTab' => 'opened']));
 
         $widgets[] = Stat::make(__('Clicked'), number_format(($clickedMails / $mailCount) * 100, 1) . '%')
             ->label(__('Clicked'))
@@ -45,7 +43,7 @@ class MailStatsWidget extends BaseWidget
             ->label(__('Bounced'))
             ->description($bouncedMails . ' ' . __('of') . ' ' . $mailCount . ' ' . __('emails'))
             ->color('danger')
-            ->url(route('filament.admin.resources.mails.index', ['activeTab' => 'bounced']));
+            ->url(route('filament.' . filament()->getCurrentPanel()?->getId() . '.resources.mails.index', ['activeTab' => 'bounced']));
 
         return $widgets;
     }

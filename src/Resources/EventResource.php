@@ -194,7 +194,7 @@ class EventResource extends Resource
                     })
                     ->searchable(),
                 Tables\Columns\TextColumn::make('mail.subject')
-                    ->url(fn(MailEvent $record) => route('filament.admin.resources.mails.view', $record->mail))
+                    ->url(fn(MailEvent $record) => route('filament.' . filament()->getCurrentPanel()?->getId() . '.resources.mails.view', $record->mail))
                     ->label(__('Subject'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('occurred_at')
