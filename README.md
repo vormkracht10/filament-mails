@@ -66,15 +66,45 @@ public function panel(Panel $panel): Panel
 
 #### List with all sent emails and statistics
 
-![Filament Mails](./docs/list.png)
+The package provides a clear overview of all emails, including statistics and the ability to filter the data.
+
+![Filament Mails](https://github.com/vormkracht10/filament-mails/blob/main/docs/mails-list.png)
+
+#### Resending emails
+
+You can resend emails to the same or another recipient(s). This is useful when your email has bounced and you want to resend it.
+
+![Filament Mails](https://github.com/vormkracht10/filament-mails/blob/main/docs/mail-resend.png)
+
+#### Information
+
+You can view all relevant information about the email, such as the subject, the body, the attachments, the from address, the to address(es), the cc address(es), the bcc address(es), the reply to address, metadata and much more.
+
+![Filament Mails](https://github.com/vormkracht10/filament-mails/blob/main/docs/mail-sender-information.png)
+
+![Filament Mails](https://github.com/vormkracht10/filament-mails/blob/main/docs/mail-statistics.png)
+
+![Filament Mails](https://github.com/vormkracht10/filament-mails/blob/main/docs/mail-events.png)
+
+![Filament Mails](https://github.com/vormkracht10/filament-mails/blob/main/docs/mail-attachments.png)
 
 #### Preview email
 
-![Filament Mails](./docs/preview.png)
+The package provides a preview of the email. This is useful to quickly check if the email is correct.
 
-#### View relevant information
+![Filament Mails](https://github.com/vormkracht10/filament-mails/blob/main/docs/mail-preview.png)
 
-![Filament Mails](./docs/slideover.png)
+We also provide the raw HTML and plain text of the email.
+
+![Filament Mails](https://github.com/vormkracht10/filament-mails/blob/main/docs/mail-raw-html.png)
+
+#### Events
+
+The package also logs all events that are fired when an email is sent. This is useful to track the email sending process.
+
+![Filament Mails](https://github.com/vormkracht10/filament-mails/blob/main/docs/events-list.png)
+
+![Filament Mails](https://github.com/vormkracht10/filament-mails/blob/main/docs/event-details.png)
 
 ## Usage
 
