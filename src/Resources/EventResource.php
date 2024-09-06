@@ -69,7 +69,7 @@ class EventResource extends Resource
                                 TextEntry::make('type')
                                     ->label(__('Type'))
                                     ->badge()
-                                    ->color(fn(WebhookEventType $state): string => match ($state) {
+                                    ->color(fn (WebhookEventType $state): string => match ($state) {
                                         WebhookEventType::DELIVERY => 'success',
                                         WebhookEventType::CLICK => 'info',
                                         WebhookEventType::OPEN => 'success',
@@ -111,7 +111,7 @@ class EventResource extends Resource
                                     ->default(__('Unknown'))
                                     ->label(__('User Agent'))
                                     ->limit(50)
-                                    ->tooltip(fn($state) => $state),
+                                    ->tooltip(fn ($state) => $state),
                             ]),
                     ]),
                 Section::make(__('Location'))
@@ -138,7 +138,7 @@ class EventResource extends Resource
                                     ->default(__('Unknown'))
                                     ->label(__('Link'))
                                     ->limit(50)
-                                    ->url(fn($state) => $state)
+                                    ->url(fn ($state) => $state)
                                     ->openUrlInNewTab(),
                                 TextEntry::make('tag')
                                     ->default(__('Unknown'))
@@ -181,7 +181,7 @@ class EventResource extends Resource
                     ->label(__('Type'))
                     ->sortable()
                     ->badge()
-                    ->color(fn(WebhookEventType $state): string => match ($state) {
+                    ->color(fn (WebhookEventType $state): string => match ($state) {
                         WebhookEventType::DELIVERY => 'success',
                         WebhookEventType::CLICK => 'clicked',
                         WebhookEventType::OPEN => 'success',
@@ -194,14 +194,14 @@ class EventResource extends Resource
                     })
                     ->searchable(),
                 Tables\Columns\TextColumn::make('mail.subject')
-                    ->url(fn(MailEvent $record) => route('filament.' . filament()->getCurrentPanel()?->getId() . '.resources.mails.view', $record->mail))
+                    ->url(fn (MailEvent $record) => route('filament.' . filament()->getCurrentPanel()?->getId() . '.resources.mails.view', $record->mail))
                     ->label(__('Subject'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('occurred_at')
                     ->label(__('Occurred At'))
                     ->dateTime('d-m-Y H:i')
                     ->since()
-                    ->tooltip(fn(MailEvent $record) => $record->occurred_at?->format('d-m-Y H:i'))
+                    ->tooltip(fn (MailEvent $record) => $record->occurred_at?->format('d-m-Y H:i'))
                     ->sortable()
                     ->searchable(),
             ])
