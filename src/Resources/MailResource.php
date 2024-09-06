@@ -2,23 +2,23 @@
 
 namespace Vormkracht10\FilamentMails\Resources;
 
-use Filament\Tables;
-use Illuminate\View\View;
-use Filament\Tables\Table;
-use Filament\Infolists\Infolist;
-use Filament\Resources\Resource;
-use Illuminate\Support\Collection;
-use Filament\Tables\Actions\Action;
-use Filament\Infolists\Components\Grid;
-use Filament\Infolists\Components\Tabs;
 use Filament\Forms\Components\TextInput;
+use Filament\Infolists\Components\Grid;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\Tabs;
 use Filament\Infolists\Components\Tabs\Tab;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ViewEntry;
+use Filament\Infolists\Infolist;
 use Filament\Mails\Resources\MailResource\Pages\ViewMail;
 use Filament\Notifications\Notification;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Table;
+use Illuminate\Support\Collection;
+use Illuminate\View\View;
 use Vormkracht10\FilamentMails\Models\Mail;
 use Vormkracht10\FilamentMails\Resources\MailResource\Pages\ListMails;
 use Vormkracht10\Mails\Enums\WebhookEventType;
@@ -181,7 +181,6 @@ class MailResource extends Resource
                                         TextEntry::make('html')
                                             ->hiddenLabel()
                                             ->label(__('HTML Content'))
-                                            ->extraAttributes(['class' => 'w-full max-w-full'])
                                             ->formatStateUsing(fn(string $state, Mail $record): View => view(
                                                 'filament-mails::mails.preview',
                                                 ['html' => $state, 'mail' => $record],
