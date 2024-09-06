@@ -6,7 +6,6 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
-use Filament\Forms\Components\Repeater;
 use Filament\Infolists\Components\Grid;
 use Vormkracht10\Mails\Models\MailEvent;
 use Filament\Infolists\Components\Section;
