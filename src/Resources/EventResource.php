@@ -154,6 +154,7 @@ class EventResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->recordAction(null)
             ->defaultSort('created_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('type')
