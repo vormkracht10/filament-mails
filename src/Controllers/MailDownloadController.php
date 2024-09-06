@@ -4,7 +4,6 @@ namespace Vormkracht10\FilamentMails\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Vormkracht10\Mails\Models\Mail;
 use Illuminate\Support\Facades\Storage;
 use Vormkracht10\Mails\Models\MailAttachment;
 
