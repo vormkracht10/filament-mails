@@ -16,6 +16,7 @@ use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\Tabs\Tab;
 use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\ViewEntry;
 use Filament\Mails\Resources\MailResource\Pages\ViewMail;
 use Filament\Notifications\Notification;
 use Vormkracht10\FilamentMails\Models\Mail;
@@ -172,18 +173,20 @@ class MailResource extends Resource
                         Tabs::make('Content')
                             ->label(__('Content'))
                             ->columnSpanFull()
+                            ->extraAttributes(['class' => 'w-full max-w-full'])
                             ->tabs([
                                 Tab::make('Preview')
+                                    ->extraAttributes(['class' => 'w-full max-w-full'])
                                     ->schema([
                                         TextEntry::make('html')
                                             ->hiddenLabel()
                                             ->label(__('HTML Content'))
+                                            ->extraAttributes(['class' => 'w-full max-w-full'])
                                             ->formatStateUsing(fn(string $state, Mail $record): View => view(
                                                 'filament-mails::mails.preview',
                                                 ['html' => $state, 'mail' => $record],
-                                            ))
-                                            ->columnSpanFull(),
-                                    ])->columnSpanFull(),
+                                            )),
+                                    ]),
                                 Tab::make('HTML')
                                     ->schema([
                                         TextEntry::make('html')
@@ -207,6 +210,29 @@ class MailResource extends Resource
                             ])->columnSpanFull(),
                     ])
                     ->columnSpanFull(),
+                Section::make('Attachments')
+                    ->icon('heroicon-o-paper-clip')
+                    ->collapsible()
+                    ->schema([
+                        RepeatableEntry::make('attachments')
+                            ->hiddenLabel()
+                            ->label(__('Attachments'))
+                            ->schema([
+                                Grid::make(3)
+                                    ->schema([
+                                        TextEntry::make('filename')
+                                            ->label(__('Name')),
+                                        TextEntry::make('size')
+                                            ->label(__('Size')),
+                                        TextEntry::make('mime')
+                                            ->label(__('Mime Type')),
+                                        ViewEntry::make('uuid')
+                                            ->label(__('Download'))
+                                            ->getStateUsing(fn($record) => $record)
+                                            ->view('filament-mails::mails.download'),
+                                    ])
+                            ]),
+                    ]),
             ]);
     }
 
