@@ -11,6 +11,7 @@ class MailPreviewController extends Controller
     public function __invoke(Request $request)
     {
         $mail = Mail::find($request->mail);
+
         return response($mail->html);
     }
 }

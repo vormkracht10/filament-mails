@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Illuminate\Support\Facades\Route;
 use Vormkracht10\FilamentMails\Controllers\MailPreviewController;
