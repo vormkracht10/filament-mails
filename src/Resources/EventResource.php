@@ -25,7 +25,10 @@ class EventResource extends Resource
 
     protected static bool $shouldRegisterNavigation = true;
 
-    protected static ?string $navigationParentItem = 'Mails';
+    public static function getNavigationParentItem(): ?string
+    {
+        return __('Mails');
+    }
 
     public static function getNavigationGroup(): ?string
     {
