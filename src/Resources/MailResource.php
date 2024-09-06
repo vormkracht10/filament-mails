@@ -6,10 +6,14 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
+use Illuminate\Support\Collection;
+use Filament\Tables\Actions\Action;
 use Filament\Infolists\Components\Grid;
 use Filament\Infolists\Components\Tabs;
-use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
 use Filament\Infolists\Components\Section;
+use Vormkracht10\Mails\Jobs\ResendMailJob;
 use Filament\Infolists\Components\Tabs\Tab;
 use Vormkracht10\FilamentMails\Models\Mail;
 use Filament\Infolists\Components\TextEntry;
@@ -251,9 +255,67 @@ class MailResource extends Resource
                     ->label(__('View'))
                     ->hiddenLabel()
                     ->tooltip(__('View')),
+                Action::make('resend')
+                    ->label(__('Resend'))
+                    ->icon('heroicon-o-arrow-uturn-right')
+                    ->requiresConfirmation()
+                    ->modalDescription(__('Are you sure you want to resend this mail?'))
+                    ->hiddenLabel()
+                    ->tooltip(__('Resend'))
+                    ->form([
+                        TextInput::make('to')
+                            ->label(__('Recipient'))
+                            ->helperText(__('You can add multiple email addresses separated by commas.'))
+                            ->required(),
+                        TextInput::make('cc')
+                            ->label(__('CC')),
+                        TextInput::make('bcc')
+                            ->label(__('BCC')),
+                    ])
+                    ->fillForm(function (Mail $record) {
+                        // Get all to, cc and bcc from the record. The values are in a json field. The keys are the email addresses.
+                        $to = json_decode($record->to, true) ?? [];
+                        $cc = json_decode($record->cc, true) ?? [];
+                        $bcc = json_decode($record->bcc, true) ?? [];
+
+                        return [
+                            'to' => implode(', ', array_keys($to)),
+                            'cc' => implode(', ', array_keys($cc)),
+                            'bcc' => implode(', ', array_keys($bcc)),
+                        ];
+                    })
+                    ->action(function (Mail $record, array $data) {
+
+                        ResendMailJob::dispatch($record, $to, $cc, $bcc);
+
+                        Notification::make()
+                            ->title(__('Mail will be resent in the background'))
+                            ->success()
+                            ->send();
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\BulkAction::make('resend')
+                        ->label(__('Resend'))
+                        ->icon('heroicon-o-arrow-uturn-right')
+                        ->requiresConfirmation()
+                        ->modalDescription(__('Are you sure you want to resend the selected mails?'))
+                        ->hiddenLabel()
+                        ->tooltip(__('Resend'))
+                        ->action(function (Collection $records, array $data) {
+                            foreach ($records as $record) {
+                                $to = json_decode($record->to, true) ?? [];
+                                $cc = json_decode($record->cc, true) ?? [];
+                                $bcc = json_decode($record->bcc, true) ?? [];
+                                ResendMailJob::dispatch($record, $to, $cc, $bcc);
+                            }
+
+                            Notification::make()
+                                ->title(__('Mails will be resent in the background'))
+                                ->success()
+                                ->send();
+                        }),
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
