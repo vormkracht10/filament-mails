@@ -42,7 +42,6 @@ class EventResource extends Resource
         return __('Events');
     }
 
-
     public static function getNavigationIcon(): string
     {
         return 'heroicon-o-calendar';
