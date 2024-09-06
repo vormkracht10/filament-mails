@@ -21,7 +21,7 @@ Email as a protocol is very error prone. Succesfull email delivery is not guaran
 
 The package is built on top of [Laravel Mails](https://github.com/vormkracht10/laravel-mails).
 
-![Filament Mails](./docs/list.png)
+![Filament Mails](https://github.com/vormkracht10/filament-mails/blob/main/docs/filament-mails.jpeg)
 
 ## Installation
 
