@@ -10,8 +10,8 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Vormkracht10\FilamentMails\Resources\EventResource\Pages\ListEvents;
-use Vormkracht10\Mails\Enums\EventType;
 use Vormkracht10\FilamentMails\Resources\EventResource\Pages\ViewEvent;
+use Vormkracht10\Mails\Enums\EventType;
 use Vormkracht10\Mails\Models\MailEvent;
 
 class EventResource extends Resource
