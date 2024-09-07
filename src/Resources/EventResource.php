@@ -2,17 +2,17 @@
 
 namespace Vormkracht10\FilamentMails\Resources;
 
-use Filament\Tables;
-use Filament\Tables\Table;
-use Filament\Infolists\Infolist;
-use Filament\Resources\Resource;
 use Filament\Infolists\Components\Grid;
-use Vormkracht10\Mails\Models\MailEvent;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
-use Vormkracht10\Mails\Enums\WebhookEventType;
+use Filament\Infolists\Infolist;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Table;
 use Vormkracht10\FilamentMails\Resources\EventResource\Pages\ListEvents;
 use Vormkracht10\FilamentMails\Resources\EventResource\Pages\ViewEvent;
+use Vormkracht10\Mails\Enums\WebhookEventType;
+use Vormkracht10\Mails\Models\MailEvent;
 
 class EventResource extends Resource
 {
