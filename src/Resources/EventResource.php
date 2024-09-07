@@ -67,6 +67,7 @@ class EventResource extends Resource
             ->schema([
                 Section::make(__('Event Details'))
                     ->icon('heroicon-o-information-circle')
+                    ->compact()
                     ->collapsible()
                     ->schema([
                         Grid::make(2)
@@ -96,6 +97,7 @@ class EventResource extends Resource
                     ]),
                 Section::make(__('User Information'))
                     ->icon('heroicon-o-user-circle')
+                    ->compact()
                     ->collapsible()
                     ->schema([
                         Grid::make(2)
@@ -124,6 +126,7 @@ class EventResource extends Resource
                     ]),
                 Section::make(__('Location'))
                     ->icon('heroicon-o-map-pin')
+                    ->compact()
                     ->collapsible()
                     ->schema([
                         Grid::make(2)
@@ -138,6 +141,7 @@ class EventResource extends Resource
                     ]),
                 Section::make(__('Additional Information'))
                     ->icon('heroicon-o-information-circle')
+                    ->compact()
                     ->collapsible()
                     ->schema([
                         Grid::make(2)
