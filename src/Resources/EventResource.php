@@ -207,7 +207,7 @@ class EventResource extends Resource
                 Tables\Columns\TextColumn::make('mail.subject')
                     ->url(fn (MailEvent $record) => route('filament.' . filament()->getCurrentPanel()?->getId() . '.resources.mails.view', [
                         'record' => $record->mail,
-                        'tenant' => filament()->getTenant()?->id
+                        'tenant' => filament()->getTenant()?->id,
                     ]))
                     ->label(__('Subject'))
                     ->searchable(['subject', 'payload']),

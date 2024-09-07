@@ -151,7 +151,7 @@ class MailResource extends Resource
                                                     ->badge()
                                                     ->url(fn (MailEvent $record) => route('filament.' . filament()->getCurrentPanel()?->getId() . '.resources.mails.events.view', [
                                                         'record' => $record,
-                                                        'tenant' => filament()->getTenant()?->id
+                                                        'tenant' => filament()->getTenant()?->id,
                                                     ]))
                                                     ->color(fn (WebhookEventType $state): string => match ($state) {
                                                         WebhookEventType::DELIVERY => 'success',
@@ -166,7 +166,7 @@ class MailResource extends Resource
                                                 TextEntry::make('occurred_at')
                                                     ->url(fn (MailEvent $record) => route('filament.' . filament()->getCurrentPanel()?->getId() . '.resources.mails.events.view', [
                                                         'record' => $record,
-                                                        'tenant' => filament()->getTenant()?->id
+                                                        'tenant' => filament()->getTenant()?->id,
                                                     ]))
                                                     ->since()
                                                     ->dateTimeTooltip('d-m-Y H:i')
