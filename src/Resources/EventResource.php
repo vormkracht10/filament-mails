@@ -12,7 +12,7 @@ use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
 use Vormkracht10\Mails\Enums\WebhookEventType;
 use Vormkracht10\FilamentMails\Resources\EventResource\Pages\ListEvents;
-use Vormkracht10\FilamentMails\Resources\EventResource\Pages\Pages\ViewEvent;
+use Vormkracht10\FilamentMails\Resources\EventResource\Pages\ViewEvent;
 
 class EventResource extends Resource
 {
