@@ -22,7 +22,7 @@ use Vormkracht10\FilamentMails\Models\Mail;
 use Vormkracht10\FilamentMails\Resources\MailResource\Pages\ListMails;
 use Vormkracht10\FilamentMails\Resources\MailResource\Pages\ViewMail;
 use Vormkracht10\Mails\Actions\ResendMail;
-use Vormkracht10\Mails\Enums\WebhookEventType;
+use Vormkracht10\Mails\Enums\EventType;
 use Vormkracht10\Mails\Models\MailEvent;
 
 class MailResource extends Resource
@@ -153,14 +153,15 @@ class MailResource extends Resource
                                                         'record' => $record,
                                                         'tenant' => filament()->getTenant()?->id,
                                                     ]))
-                                                    ->color(fn (WebhookEventType $state): string => match ($state) {
-                                                        WebhookEventType::DELIVERY => 'success',
-                                                        WebhookEventType::CLICK => 'clicked',
-                                                        WebhookEventType::OPEN => 'success',
-                                                        WebhookEventType::BOUNCE => 'danger',
-                                                        WebhookEventType::COMPLAINT => 'danger',
+                                                    ->color(fn (EventType $state): string => match ($state) {
+                                                        EventType::DELIVERED => 'success',
+                                                        EventType::CLICKED => 'clicked',
+                                                        EventType::OPENED => 'success',
+                                                        EventType::SOFT_BOUNCED => 'danger',
+                                                        EventType::HARD_BOUNCED => 'danger',
+                                                        EventType::COMPLAINED => 'danger',
                                                     })
-                                                    ->formatStateUsing(function (WebhookEventType $state) {
+                                                    ->formatStateUsing(function (EventType $state) {
                                                         return ucfirst($state->value);
                                                     }),
                                                 TextEntry::make('occurred_at')
