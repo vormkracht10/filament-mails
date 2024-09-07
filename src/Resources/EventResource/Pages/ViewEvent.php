@@ -1,6 +1,6 @@
 <?php
 
-namespace Filament\Mails\Resources\EventResource\Pages;
+namespace Vormkracht10\FilamentMails\Resources\EventResource\Pages\Pages;
 
 use Filament\Resources\Pages\ViewRecord;
 use Vormkracht10\FilamentMails\Resources\EventResource;
