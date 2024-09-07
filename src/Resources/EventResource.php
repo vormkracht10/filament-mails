@@ -10,8 +10,8 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Vormkracht10\FilamentMails\Resources\EventResource\Pages\ListEvents;
+use Vormkracht10\Mails\Enums\EventType;
 use Vormkracht10\FilamentMails\Resources\EventResource\Pages\ViewEvent;
-use Vormkracht10\Mails\Enums\WebhookEventType;
 use Vormkracht10\Mails\Models\MailEvent;
 
 class EventResource extends Resource
@@ -74,14 +74,15 @@ class EventResource extends Resource
                                 TextEntry::make('type')
                                     ->label(__('Type'))
                                     ->badge()
-                                    ->color(fn (WebhookEventType $state): string => match ($state) {
-                                        WebhookEventType::DELIVERY => 'success',
-                                        WebhookEventType::CLICK => 'clicked',
-                                        WebhookEventType::OPEN => 'success',
-                                        WebhookEventType::BOUNCE => 'danger',
-                                        WebhookEventType::COMPLAINT => 'danger',
+                                    ->color(fn (EventType $state): string => match ($state) {
+                                        EventType::DELIVERED => 'success',
+                                        EventType::CLICKED => 'clicked',
+                                        EventType::OPENED => 'success',
+                                        EventType::SOFT_BOUNCED => 'danger',
+                                        EventType::HARD_BOUNCED => 'danger',
+                                        EventType::COMPLAINED => 'danger',
                                     })
-                                    ->formatStateUsing(function (WebhookEventType $state) {
+                                    ->formatStateUsing(function (EventType $state) {
                                         return ucfirst($state->value);
                                     }),
                                 TextEntry::make('mail.subject')
@@ -193,14 +194,15 @@ class EventResource extends Resource
                     ->label(__('Type'))
                     ->sortable()
                     ->badge()
-                    ->color(fn (WebhookEventType $state): string => match ($state) {
-                        WebhookEventType::DELIVERY => 'success',
-                        WebhookEventType::CLICK => 'clicked',
-                        WebhookEventType::OPEN => 'success',
-                        WebhookEventType::BOUNCE => 'danger',
-                        WebhookEventType::COMPLAINT => 'danger',
+                    ->color(fn (EventType $state): string => match ($state) {
+                        EventType::DELIVERED => 'success',
+                        EventType::CLICKED => 'clicked',
+                        EventType::OPENED => 'success',
+                        EventType::SOFT_BOUNCED => 'danger',
+                        EventType::HARD_BOUNCED => 'danger',
+                        EventType::COMPLAINED => 'danger',
                     })
-                    ->formatStateUsing(function (WebhookEventType $state) {
+                    ->formatStateUsing(function (EventType $state) {
                         return ucfirst($state->value);
                     })
                     ->searchable(),
