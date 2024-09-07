@@ -6,7 +6,7 @@ use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 use Vormkracht10\FilamentMails\Resources\EventResource;
-use Vormkracht10\Mails\Enums\WebhookEventType;
+use Vormkracht10\Mails\Enums\EventType;
 use Vormkracht10\Mails\Models\MailEvent;
 
 class ListEvents extends ListRecords
@@ -34,32 +34,38 @@ class ListEvents extends ListRecords
             'delivery' => Tab::make()
                 ->label(__('Delivery'))
                 ->icon('heroicon-o-check-circle')
-                ->badge(MailEvent::where('type', WebhookEventType::DELIVERY)->count())
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', WebhookEventType::DELIVERY)),
+                ->badge(MailEvent::where('type', EventType::DELIVERED)->count())
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', EventType::DELIVERED)),
 
             'click' => Tab::make()
                 ->label(__('Click'))
                 ->icon('heroicon-o-cursor-arrow-rays')
-                ->badge(MailEvent::where('type', WebhookEventType::CLICK)->count())
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', WebhookEventType::CLICK)),
+                ->badge(MailEvent::where('type', EventType::CLICKED)->count())
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', EventType::CLICKED)),
 
             'open' => Tab::make()
                 ->label(__('Open'))
                 ->icon('heroicon-o-envelope-open')
-                ->badge(MailEvent::where('type', WebhookEventType::OPEN)->count())
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', WebhookEventType::OPEN)),
+                ->badge(MailEvent::where('type', EventType::OPENED)->count())
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', EventType::OPENED)),
 
-            'bounce' => Tab::make()
-                ->label(__('Bounce'))
+            'soft_bounce' => Tab::make()
+                ->label(__('Soft Bounce'))
                 ->icon('heroicon-o-x-circle')
-                ->badge(MailEvent::where('type', WebhookEventType::BOUNCE)->count())
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', WebhookEventType::BOUNCE)),
+                ->badge(MailEvent::where('type', EventType::SOFT_BOUNCED)->count())
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', EventType::SOFT_BOUNCED)),
+
+            'hard_bounce' => Tab::make()
+                ->label(__('Hard Bounce'))
+                ->icon('heroicon-o-x-circle')
+                ->badge(MailEvent::where('type', EventType::HARD_BOUNCED)->count())
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', EventType::HARD_BOUNCED)),
 
             'complaint' => Tab::make()
                 ->label(__('Complaint'))
                 ->icon('heroicon-o-exclamation-circle')
-                ->badge(MailEvent::where('type', WebhookEventType::COMPLAINT)->count())
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', WebhookEventType::COMPLAINT)),
+                ->badge(MailEvent::where('type', EventType::COMPLAINED)->count())
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', EventType::COMPLAINED)),
         ];
     }
 }
