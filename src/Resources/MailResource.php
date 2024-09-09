@@ -155,11 +155,14 @@ class MailResource extends Resource
                                                         'tenant' => filament()->getTenant()?->id,
                                                     ]))
                                                     ->color(fn (EventType $state): string => match ($state) {
-                                                        EventType::DELIVERY => 'success',
-                                                        EventType::CLICK => 'clicked',
-                                                        EventType::OPEN => 'success',
-                                                        EventType::BOUNCE => 'danger',
-                                                        EventType::COMPLAINT => 'danger',
+                                                        EventType::DELIVERED => 'success',
+                                                        EventType::CLICKED => 'clicked',
+                                                        EventType::OPENED => 'success',
+                                                        EventType::SOFT_BOUNCED => 'danger',
+                                                        EventType::HARD_BOUNCED => 'danger',
+                                                        EventType::COMPLAINED => 'danger',
+                                                        EventType::UNSUBSCRIBED => 'danger',
+                                                        EventType::ACCEPTED => 'success',
                                                     })
                                                     ->formatStateUsing(function (EventType $state) {
                                                         return ucfirst($state->value);
@@ -275,7 +278,7 @@ class MailResource extends Resource
                         'Delivered' => 'success',
                         'Sent' => 'info',
                         'Resent' => 'info',
-                        'Pending' => 'gray',
+                        'Unsent' => 'gray',
                         default => 'gray',
                     }),
                 Tables\Columns\TextColumn::make('subject')
