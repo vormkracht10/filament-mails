@@ -295,7 +295,7 @@ class MailResource extends Resource
                 Tables\Columns\TextColumn::make('to')
                     ->label(__('Recipient'))
                     ->limit(50)
-                    ->getStateUsing(fn (Mail $record) => self::formatMailState($record->to))
+                    ->getStateUsing(fn (Mail $record) => self::formatMailState(emails: $record->to, mailOnly: true))
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('opens')
@@ -400,11 +400,11 @@ class MailResource extends Resource
         ];
     }
 
-    private static function formatMailState(array $emails): string
+    private static function formatMailState(array $emails, bool $mailOnly = false): string
     {
         return collect($emails)
             ->mapWithKeys(fn ($value, $key) => [$key => $value ?? $key])
-            ->map(fn ($value, $key) => $value === null ? $key : "$value <$key>")
+            ->map(fn ($value, $key) => $mailOnly ? $key : ($value === null ? $key : "$value <$key>"))
             ->implode(', ');
     }
 }
