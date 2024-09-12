@@ -2,14 +2,14 @@
 
 namespace Vormkracht10\FilamentMails\Resources;
 
-use Filament\Infolists\Components\Grid;
-use Filament\Infolists\Components\Tabs;
 use Filament\Forms\Components\TextInput;
+use Filament\Infolists\Components\Grid;
+use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\Tabs;
 use Filament\Infolists\Components\Tabs\Tab;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ViewEntry;
-use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Infolist;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
@@ -82,22 +82,22 @@ class MailResource extends Resource
                                                     ->label(__('Subject')),
                                                 TextEntry::make('from')
                                                     ->label(__('From'))
-                                                    ->formatStateUsing(fn($state) => self::formatEmailAddress($state)),
+                                                    ->formatStateUsing(fn ($state) => self::formatEmailAddress($state)),
                                                 TextEntry::make('to')
                                                     ->label(__('Recipient'))
-                                                    ->formatStateUsing(fn($state) => self::formatEmailAddress($state)),
+                                                    ->formatStateUsing(fn ($state) => self::formatEmailAddress($state)),
                                                 TextEntry::make('cc')
                                                     ->label(__('CC'))
                                                     ->default('-')
-                                                    ->formatStateUsing(fn($state) => self::formatEmailAddress($state)),
+                                                    ->formatStateUsing(fn ($state) => self::formatEmailAddress($state)),
                                                 TextEntry::make('bcc')
                                                     ->label(__('BCC'))
                                                     ->default('-')
-                                                    ->formatStateUsing(fn($state) => self::formatEmailAddress($state)),
+                                                    ->formatStateUsing(fn ($state) => self::formatEmailAddress($state)),
                                                 TextEntry::make('reply_to')
                                                     ->default('-')
                                                     ->label(__('Reply To'))
-                                                    ->formatStateUsing(fn($state) => self::formatEmailAddress($state)),
+                                                    ->formatStateUsing(fn ($state) => self::formatEmailAddress($state)),
                                             ]),
                                     ]),
                                 Tab::make(__('Statistics'))
@@ -150,11 +150,11 @@ class MailResource extends Resource
                                                 TextEntry::make('type')
                                                     ->label(__('Type'))
                                                     ->badge()
-                                                    ->url(fn(MailEvent $record) => route('filament.' . filament()->getCurrentPanel()?->getId() . '.resources.mails.events.view', [
+                                                    ->url(fn (MailEvent $record) => route('filament.' . filament()->getCurrentPanel()?->getId() . '.resources.mails.events.view', [
                                                         'record' => $record,
                                                         'tenant' => filament()->getTenant()?->id,
                                                     ]))
-                                                    ->color(fn(EventType $state): string => match ($state) {
+                                                    ->color(fn (EventType $state): string => match ($state) {
                                                         EventType::DELIVERED => 'success',
                                                         EventType::CLICKED => 'clicked',
                                                         EventType::OPENED => 'success',
@@ -168,7 +168,7 @@ class MailResource extends Resource
                                                         return ucfirst($state->value);
                                                     }),
                                                 TextEntry::make('occurred_at')
-                                                    ->url(fn(MailEvent $record) => route('filament.' . filament()->getCurrentPanel()?->getId() . '.resources.mails.events.view', [
+                                                    ->url(fn (MailEvent $record) => route('filament.' . filament()->getCurrentPanel()?->getId() . '.resources.mails.events.view', [
                                                         'record' => $record,
                                                         'tenant' => filament()->getTenant()?->id,
                                                     ]))
@@ -198,7 +198,7 @@ class MailResource extends Resource
                                             ->hiddenLabel()
                                             ->label(__('HTML Content'))
                                             ->extraAttributes(['class' => 'overflow-x-auto'])
-                                            ->formatStateUsing(fn(string $state, Mail $record): View => view(
+                                            ->formatStateUsing(fn (string $state, Mail $record): View => view(
                                                 'filament-mails::mails.preview',
                                                 ['html' => $state, 'mail' => $record],
                                             )),
@@ -208,7 +208,7 @@ class MailResource extends Resource
                                         TextEntry::make('html')
                                             ->hiddenLabel()
                                             ->extraAttributes(['class' => 'overflow-x-auto'])
-                                            ->formatStateUsing(fn(string $state, Mail $record): View => view(
+                                            ->formatStateUsing(fn (string $state, Mail $record): View => view(
                                                 'filament-mails::mails.html',
                                                 ['html' => $state, 'mail' => $record],
                                             ))
@@ -250,7 +250,7 @@ class MailResource extends Resource
                                             ->label(__('Mime Type')),
                                         ViewEntry::make('uuid')
                                             ->label(__('Download'))
-                                            ->getStateUsing(fn($record) => $record)
+                                            ->getStateUsing(fn ($record) => $record)
                                             ->view('filament-mails::mails.download'),
                                     ]),
                             ]),
@@ -269,7 +269,7 @@ class MailResource extends Resource
                     ->label(__('Status'))
                     ->sortable()
                     ->badge()
-                    ->color(fn(string $state): string => match ($state) {
+                    ->color(fn (string $state): string => match ($state) {
                         __('Soft Bounced') => 'warning',
                         __('Hard Bounced') => 'danger',
                         __('Complained') => 'danger',
@@ -289,27 +289,27 @@ class MailResource extends Resource
                 Tables\Columns\IconColumn::make('attachments')
                     ->label('')
                     ->alignLeft()
-                    ->getStateUsing(fn(Mail $record) => $record->attachments->count() > 0)
-                    ->icon(fn(string $state): string => $state ? 'heroicon-o-paper-clip' : ''),
+                    ->getStateUsing(fn (Mail $record) => $record->attachments->count() > 0)
+                    ->icon(fn (string $state): string => $state ? 'heroicon-o-paper-clip' : ''),
                 Tables\Columns\TextColumn::make('to')
                     ->label(__('Recipient'))
                     ->limit(50)
-                    ->formatStateUsing(fn($state) => self::formatEmailAddressForTable($state))
+                    ->formatStateUsing(fn ($state) => self::formatEmailAddressForTable($state))
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('opens')
                     ->label(__('Opens'))
-                    ->tooltip(fn(Mail $record) => __('Last opened at :date', ['date' => $record->last_opened_at?->format('d-m-Y H:i')]))
+                    ->tooltip(fn (Mail $record) => __('Last opened at :date', ['date' => $record->last_opened_at?->format('d-m-Y H:i')]))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('clicks')
                     ->label(__('Clicks'))
-                    ->tooltip(fn(Mail $record) => __('Last clicked at :date', ['date' => $record->last_clicked_at?->format('d-m-Y H:i')]))
+                    ->tooltip(fn (Mail $record) => __('Last clicked at :date', ['date' => $record->last_clicked_at?->format('d-m-Y H:i')]))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('sent_at')
                     ->label(__('Sent At'))
                     ->dateTime('d-m-Y H:i')
                     ->since()
-                    ->tooltip(fn(Mail $record) => $record->sent_at?->format('d-m-Y H:i'))
+                    ->tooltip(fn (Mail $record) => $record->sent_at?->format('d-m-Y H:i'))
                     ->sortable()
                     ->searchable(),
             ])
