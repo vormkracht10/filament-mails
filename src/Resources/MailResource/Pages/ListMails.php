@@ -70,7 +70,7 @@ class ListMails extends ListRecords
                         $query->hardBounced();
                     });
                 })),
-                
+
             'unsent' => Tab::make()
                 ->label(__('Unsent'))
                 ->badgeColor('gray')
