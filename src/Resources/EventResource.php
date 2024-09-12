@@ -78,7 +78,7 @@ class EventResource extends Resource
                                     ->color(fn (EventType $state): string => match ($state) {
                                         EventType::DELIVERED => 'success',
                                         EventType::CLICKED => 'clicked',
-                                        EventType::OPENED => 'success',
+                                        EventType::OPENED => 'info',
                                         EventType::SOFT_BOUNCED => 'danger',
                                         EventType::HARD_BOUNCED => 'danger',
                                         EventType::COMPLAINED => 'danger',
@@ -203,7 +203,7 @@ class EventResource extends Resource
                     ->color(fn (EventType $state): string => match ($state) {
                         EventType::DELIVERED => 'success',
                         EventType::CLICKED => 'clicked',
-                        EventType::OPENED => 'success',
+                        EventType::OPENED => 'info',
                         EventType::SOFT_BOUNCED => 'danger',
                         EventType::HARD_BOUNCED => 'danger',
                         EventType::COMPLAINED => 'danger',

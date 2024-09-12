@@ -157,7 +157,7 @@ class MailResource extends Resource
                                                     ->color(fn (EventType $state): string => match ($state) {
                                                         EventType::DELIVERED => 'success',
                                                         EventType::CLICKED => 'clicked',
-                                                        EventType::OPENED => 'success',
+                                                        EventType::OPENED => 'info',
                                                         EventType::SOFT_BOUNCED => 'danger',
                                                         EventType::HARD_BOUNCED => 'danger',
                                                         EventType::COMPLAINED => 'danger',
@@ -274,7 +274,7 @@ class MailResource extends Resource
                         __('Hard Bounced') => 'danger',
                         __('Complained') => 'danger',
                         __('Clicked') => 'clicked',
-                        __('Opened') => 'success',
+                        __('Opened') => 'info',
                         __('Delivered') => 'success',
                         __('Sent') => 'info',
                         __('Resent') => 'info',

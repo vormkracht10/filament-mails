@@ -31,7 +31,7 @@ class MailStatsWidget extends BaseWidget
         $widgets[] = Stat::make(__('Opened'), number_format(($openedMails / $mailCount) * 100, 1) . '%')
             ->label(__('Opened'))
             ->description($openedMails . ' ' . __('of') . ' ' . $mailCount . ' ' . __('emails'))
-            ->color('success')
+            ->color('info')
             ->url(route('filament.' . filament()->getCurrentPanel()?->getId() . '.resources.mails.index', [
                 'activeTab' => 'opened',
                 'tenant' => filament()->getTenant()?->id,
