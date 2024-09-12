@@ -40,6 +40,11 @@ class ListMails extends ListRecords
                 ->icon('heroicon-o-check-circle')
                 ->badge(Mail::delivered()->count())
                 ->modifyQueryUsing(fn (Builder $query) => $query->delivered()),
+            'opened' => Tab::make()
+                ->label(__('Opened'))
+                ->icon('heroicon-o-eye')
+                ->badge(Mail::opened()->count())
+                ->modifyQueryUsing(fn (Builder $query) => $query->opened()),
             'clicked' => Tab::make()
                 ->label(__('Clicked'))
                 ->icon('heroicon-o-cursor-arrow-rays')
