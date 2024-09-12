@@ -2,28 +2,28 @@
 
 namespace Vormkracht10\FilamentMails\Resources;
 
-use Filament\Tables;
-use Illuminate\View\View;
-use Filament\Tables\Table;
-use Filament\Infolists\Infolist;
-use Filament\Resources\Resource;
-use Illuminate\Support\Collection;
-use Filament\Tables\Actions\Action;
 use Filament\Infolists\Components\Grid;
 use Filament\Infolists\Components\Tabs;
 use Filament\Forms\Components\TextInput;
-use Filament\Notifications\Notification;
-use Vormkracht10\Mails\Models\MailEvent;
 use Filament\Infolists\Components\Section;
-use Vormkracht10\Mails\Actions\ResendMail;
 use Filament\Infolists\Components\Tabs\Tab;
-use Vormkracht10\FilamentMails\Models\Mail;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ViewEntry;
-use Vormkracht10\Mails\Enums\WebhookEventType;
 use Filament\Infolists\Components\RepeatableEntry;
-use Vormkracht10\FilamentMails\Resources\MailResource\Pages\ViewMail;
+use Filament\Infolists\Infolist;
+use Filament\Notifications\Notification;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Table;
+use Illuminate\Support\Collection;
+use Illuminate\View\View;
+use Vormkracht10\FilamentMails\Models\Mail;
 use Vormkracht10\FilamentMails\Resources\MailResource\Pages\ListMails;
+use Vormkracht10\FilamentMails\Resources\MailResource\Pages\ViewMail;
+use Vormkracht10\Mails\Actions\ResendMail;
+use Vormkracht10\Mails\Enums\EventType;
+use Vormkracht10\Mails\Models\MailEvent;
 
 class MailResource extends Resource
 {
@@ -154,14 +154,17 @@ class MailResource extends Resource
                                                         'record' => $record,
                                                         'tenant' => filament()->getTenant()?->id,
                                                     ]))
-                                                    ->color(fn(WebhookEventType $state): string => match ($state) {
-                                                        WebhookEventType::DELIVERY => 'success',
-                                                        WebhookEventType::CLICK => 'clicked',
-                                                        WebhookEventType::OPEN => 'success',
-                                                        WebhookEventType::BOUNCE => 'danger',
-                                                        WebhookEventType::COMPLAINT => 'danger',
+                                                    ->color(fn(EventType $state): string => match ($state) {
+                                                        EventType::DELIVERED => 'success',
+                                                        EventType::CLICKED => 'clicked',
+                                                        EventType::OPENED => 'success',
+                                                        EventType::SOFT_BOUNCED => 'danger',
+                                                        EventType::HARD_BOUNCED => 'danger',
+                                                        EventType::COMPLAINED => 'danger',
+                                                        EventType::UNSUBSCRIBED => 'danger',
+                                                        EventType::ACCEPTED => 'success',
                                                     })
-                                                    ->formatStateUsing(function (WebhookEventType $state) {
+                                                    ->formatStateUsing(function (EventType $state) {
                                                         return ucfirst($state->value);
                                                     }),
                                                 TextEntry::make('occurred_at')
@@ -268,13 +271,14 @@ class MailResource extends Resource
                     ->badge()
                     ->color(fn(string $state): string => match ($state) {
                         __('Soft Bounced') => 'warning',
+                        __('Hard Bounced') => 'danger',
                         __('Complained') => 'danger',
                         __('Clicked') => 'clicked',
                         __('Opened') => 'success',
                         __('Delivered') => 'success',
                         __('Sent') => 'info',
                         __('Resent') => 'info',
-                        __('Pending') => 'gray',
+                        __('Unsent') => 'gray',
                         default => 'gray',
                     }),
                 Tables\Columns\TextColumn::make('subject')
