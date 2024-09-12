@@ -2,10 +2,10 @@
 
 namespace Vormkracht10\FilamentMails\Resources\MailResource\Pages;
 
+use Vormkracht10\Mails\Models\Mail;
 use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
-use Vormkracht10\FilamentMails\Models\Mail;
 use Vormkracht10\FilamentMails\Resources\MailResource;
 use Vormkracht10\FilamentMails\Widgets\MailStatsWidget;
 

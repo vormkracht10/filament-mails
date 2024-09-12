@@ -2,9 +2,9 @@
 
 namespace Vormkracht10\FilamentMails\Widgets;
 
-use Filament\Widgets\StatsOverviewWidget as BaseWidget;
+use Vormkracht10\Mails\Models\Mail;
 use Filament\Widgets\StatsOverviewWidget\Stat;
-use Vormkracht10\FilamentMails\Models\Mail;
+use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 
 class MailStatsWidget extends BaseWidget
 {

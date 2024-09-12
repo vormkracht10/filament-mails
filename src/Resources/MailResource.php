@@ -2,28 +2,28 @@
 
 namespace Vormkracht10\FilamentMails\Resources;
 
+use Filament\Tables;
+use Illuminate\View\View;
+use Filament\Tables\Table;
+use Filament\Infolists\Infolist;
+use Filament\Resources\Resource;
+use Illuminate\Support\Collection;
+use Filament\Tables\Actions\Action;
+use Vormkracht10\Mails\Models\Mail;
 use Filament\Infolists\Components\Grid;
 use Filament\Infolists\Components\Tabs;
+use Vormkracht10\Mails\Enums\EventType;
 use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
+use Vormkracht10\Mails\Models\MailEvent;
 use Filament\Infolists\Components\Section;
+use Vormkracht10\Mails\Actions\ResendMail;
 use Filament\Infolists\Components\Tabs\Tab;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ViewEntry;
 use Filament\Infolists\Components\RepeatableEntry;
-use Filament\Infolists\Infolist;
-use Filament\Notifications\Notification;
-use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Actions\Action;
-use Filament\Tables\Table;
-use Illuminate\Support\Collection;
-use Illuminate\View\View;
-use Vormkracht10\FilamentMails\Models\Mail;
-use Vormkracht10\FilamentMails\Resources\MailResource\Pages\ListMails;
 use Vormkracht10\FilamentMails\Resources\MailResource\Pages\ViewMail;
-use Vormkracht10\Mails\Actions\ResendMail;
-use Vormkracht10\Mails\Enums\EventType;
-use Vormkracht10\Mails\Models\MailEvent;
+use Vormkracht10\FilamentMails\Resources\MailResource\Pages\ListMails;
 
 class MailResource extends Resource
 {
@@ -82,22 +82,22 @@ class MailResource extends Resource
                                                     ->label(__('Subject')),
                                                 TextEntry::make('from')
                                                     ->label(__('From'))
-                                                    ->formatStateUsing(fn($state) => self::formatEmailAddress($state)),
+                                                    ->getStateUsing(fn (Mail $record) => self::formatMailState($record->from)),
                                                 TextEntry::make('to')
                                                     ->label(__('Recipient'))
-                                                    ->formatStateUsing(fn($state) => self::formatEmailAddress($state)),
+                                                    ->getStateUsing(fn (Mail $record) => self::formatMailState($record->to)),
                                                 TextEntry::make('cc')
                                                     ->label(__('CC'))
                                                     ->default('-')
-                                                    ->formatStateUsing(fn($state) => self::formatEmailAddress($state)),
+                                                    ->getStateUsing(fn (Mail $record) => self::formatMailState($record->cc ?? [])),
                                                 TextEntry::make('bcc')
                                                     ->label(__('BCC'))
                                                     ->default('-')
-                                                    ->formatStateUsing(fn($state) => self::formatEmailAddress($state)),
+                                                    ->getStateUsing(fn (Mail $record) => self::formatMailState($record->bcc ?? [])),
                                                 TextEntry::make('reply_to')
                                                     ->default('-')
                                                     ->label(__('Reply To'))
-                                                    ->formatStateUsing(fn($state) => self::formatEmailAddress($state)),
+                                                    ->getStateUsing(fn (Mail $record) => self::formatMailState($record->reply_to ?? [])),
                                             ]),
                                     ]),
                                 Tab::make(__('Statistics'))
@@ -294,7 +294,7 @@ class MailResource extends Resource
                 Tables\Columns\TextColumn::make('to')
                     ->label(__('Recipient'))
                     ->limit(50)
-                    ->formatStateUsing(fn($state) => self::formatEmailAddressForTable($state))
+                    ->getStateUsing(fn(Mail $record) => self::formatMailState($record->to))
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('opens')
@@ -399,35 +399,11 @@ class MailResource extends Resource
         ];
     }
 
-    private static function formatEmailAddress($state): string
+    private static function formatMailState(array $emails): string
     {
-        if (empty($state)) {
-            return '-';
-        }
-
-        $data = json_decode($state, true);
-
-        if (! is_array($data)) {
-            return (string) $state; // Return the original state if it's not valid JSON
-        }
-
-        return implode(', ', array_map(function ($email, $name) {
-            return $name === null ? $email : "$name <$email>";
-        }, array_keys($data), $data));
-    }
-
-    private static function formatEmailAddressForTable($state): string
-    {
-        if (empty($state)) {
-            return '-';
-        }
-
-        $data = json_decode($state, true);
-
-        if (! is_array($data)) {
-            return (string) $state;
-        }
-
-        return implode(', ', array_keys($data));
+        return collect($emails)
+            ->mapWithKeys(fn($value, $key) => [$key => $value ?? $key])
+            ->map(fn($value, $key) => $value === null ? $key : "$value <$key>")
+            ->implode(', ');
     }
 }
