@@ -195,6 +195,7 @@ class EventResource extends Resource
             ->recordAction('view')
             ->recordUrl(null)
             ->defaultSort('created_at', 'desc')
+            ->paginated([50, 100, 'all'])
             ->columns([
                 Tables\Columns\TextColumn::make('type')
                     ->label(__('Type'))
