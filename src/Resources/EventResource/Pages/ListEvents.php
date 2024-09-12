@@ -28,41 +28,44 @@ class ListEvents extends ListRecords
         return [
             'all' => Tab::make()
                 ->label(__('All'))
+                ->badgeColor('primary')
                 ->icon('heroicon-o-inbox')
                 ->badge(MailEvent::count()),
 
             'delivery' => Tab::make()
                 ->label(__('Delivery'))
+                ->badgeColor('success')
                 ->icon('heroicon-o-check-circle')
                 ->badge(MailEvent::where('type', EventType::DELIVERED)->count())
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('type', EventType::DELIVERED)),
 
             'click' => Tab::make()
                 ->label(__('Click'))
+                ->badgeColor('clicked')
                 ->icon('heroicon-o-cursor-arrow-rays')
                 ->badge(MailEvent::where('type', EventType::CLICKED)->count())
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('type', EventType::CLICKED)),
 
             'open' => Tab::make()
                 ->label(__('Open'))
+                ->badgeColor('info')
                 ->icon('heroicon-o-envelope-open')
                 ->badge(MailEvent::where('type', EventType::OPENED)->count())
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('type', EventType::OPENED)),
 
-            'soft_bounce' => Tab::make()
-                ->label(__('Soft Bounce'))
+            'bounced' => Tab::make()
+                ->label(__('Bounced'))
+                ->badgeColor('danger')
                 ->icon('heroicon-o-x-circle')
-                ->badge(MailEvent::where('type', EventType::SOFT_BOUNCED)->count())
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', EventType::SOFT_BOUNCED)),
-
-            'hard_bounce' => Tab::make()
-                ->label(__('Hard Bounce'))
-                ->icon('heroicon-o-x-circle')
-                ->badge(MailEvent::where('type', EventType::HARD_BOUNCED)->count())
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', EventType::HARD_BOUNCED)),
+                ->badge(fn () => MailEvent::where('type', EventType::SOFT_BOUNCED)->count() + MailEvent::where('type', EventType::HARD_BOUNCED)->count())
+                ->modifyQueryUsing(fn (Builder $query) => $query->where(function ($query) {
+                    $query->where('type', EventType::SOFT_BOUNCED)
+                        ->orWhere('type', EventType::HARD_BOUNCED);
+                })),
 
             'complaint' => Tab::make()
                 ->label(__('Complaint'))
+                ->badgeColor('danger')
                 ->icon('heroicon-o-exclamation-circle')
                 ->badge(MailEvent::where('type', EventType::COMPLAINED)->count())
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('type', EventType::COMPLAINED)),

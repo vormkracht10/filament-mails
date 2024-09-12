@@ -28,30 +28,41 @@ class ListMails extends ListRecords
         return [
             'all' => Tab::make()
                 ->label(__('All'))
+                ->badgeColor('primary')
                 ->icon('heroicon-o-inbox')
                 ->badge(Mail::count()),
+
             'sent' => Tab::make()
                 ->label(__('Sent'))
+                ->badgeColor('info')
                 ->icon('heroicon-o-paper-airplane')
                 ->badge(Mail::sent()->count())
                 ->modifyQueryUsing(fn (Builder $query) => $query->sent()),
+
             'delivered' => Tab::make()
                 ->label(__('Delivered'))
+                ->badgeColor('success')
                 ->icon('heroicon-o-check-circle')
                 ->badge(Mail::delivered()->count())
                 ->modifyQueryUsing(fn (Builder $query) => $query->delivered()),
+
             'opened' => Tab::make()
                 ->label(__('Opened'))
+                ->badgeColor('info')
                 ->icon('heroicon-o-eye')
                 ->badge(Mail::opened()->count())
                 ->modifyQueryUsing(fn (Builder $query) => $query->opened()),
+
             'clicked' => Tab::make()
                 ->label(__('Clicked'))
+                ->badgeColor('clicked')
                 ->icon('heroicon-o-cursor-arrow-rays')
                 ->badge(Mail::clicked()->count())
                 ->modifyQueryUsing(fn (Builder $query) => $query->clicked()),
+
             'bounced' => Tab::make()
                 ->label(__('Bounced'))
+                ->badgeColor('danger')
                 ->icon('heroicon-o-x-circle')
                 ->badge(fn () => Mail::softBounced()->count() + Mail::hardBounced()->count())
                 ->modifyQueryUsing(fn (Builder $query) => $query->where(function ($query) {
@@ -59,8 +70,10 @@ class ListMails extends ListRecords
                         $query->hardBounced();
                     });
                 })),
+                
             'unsent' => Tab::make()
                 ->label(__('Unsent'))
+                ->badgeColor('gray')
                 ->icon('heroicon-o-x-circle')
                 ->badge(Mail::unsent()->count())
                 ->modifyQueryUsing(fn (Builder $query) => $query->unsent()),
