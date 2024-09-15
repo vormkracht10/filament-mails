@@ -19,7 +19,10 @@ class FilamentMailsPlugin implements Plugin
             ->colors([
                 'clicked' => Color::Purple,
             ])
-            ->discoverResources(in: __DIR__ . '/Resources', for: 'Vormkracht10\\FilamentMails\\Resources');
+            ->resources([
+                config('filament-mails.resources.mail'),
+                config('filament-mails.resources.event'),
+            ]);
     }
 
     public function boot(Panel $panel): void

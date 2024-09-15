@@ -42,6 +42,7 @@ You can publish the config file with:
 
 ```bash
 php artisan vendor:publish --tag="mails-config"
+php artisan vendor:publish --tag="filament-mails-config"
 ```
 
 Optionally, you can publish the views using
@@ -60,6 +61,19 @@ public function panel(Panel $panel): Panel
     return $panel
         ->plugin(FilamentMailsPlugin::make());
 }
+```
+
+### Configuration
+
+Sometimes you want to customize the resource, like configuring which users or roles may access the resource. You can do this by overriding the `MailResource` or `EventResource` classes in the `filament-mails` config file. Make sure your custom resource extends the original resource.
+
+```php
+return [
+    'resources' => [
+        'mail' => \App\Filament\Resources\MailResource::class,
+        'event' => \App\Filament\Resources\EventResource::class,
+    ],
+];
 ```
 
 ## Features and screenshots
