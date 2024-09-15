@@ -2,8 +2,8 @@
 
 namespace Vormkracht10\FilamentMails;
 
-use Filament\Contracts\Plugin;
 use Filament\Panel;
+use Filament\Contracts\Plugin;
 use Filament\Support\Colors\Color;
 
 class FilamentMailsPlugin implements Plugin
@@ -19,8 +19,7 @@ class FilamentMailsPlugin implements Plugin
             ->colors([
                 'clicked' => Color::Purple,
             ])
-            ->discoverResources(in: __DIR__ . '/Resources', for: 'Vormkracht10\\FilamentMails\\Resources')
-            ->discoverWidgets(in: __DIR__ . '/Widgets', for: 'Vormkracht10\\FilamentMails\\Widgets');
+            ->discoverResources(in: __DIR__ . '/Resources', for: 'Vormkracht10\\FilamentMails\\Resources');
     }
 
     public function boot(Panel $panel): void

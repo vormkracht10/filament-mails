@@ -1,6 +1,6 @@
 <?php
 
-namespace Vormkracht10\FilamentMails\Widgets;
+namespace Vormkracht10\FilamentMails\Resources\MailResource\Widgets;
 
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
@@ -10,9 +10,11 @@ class MailStatsWidget extends BaseWidget
 {
     protected static ?int $sort = 0;
 
+    protected static bool $isDiscovered = false;
+
     protected function getStats(): array
     {
-        $bouncedMails = Mail::where(fn ($query) => $query->softBounced()->orWhere(fn ($query) => $query->hardBounced()))->count();
+        $bouncedMails = Mail::where(fn($query) => $query->softBounced()->orWhere(fn($query) => $query->hardBounced()))->count();
         $openedMails = Mail::opened()->count();
         $deliveredMails = Mail::delivered()->count();
         $clickedMails = Mail::clicked()->count();

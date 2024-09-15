@@ -2,12 +2,12 @@
 
 namespace Vormkracht10\FilamentMails\Resources\MailResource\Pages;
 
+use Vormkracht10\Mails\Models\Mail;
 use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 use Vormkracht10\FilamentMails\Resources\MailResource;
-use Vormkracht10\FilamentMails\Widgets\MailStatsWidget;
-use Vormkracht10\Mails\Models\Mail;
+use Vormkracht10\FilamentMails\Resources\MailResource\Widgets\MailStatsWidget;
 
 class ListMails extends ListRecords
 {
@@ -37,35 +37,35 @@ class ListMails extends ListRecords
                 ->badgeColor('info')
                 ->icon('heroicon-o-paper-airplane')
                 ->badge(Mail::sent()->count())
-                ->modifyQueryUsing(fn (Builder $query) => $query->sent()),
+                ->modifyQueryUsing(fn(Builder $query) => $query->sent()),
 
             'delivered' => Tab::make()
                 ->label(__('Delivered'))
                 ->badgeColor('success')
                 ->icon('heroicon-o-check-circle')
                 ->badge(Mail::delivered()->count())
-                ->modifyQueryUsing(fn (Builder $query) => $query->delivered()),
+                ->modifyQueryUsing(fn(Builder $query) => $query->delivered()),
 
             'opened' => Tab::make()
                 ->label(__('Opened'))
                 ->badgeColor('info')
                 ->icon('heroicon-o-eye')
                 ->badge(Mail::opened()->count())
-                ->modifyQueryUsing(fn (Builder $query) => $query->opened()),
+                ->modifyQueryUsing(fn(Builder $query) => $query->opened()),
 
             'clicked' => Tab::make()
                 ->label(__('Clicked'))
                 ->badgeColor('clicked')
                 ->icon('heroicon-o-cursor-arrow-rays')
                 ->badge(Mail::clicked()->count())
-                ->modifyQueryUsing(fn (Builder $query) => $query->clicked()),
+                ->modifyQueryUsing(fn(Builder $query) => $query->clicked()),
 
             'bounced' => Tab::make()
                 ->label(__('Bounced'))
                 ->badgeColor('danger')
                 ->icon('heroicon-o-x-circle')
-                ->badge(fn () => Mail::softBounced()->count() + Mail::hardBounced()->count())
-                ->modifyQueryUsing(fn (Builder $query) => $query->where(function ($query) {
+                ->badge(fn() => Mail::softBounced()->count() + Mail::hardBounced()->count())
+                ->modifyQueryUsing(fn(Builder $query) => $query->where(function ($query) {
                     $query->softBounced()->orWhere(function ($query) {
                         $query->hardBounced();
                     });
@@ -76,7 +76,7 @@ class ListMails extends ListRecords
                 ->badgeColor('gray')
                 ->icon('heroicon-o-x-circle')
                 ->badge(Mail::unsent()->count())
-                ->modifyQueryUsing(fn (Builder $query) => $query->unsent()),
+                ->modifyQueryUsing(fn(Builder $query) => $query->unsent()),
         ];
     }
 
