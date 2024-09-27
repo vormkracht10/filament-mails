@@ -237,9 +237,15 @@ class MailResource extends Resource
                     ->compact()
                     ->collapsible()
                     ->schema([
+                        TextEntry::make('attachments')
+                            ->hiddenLabel()
+                            ->label(__('Attachments'))
+                            ->visible(fn(Mail $record) => $record->attachments->count() == 0)
+                            ->default(__('Email has no attachments')),
                         RepeatableEntry::make('attachments')
                             ->hiddenLabel()
                             ->label(__('Attachments'))
+                            ->visible(fn(Mail $record) => $record->attachments->count() > 0)
                             ->schema([
                                 Grid::make(3)
                                     ->schema([
