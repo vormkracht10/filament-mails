@@ -370,16 +370,22 @@ class MailResource extends Resource
                     ->fillForm(function (Mail $record) {
                         return [
                             'to' => implode(', ', array_keys($record->to)),
-                            'cc' => implode(', ', array_keys($record->cc ?? [])),
-                            'bcc' => implode(', ', array_keys($record->bcc ?? [])),
+                            'cc' => is_array($record->cc) ? implode(', ', array_keys($record->cc)) : null,
+                            'bcc' => is_array($record->bcc) ? implode(', ', array_keys($record->bcc)) : null,
                         ];
                     })
                     ->action(function (Mail $record, array $data) {
                         $to = explode(',', $data['to']);
-                        $cc = explode(',', $data['cc']);
-                        $bcc = explode(',', $data['bcc']);
 
-                        (new ResendMail)->handle($record, $to, $cc, $bcc);
+                        if ($data['cc']) {
+                            $data['cc'] = explode(',', $data['cc']);
+                        }
+
+                        if ($data['bcc']) {
+                            $data['bcc'] = explode(',', $data['bcc']);
+                        }
+
+                        (new ResendMail)->handle($record, $to, $data['cc'] ?? [], $data['bcc'] ?? []);
 
                         Notification::make()
                             ->title(__('Mail will be resent in the background'))
