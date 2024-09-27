@@ -181,7 +181,7 @@ class MailResource extends Resource
                                                         EventType::OPENED => 'info',
                                                         EventType::SOFT_BOUNCED => 'danger',
                                                         EventType::HARD_BOUNCED => 'danger',
-                                                        EventType::COMPLAINED => 'danger',
+                                                        EventType::COMPLAINED => 'warning',
                                                         EventType::UNSUBSCRIBED => 'danger',
                                                         EventType::ACCEPTED => 'success',
                                                     })
