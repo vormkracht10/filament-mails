@@ -7,5 +7,5 @@ return [
     'resources' => [
         'mail' => MailResource::class,
         'event' => EventResource::class,
-    ]
+    ],
 ];
