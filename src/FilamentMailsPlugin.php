@@ -2,9 +2,10 @@
 
 namespace Vormkracht10\FilamentMails;
 
-use Filament\Contracts\Plugin;
 use Filament\Panel;
+use Filament\Contracts\Plugin;
 use Filament\Support\Colors\Color;
+use Leandrocfe\FilamentApexCharts\FilamentApexChartsPlugin;
 
 class FilamentMailsPlugin implements Plugin
 {
@@ -22,7 +23,8 @@ class FilamentMailsPlugin implements Plugin
             ->resources([
                 config('filament-mails.resources.mail'),
                 config('filament-mails.resources.event'),
-            ]);
+            ])
+            ->plugin(FilamentApexChartsPlugin::make());
     }
 
     public function boot(Panel $panel): void
