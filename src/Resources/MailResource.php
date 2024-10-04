@@ -440,7 +440,6 @@ class MailResource extends Resource
     {
         return [
             MailStatsWidget::class,
-            // MailsPerStatusWidget::class,
         ];
     }
 }
