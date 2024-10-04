@@ -10,10 +10,14 @@ Filament Mails can collect everything you might want to track about the mails th
 -   Log all sent emails with only specific attributes
 -   View all sent emails in the browser using the viewer
 -   Collect feedback about the delivery from email providers using webhooks
--   Relate sent emails to Eloquent models
 -   Get automatically notified when email bounces
 -   Prune logging of emails periodically
 -   Resend logged email to another recipient
+
+## Upcoming features
+
+-   We're currently in the process of writing mail events support for other popular email service providers like Mailgun, Resend, SendGrid, Amazon SES and Mailtrap.
+-   Relate emails being send in Laravel directly to Eloquent models, for example the order confirmation email attached to an Order model.
 
 ## Why this package
 
@@ -109,10 +113,6 @@ We also provide the raw HTML and plain text of the email.
 The package also logs all events that are fired when an email is sent. This is useful to track the email sending process.
 ![Filament Mails](https://raw.githubusercontent.com/vormkracht10/filament-mails/main/docs/events-list.png)
 ![Filament Mails](https://raw.githubusercontent.com/vormkracht10/filament-mails/main/docs/event-details.png)
-
-## Usage
-
-..
 
 ## Testing
 
