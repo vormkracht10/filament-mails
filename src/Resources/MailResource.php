@@ -86,7 +86,7 @@ class MailResource extends Resource
                                                     ->label(__('From'))
                                                     ->getStateUsing(fn(Mail $record) => self::formatMailState($record->from)),
                                                 TextEntry::make('to')
-                                                    ->label(__('Recipient'))
+                                                    ->label(__('Recipient(s)'))
                                                     ->getStateUsing(fn(Mail $record) => self::formatMailState($record->to)),
                                                 TextEntry::make('cc')
                                                     ->label(__('CC'))
@@ -320,7 +320,7 @@ class MailResource extends Resource
                     ->getStateUsing(fn(Mail $record) => $record->attachments->count() > 0)
                     ->icon(fn(string $state): string => $state ? 'heroicon-o-paper-clip' : ''),
                 Tables\Columns\TextColumn::make('to')
-                    ->label(__('Recipient'))
+                    ->label(__('Recipient(s)'))
                     ->limit(50)
                     ->getStateUsing(fn(Mail $record) => self::formatMailState(emails: $record->to, mailOnly: true))
                     ->sortable()
@@ -401,14 +401,14 @@ class MailResource extends Resource
     {
         return [
             TagsInput::make('to')
-                ->placeholder(__('Recipient'))
-                ->label(__('Recipient'))
+                ->placeholder(__('Recipient(s)'))
+                ->label(__('Recipient(s)'))
                 ->required(),
             TagsInput::make('cc')
-                ->placeholder(__('Recipient'))
+                ->placeholder(__('Recipient(s)'))
                 ->label(__('CC')),
             TagsInput::make('bcc')
-                ->placeholder(__('Recipient'))
+                ->placeholder(__('Recipient(s)'))
                 ->label(__('BCC')),
         ];
     }
