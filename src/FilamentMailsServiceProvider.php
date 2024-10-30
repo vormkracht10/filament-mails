@@ -104,8 +104,8 @@ class FilamentMailsServiceProvider extends PackageServiceProvider
     {
         return [
             // AlpineComponent::make('filament-mails', __DIR__ . '/../resources/dist/components/filament-mails.js'),
-            Css::make('filament-mails-styles', __DIR__ . '/../resources/dist/filament-mails.css'),
-            Js::make('filament-mails-scripts', __DIR__ . '/../resources/dist/filament-mails.js'),
+            // Css::make('filament-mails-styles', __DIR__ . '/../resources/dist/filament-mails.css'),
+            // Js::make('filament-mails-scripts', __DIR__ . '/../resources/dist/filament-mails.js'),
         ];
     }
 
