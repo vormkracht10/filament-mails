@@ -87,7 +87,7 @@ class MailResource extends Resource
                                                     ->getStateUsing(fn (Mail $record) => self::formatMailState($record->from)),
                                                 TextEntry::make('to')
                                                     ->label(__('Recipient(s)'))
-                                                    ->getStateUsing(fn(Mail $record) => self::formatMailState($record->to)),
+                                                    ->getStateUsing(fn (Mail $record) => self::formatMailState($record->to)),
                                                 TextEntry::make('cc')
                                                     ->label(__('CC'))
                                                     ->default('-')
