@@ -1,6 +1,6 @@
 {
     "name": "vormkracht10/filament-mails",
-    "description": "This is my package filament-mails",
+    "description": "View logged mails and events in a beautiful Filament UI.",
     "keywords": [
         "vormkracht10",
         "laravel",
