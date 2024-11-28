@@ -115,7 +115,6 @@ class FilamentMailsServiceProvider extends PackageServiceProvider
     protected function getCommands(): array
     {
         return [
-            FilamentMailsCommand::class,
         ];
     }
 
