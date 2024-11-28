@@ -13,7 +13,6 @@ use Livewire\Features\SupportTesting\Testable;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Vormkracht10\FilamentMails\Commands\FilamentMailsCommand;
 use Vormkracht10\FilamentMails\Testing\TestsFilamentMails;
 
 class FilamentMailsServiceProvider extends PackageServiceProvider
