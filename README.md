@@ -12,7 +12,7 @@ Filament Mails can collect everything you might want to track about the mails th
 -   Collect feedback about the delivery from email providers using webhooks
 -   Get automatically notified when email bounces
 -   Prune logging of emails periodically
--   Resend logged email to another recipient
+-   Resend logged email to same or another recipient
 
 ## Upcoming features
 
