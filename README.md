@@ -5,6 +5,12 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/vormkracht10/filament-mails/fix-php-code-styling.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/vormkracht10/filament-mails/actions?query=workflow%3A"Fix+PHP+code+styling"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/vormkracht10/filament-mails.svg?style=flat-square)](https://packagist.org/packages/vormkracht10/filament-mails)
 
+## Nice to meet you, we're [Vormkracht10](https://vormkracht10.nl)
+
+Hi! We are a web development agency from Nijmegen in the Netherlands and we use Laravel for everything: advanced websites with a lot of bells and whitles and large web applications.
+
+## About the package
+
 Filament Mails can collect everything you might want to track about the mails that has been sent by your Filament app. Common use cases are provided in this package:
 
 -   Log all sent emails with only specific attributes
