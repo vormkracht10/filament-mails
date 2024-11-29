@@ -67,6 +67,8 @@ public function panel(Panel $panel): Panel
 }
 ```
 
+For setting up the webhooks to register mail events, please look into the README of [Laravel Mails](https://github.com/vormkracht10/laravel-mails), the underlying package that powers this package.
+
 ### Configuration
 
 Sometimes you want to customize the resource, like configuring which users or roles may access the resource. You can do this by overriding the `MailResource` or `EventResource` classes in the `filament-mails` config file. Make sure your custom resource extends the original resource.
