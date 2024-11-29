@@ -67,7 +67,8 @@ public function panel(Panel $panel): Panel
 }
 ```
 
-For setting up the webhooks to register mail events, please look into the README of [Laravel Mails](https://github.com/vormkracht10/laravel-mails), the underlying package that powers this package.
+> [!IMPORTANT]
+> For setting up the webhooks to register mail events, please look into the README of [Laravel Mails](https://github.com/vormkracht10/laravel-mails), the underlying package that powers this package.
 
 ### Configuration
 
