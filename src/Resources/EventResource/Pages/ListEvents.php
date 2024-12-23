@@ -54,6 +54,12 @@ class ListEvents extends ListRecords
                 ->badge(MailEvent::where('type', EventType::OPENED)->count())
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('type', EventType::OPENED)),
 
+            'soft_bounce' => Tab::make()
+                ->label(__('Soft Bounce'))
+                ->icon('heroicon-o-x-circle')
+                ->badge(MailEvent::where('type', EventType::SOFT_BOUNCED)->count())
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', EventType::SOFT_BOUNCED)),
+
             'bounced' => Tab::make()
                 ->label(__('Bounced'))
                 ->badgeColor('danger')

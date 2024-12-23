@@ -346,6 +346,8 @@ class MailResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make()
+                    ->url(null)
+                    ->modal()
                     ->slideOver()
                     ->label(__('View'))
                     ->hiddenLabel()

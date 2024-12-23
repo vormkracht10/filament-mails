@@ -24,6 +24,11 @@ class EventResource extends Resource
 
     protected static bool $shouldRegisterNavigation = true;
 
+    public function getTitle(): string
+    {
+        return __('Events');
+    }
+
     public static function getNavigationParentItem(): ?string
     {
         return __('Mails');
@@ -41,7 +46,7 @@ class EventResource extends Resource
 
     public static function getLabel(): ?string
     {
-        return __('Events');
+        return __('Event');
     }
 
     public static function getPluralModelLabel(): string
@@ -52,11 +57,6 @@ class EventResource extends Resource
     public static function getNavigationIcon(): string
     {
         return 'heroicon-o-calendar';
-    }
-
-    public function getTitle(): string
-    {
-        return __('Events');
     }
 
     public static function infolist(Infolist $infolist): Infolist
@@ -214,10 +214,6 @@ class EventResource extends Resource
                     })
                     ->searchable(),
                 Tables\Columns\TextColumn::make('mail.subject')
-                    ->url(fn (MailEvent $record) => route('filament.' . filament()->getCurrentPanel()?->getId() . '.resources.mails.view', [
-                        'record' => $record->mail,
-                        'tenant' => filament()->getTenant()?->id,
-                    ]))
                     ->label(__('Subject'))
                     ->searchable(['subject', 'payload']),
                 Tables\Columns\TextColumn::make('occurred_at')
@@ -233,6 +229,8 @@ class EventResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make()
+                    ->url(null)
+                    ->modal()
                     ->slideOver()
                     ->label(__('View'))
                     ->hiddenLabel()
