@@ -14,12 +14,14 @@ class MailStatsWidget extends BaseWidget
 
     protected function getStats(): array
     {
-        $bouncedMails = Mail::where(fn ($query) => $query->softBounced()->orWhere(fn ($query) => $query->hardBounced()))->count();
-        $openedMails = Mail::opened()->count();
-        $deliveredMails = Mail::delivered()->count();
-        $clickedMails = Mail::clicked()->count();
+        $class = config('mails.models.mail');
+        
+        $bouncedMails = $class::where(fn ($query) => $query->softBounced()->orWhere(fn ($query) => $query->hardBounced()))->count();
+        $openedMails = $class::opened()->count();
+        $deliveredMails = $class::delivered()->count();
+        $clickedMails = $class::clicked()->count();
 
-        $mailCount = Mail::count();
+        $mailCount = $class::count();
 
         if ($mailCount === 0) {
             return [];
