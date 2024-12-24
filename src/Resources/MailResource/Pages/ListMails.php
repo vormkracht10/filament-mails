@@ -37,28 +37,48 @@ class ListMails extends ListRecords
                 ->badgeColor('info')
                 ->icon('heroicon-o-paper-airplane')
                 ->badge(Mail::sent()->count())
-                ->modifyQueryUsing(fn (Builder $query) => $query->sent()),
+                ->modifyQueryUsing(function (Builder $query): Builder {
+                    /** @var Mail $model */
+                    $model = $query->getModel();
+
+                    return $model->sent();
+                }),
 
             'delivered' => Tab::make()
                 ->label(__('Delivered'))
                 ->badgeColor('success')
                 ->icon('heroicon-o-check-circle')
                 ->badge(Mail::delivered()->count())
-                ->modifyQueryUsing(fn (Builder $query) => $query->delivered()),
+                ->modifyQueryUsing(function (Builder $query): Builder {
+                    /** @var Mail $model */
+                    $model = $query->getModel();
+
+                    return $model->delivered();
+                }),
 
             'opened' => Tab::make()
                 ->label(__('Opened'))
                 ->badgeColor('info')
                 ->icon('heroicon-o-eye')
                 ->badge(Mail::opened()->count())
-                ->modifyQueryUsing(fn (Builder $query) => $query->opened()),
+                ->modifyQueryUsing(function (Builder $query): Builder {
+                    /** @var Mail $model */
+                    $model = $query->getModel();
+
+                    return $model->opened();
+                }),
 
             'clicked' => Tab::make()
                 ->label(__('Clicked'))
                 ->badgeColor('clicked')
                 ->icon('heroicon-o-cursor-arrow-rays')
                 ->badge(Mail::clicked()->count())
-                ->modifyQueryUsing(fn (Builder $query) => $query->clicked()),
+                ->modifyQueryUsing(function (Builder $query): Builder {
+                    /** @var Mail $model */
+                    $model = $query->getModel();
+
+                    return $model->clicked();
+                }),
 
             'bounced' => Tab::make()
                 ->label(__('Bounced'))
@@ -66,8 +86,13 @@ class ListMails extends ListRecords
                 ->icon('heroicon-o-x-circle')
                 ->badge(fn () => Mail::softBounced()->count() + Mail::hardBounced()->count())
                 ->modifyQueryUsing(fn (Builder $query) => $query->where(function ($query) {
-                    $query->softBounced()->orWhere(function ($query) {
-                        $query->hardBounced();
+                    /** @var Mail $model */
+                    $model = $query->getModel();
+
+                    return $model->where(function (Builder $query): void {
+                        $query->softBounced()->orWhere(function (Builder $query): void {
+                            $query->hardBounced();
+                        });
                     });
                 })),
 
@@ -76,7 +101,12 @@ class ListMails extends ListRecords
                 ->badgeColor('gray')
                 ->icon('heroicon-o-x-circle')
                 ->badge(Mail::unsent()->count())
-                ->modifyQueryUsing(fn (Builder $query) => $query->unsent()),
+                ->modifyQueryUsing(function (Builder $query): Builder {
+                    /** @var Mail $model */
+                    $model = $query->getModel();
+
+                    return $model->unsent();
+                }),
         ];
     }
 
