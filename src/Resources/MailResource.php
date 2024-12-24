@@ -2,32 +2,31 @@
 
 namespace Vormkracht10\FilamentMails\Resources;
 
-use Filament\Tables;
-use Illuminate\View\View;
-use Filament\Tables\Table;
 use Filament\Facades\Filament;
-use Illuminate\Support\Carbon;
-use Filament\Infolists\Infolist;
-use Filament\Resources\Resource;
-use Illuminate\Support\Collection;
-use Filament\Tables\Actions\Action;
-use Vormkracht10\Mails\Models\Mail;
-use Filament\Infolists\Components\Grid;
-use Filament\Infolists\Components\Tabs;
-use Illuminate\Database\Eloquent\Model;
-use Vormkracht10\Mails\Enums\EventType;
 use Filament\Forms\Components\TagsInput;
-use Filament\Notifications\Notification;
-use Vormkracht10\Mails\Models\MailEvent;
+use Filament\Infolists\Components\Grid;
+use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\Section;
-use Vormkracht10\Mails\Actions\ResendMail;
+use Filament\Infolists\Components\Tabs;
 use Filament\Infolists\Components\Tabs\Tab;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ViewEntry;
-use Filament\Infolists\Components\RepeatableEntry;
-use Vormkracht10\FilamentMails\Resources\MailResource\Pages\ViewMail;
+use Filament\Infolists\Infolist;
+use Filament\Notifications\Notification;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Table;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
+use Illuminate\View\View;
 use Vormkracht10\FilamentMails\Resources\MailResource\Pages\ListMails;
+use Vormkracht10\FilamentMails\Resources\MailResource\Pages\ViewMail;
 use Vormkracht10\FilamentMails\Resources\MailResource\Widgets\MailStatsWidget;
+use Vormkracht10\Mails\Actions\ResendMail;
+use Vormkracht10\Mails\Enums\EventType;
+use Vormkracht10\Mails\Models\Mail;
+use Vormkracht10\Mails\Models\MailEvent;
 
 class MailResource extends Resource
 {
@@ -176,11 +175,11 @@ class MailResource extends Resource
                                                     ->url(function (Mail $record) {
                                                         $panel = Filament::getCurrentPanel();
                                                         $tenant = Filament::getTenant();
-                                    
-                                                        if (!$panel || !$tenant) {
+
+                                                        if (! $panel || ! $tenant) {
                                                             return null;
                                                         }
-                                    
+
                                                         return route('filament.' . $panel->getId() . '.resources.mails.events.view', [
                                                             'record' => $record,
                                                             'tenant' => $tenant->getKey(),
@@ -203,11 +202,11 @@ class MailResource extends Resource
                                                     ->url(function (MailEvent $record) {
                                                         $panel = Filament::getCurrentPanel();
                                                         $tenant = Filament::getTenant();
-                                    
-                                                        if (!$panel || !$tenant) {
+
+                                                        if (! $panel || ! $tenant) {
                                                             return null;
                                                         }
-                                    
+
                                                         return route('filament.' . $panel->getId() . '.resources.mails.events.view', [
                                                             'record' => $record,
                                                             'tenant' => $tenant->getKey(),

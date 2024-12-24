@@ -29,11 +29,11 @@ class MailStatsWidget extends BaseWidget
         $generateUrl = function (string $activeTab): ?string {
             $panel = Filament::getCurrentPanel();
             $tenant = Filament::getTenant();
-            
-            if (!$panel || !$tenant) {
+
+            if (! $panel || ! $tenant) {
                 return null;
             }
-            
+
             return route('filament.' . $panel->getId() . '.resources.mails.index', [
                 'activeTab' => $activeTab,
                 'tenant' => $tenant->getKey(),
