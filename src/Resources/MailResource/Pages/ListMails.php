@@ -40,6 +40,7 @@ class ListMails extends ListRecords
                 ->modifyQueryUsing(function (Builder $query): Builder {
                     /** @var Mail $model */
                     $model = $query->getModel();
+
                     return $model->sent();
                 }),
 
@@ -51,6 +52,7 @@ class ListMails extends ListRecords
                 ->modifyQueryUsing(function (Builder $query): Builder {
                     /** @var Mail $model */
                     $model = $query->getModel();
+
                     return $model->delivered();
                 }),
 
@@ -62,6 +64,7 @@ class ListMails extends ListRecords
                 ->modifyQueryUsing(function (Builder $query): Builder {
                     /** @var Mail $model */
                     $model = $query->getModel();
+
                     return $model->opened();
                 }),
 
@@ -73,6 +76,7 @@ class ListMails extends ListRecords
                 ->modifyQueryUsing(function (Builder $query): Builder {
                     /** @var Mail $model */
                     $model = $query->getModel();
+
                     return $model->clicked();
                 }),
 
@@ -80,10 +84,11 @@ class ListMails extends ListRecords
                 ->label(__('Bounced'))
                 ->badgeColor('danger')
                 ->icon('heroicon-o-x-circle')
-                ->badge(fn() => Mail::softBounced()->count() + Mail::hardBounced()->count())
-                ->modifyQueryUsing(fn(Builder $query) => $query->where(function ($query) {
+                ->badge(fn () => Mail::softBounced()->count() + Mail::hardBounced()->count())
+                ->modifyQueryUsing(fn (Builder $query) => $query->where(function ($query) {
                     /** @var Mail $model */
                     $model = $query->getModel();
+
                     return $model->where(function (Builder $query): void {
                         $query->softBounced()->orWhere(function (Builder $query): void {
                             $query->hardBounced();
@@ -99,6 +104,7 @@ class ListMails extends ListRecords
                 ->modifyQueryUsing(function (Builder $query): Builder {
                     /** @var Mail $model */
                     $model = $query->getModel();
+
                     return $model->unsent();
                 }),
         ];
