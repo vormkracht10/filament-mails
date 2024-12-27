@@ -7,6 +7,7 @@ use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 use Vormkracht10\FilamentMails\Resources\MailResource;
 use Vormkracht10\FilamentMails\Resources\MailResource\Widgets\MailStatsWidget;
+use Vormkracht10\Mails\Models\Mail;
 
 class ListMails extends ListRecords
 {
@@ -24,7 +25,10 @@ class ListMails extends ListRecords
 
     public function getTabs(): array
     {
+        /** @var Mail $class */
         $class = config('mails.models.mail');
+
+        $class = new $class;
 
         return [
             'all' => Tab::make()
@@ -38,46 +42,57 @@ class ListMails extends ListRecords
                 ->badgeColor('info')
                 ->icon('heroicon-o-paper-airplane')
                 ->badge($class::sent()->count())
-                ->modifyQueryUsing(fn (Builder $query) => $query->sent()),
+                ->modifyQueryUsing(function (Builder $query) use ($class): Builder {
+                    return $class->sent();
+                }),
 
             'delivered' => Tab::make()
                 ->label(__('Delivered'))
                 ->badgeColor('success')
                 ->icon('heroicon-o-check-circle')
                 ->badge($class::delivered()->count())
-                ->modifyQueryUsing(fn (Builder $query) => $query->delivered()),
+                ->modifyQueryUsing(function (Builder $query) use ($class): Builder {
+                    return $class->delivered();
+                }),
 
             'opened' => Tab::make()
                 ->label(__('Opened'))
                 ->badgeColor('info')
                 ->icon('heroicon-o-eye')
                 ->badge($class::opened()->count())
-                ->modifyQueryUsing(fn (Builder $query) => $query->opened()),
+                ->modifyQueryUsing(function (Builder $query) use ($class): Builder {
+                    return $class->opened();
+                }),
 
             'clicked' => Tab::make()
                 ->label(__('Clicked'))
                 ->badgeColor('clicked')
                 ->icon('heroicon-o-cursor-arrow-rays')
                 ->badge($class::clicked()->count())
-                ->modifyQueryUsing(fn (Builder $query) => $query->clicked()),
+                ->modifyQueryUsing(function (Builder $query) use ($class): Builder {
+                    return $class->clicked();
+                }),
 
             'bounced' => Tab::make()
                 ->label(__('Bounced'))
                 ->badgeColor('danger')
                 ->icon('heroicon-o-x-circle')
                 ->badge(fn () => $class::softBounced()->count() + $class::hardBounced()->count())
-                ->modifyQueryUsing(fn (Builder $query) => $query->where(function ($query) {
-                    $query->softBounced()->orWhere(function ($query) {
-                        $query->hardBounced();
+                ->modifyQueryUsing(function (Builder $query) use ($class): Builder {
+                    return $query->where(function (Builder $subQuery) use ($class) {
+                        return $subQuery->whereIn('id', $class::softBounced()->select('id'))
+                            ->orWhereIn('id', $class::hardBounced()->select('id'));
                     });
-                })),
+                }),
 
             'unsent' => Tab::make()
                 ->label(__('Unsent'))
                 ->badgeColor('gray')
                 ->icon('heroicon-o-x-circle')
                 ->badge($class::unsent()->count())
-                ->modifyQueryUsing(fn (Builder $query) => $query->unsent()),
+                ->modifyQueryUsing(function (Builder $query) use ($class): Builder {
+                    return $class->unsent();
+                }),
         ];
     }
 

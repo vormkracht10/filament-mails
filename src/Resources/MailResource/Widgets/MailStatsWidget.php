@@ -2,6 +2,7 @@
 
 namespace Vormkracht10\FilamentMails\Resources\MailResource\Widgets;
 
+use Filament\Facades\Filament;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 
@@ -26,6 +27,20 @@ class MailStatsWidget extends BaseWidget
             return [];
         }
 
+        $generateUrl = function (string $activeTab): ?string {
+            $panel = Filament::getCurrentPanel();
+            $tenant = Filament::getTenant();
+
+            if (! $panel || ! $tenant) {
+                return null;
+            }
+
+            return route('filament.' . $panel->getId() . '.resources.mails.index', [
+                'activeTab' => $activeTab,
+                'tenant' => $tenant->getKey(),
+            ]);
+        };
+
         $widgets[] = Stat::make(__('Delivered'), number_format(($deliveredMails / $mailCount) * 100, 1) . '%')
             ->label(__('Delivered'))
             ->description($deliveredMails . ' ' . __('of') . ' ' . $mailCount . ' ' . __('emails'))
@@ -35,10 +50,7 @@ class MailStatsWidget extends BaseWidget
             ->label(__('Opened'))
             ->description($openedMails . ' ' . __('of') . ' ' . $mailCount . ' ' . __('emails'))
             ->color('info')
-            ->url(route('filament.' . filament()->getCurrentPanel()?->getId() . '.resources.mails.index', [
-                'activeTab' => 'opened',
-                'tenant' => filament()->getTenant()?->id,
-            ]));
+            ->url($generateUrl('opened'));
 
         $widgets[] = Stat::make(__('Clicked'), number_format(($clickedMails / $mailCount) * 100, 1) . '%')
             ->label(__('Clicked'))
@@ -49,10 +61,7 @@ class MailStatsWidget extends BaseWidget
             ->label(__('Bounced'))
             ->description($bouncedMails . ' ' . __('of') . ' ' . $mailCount . ' ' . __('emails'))
             ->color('danger')
-            ->url(route('filament.' . filament()->getCurrentPanel()?->getId() . '.resources.mails.index', [
-                'activeTab' => 'bounced',
-                'tenant' => filament()->getTenant()?->id,
-            ]));
+            ->url($generateUrl('bounced'));
 
         return $widgets;
     }

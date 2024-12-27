@@ -2,6 +2,7 @@
 
 namespace Vormkracht10\FilamentMails\Resources;
 
+use Filament\Facades\Filament;
 use Filament\Forms\Components\TagsInput;
 use Filament\Infolists\Components\Grid;
 use Filament\Infolists\Components\RepeatableEntry;
@@ -174,10 +175,19 @@ class MailResource extends Resource
                                                 TextEntry::make('type')
                                                     ->label(__('Type'))
                                                     ->badge()
-                                                    ->url(fn (MailEvent $record) => route('filament.' . filament()->getCurrentPanel()?->getId() . '.resources.mails.events.view', [
-                                                        'record' => $record,
-                                                        'tenant' => filament()->getTenant()?->id,
-                                                    ]))
+                                                    ->url(function (Mail $record) {
+                                                        $panel = Filament::getCurrentPanel();
+                                                        $tenant = Filament::getTenant();
+
+                                                        if (! $panel || ! $tenant) {
+                                                            return null;
+                                                        }
+
+                                                        return route('filament.' . $panel->getId() . '.resources.mails.events.view', [
+                                                            'record' => $record,
+                                                            'tenant' => $tenant->getKey(),
+                                                        ]);
+                                                    })
                                                     ->color(fn (EventType $state): string => match ($state) {
                                                         EventType::DELIVERED => 'success',
                                                         EventType::CLICKED => 'clicked',
@@ -192,10 +202,19 @@ class MailResource extends Resource
                                                         return ucfirst($state->value);
                                                     }),
                                                 TextEntry::make('occurred_at')
-                                                    ->url(fn (MailEvent $record) => route('filament.' . filament()->getCurrentPanel()?->getId() . '.resources.mails.events.view', [
-                                                        'record' => $record,
-                                                        'tenant' => filament()->getTenant()?->id,
-                                                    ]))
+                                                    ->url(function (MailEvent $record) {
+                                                        $panel = Filament::getCurrentPanel();
+                                                        $tenant = Filament::getTenant();
+
+                                                        if (! $panel || ! $tenant) {
+                                                            return null;
+                                                        }
+
+                                                        return route('filament.' . $panel->getId() . '.resources.mails.events.view', [
+                                                            'record' => $record,
+                                                            'tenant' => $tenant->getKey(),
+                                                        ]);
+                                                    })
                                                     ->since()
                                                     ->dateTimeTooltip('d-m-Y H:i')
                                                     ->label(__('Occurred At')),
@@ -366,8 +385,8 @@ class MailResource extends Resource
                     ->fillForm(function (Mail $record) {
                         return [
                             'to' => array_keys($record->to),
-                            'cc' => is_array($record->cc) ? array_keys($record->cc) : null,
-                            'bcc' => is_array($record->bcc) ? array_keys($record->bcc) : null,
+                            'cc' => array_keys($record->cc),
+                            'bcc' => array_keys($record->bcc),
                         ];
                     })
                     ->action(function (Mail $record, array $data) {
@@ -430,7 +449,7 @@ class MailResource extends Resource
     {
         return collect($emails)
             ->mapWithKeys(fn ($value, $key) => [$key => $value ?? $key])
-            ->map(fn ($value, $key) => $mailOnly ? $key : ($value === null ? $key : "$value <$key>"))
+            ->map(fn ($value, $key) => $mailOnly ? $key : ($value == null ? $key : "$value <$key>"))
             ->implode(', ');
     }
 
