@@ -28,6 +28,8 @@ class ListMails extends ListRecords
         /** @var Mail $class */
         $class = config('mails.models.mail');
 
+        $class = new $class;
+
         return [
             'all' => Tab::make()
                 ->label(__('All'))
