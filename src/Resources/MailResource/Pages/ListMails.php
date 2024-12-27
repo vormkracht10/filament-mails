@@ -7,7 +7,6 @@ use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 use Vormkracht10\FilamentMails\Resources\MailResource;
 use Vormkracht10\FilamentMails\Resources\MailResource\Widgets\MailStatsWidget;
-use Vormkracht10\Mails\Models\Mail;
 
 class ListMails extends ListRecords
 {
@@ -26,7 +25,7 @@ class ListMails extends ListRecords
     public function getTabs(): array
     {
         $class = config('mails.models.mail');
-        
+
         return [
             'all' => Tab::make()
                 ->label(__('All'))
