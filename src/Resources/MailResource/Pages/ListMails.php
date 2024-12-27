@@ -2,12 +2,12 @@
 
 namespace Vormkracht10\FilamentMails\Resources\MailResource\Pages;
 
+use Vormkracht10\Mails\Models\Mail;
 use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 use Vormkracht10\FilamentMails\Resources\MailResource;
 use Vormkracht10\FilamentMails\Resources\MailResource\Widgets\MailStatsWidget;
-use Vormkracht10\Mails\Models\Mail;
 
 class ListMails extends ListRecords
 {
@@ -25,87 +25,71 @@ class ListMails extends ListRecords
 
     public function getTabs(): array
     {
+        /** @var Mail $class */
+        $class = config('mails.models.mail');
+
         return [
             'all' => Tab::make()
                 ->label(__('All'))
                 ->badgeColor('primary')
                 ->icon('heroicon-o-inbox')
-                ->badge(Mail::count()),
+                ->badge($class::count()),
 
             'sent' => Tab::make()
                 ->label(__('Sent'))
                 ->badgeColor('info')
                 ->icon('heroicon-o-paper-airplane')
-                ->badge(Mail::sent()->count())
-                ->modifyQueryUsing(function (Builder $query): Builder {
-                    /** @var Mail $model */
-                    $model = $query->getModel();
-
-                    return $model->sent();
+                ->badge($class::sent()->count())
+                ->modifyQueryUsing(function (Builder $query) use ($class): Builder {
+                    return $class->sent();
                 }),
 
             'delivered' => Tab::make()
                 ->label(__('Delivered'))
                 ->badgeColor('success')
                 ->icon('heroicon-o-check-circle')
-                ->badge(Mail::delivered()->count())
-                ->modifyQueryUsing(function (Builder $query): Builder {
-                    /** @var Mail $model */
-                    $model = $query->getModel();
-
-                    return $model->delivered();
+                ->badge($class::delivered()->count())
+                ->modifyQueryUsing(function (Builder $query) use ($class): Builder {
+                    return $class->delivered();
                 }),
 
             'opened' => Tab::make()
                 ->label(__('Opened'))
                 ->badgeColor('info')
                 ->icon('heroicon-o-eye')
-                ->badge(Mail::opened()->count())
-                ->modifyQueryUsing(function (Builder $query): Builder {
-                    /** @var Mail $model */
-                    $model = $query->getModel();
-
-                    return $model->opened();
+                ->badge($class::opened()->count())
+                ->modifyQueryUsing(function (Builder $query) use ($class): Builder {
+                    return $class->opened();
                 }),
 
             'clicked' => Tab::make()
                 ->label(__('Clicked'))
                 ->badgeColor('clicked')
                 ->icon('heroicon-o-cursor-arrow-rays')
-                ->badge(Mail::clicked()->count())
-                ->modifyQueryUsing(function (Builder $query): Builder {
-                    /** @var Mail $model */
-                    $model = $query->getModel();
-
-                    return $model->clicked();
+                ->badge($class::clicked()->count())
+                ->modifyQueryUsing(function (Builder $query) use ($class): Builder {
+                    return $class->clicked();
                 }),
 
             'bounced' => Tab::make()
                 ->label(__('Bounced'))
                 ->badgeColor('danger')
                 ->icon('heroicon-o-x-circle')
-                ->badge(fn () => Mail::softBounced()->count() + Mail::hardBounced()->count())
-                ->modifyQueryUsing(fn (Builder $query) => $query->where(function ($query) {
-                    /** @var Mail $model */
-                    $model = $query->getModel();
-
-                    return $model->where(function (Builder $query): void {
-                        $query->softBounced()->orWhere(function (Builder $query): void {
-                            $query->hardBounced();
-                        });
+                ->badge(fn() => $class::softBounced()->count() + $class::hardBounced()->count())
+                ->modifyQueryUsing(function (Builder $query) use ($class): Builder {
+                    return $query->where(function (Builder $subQuery) use ($class) {
+                        return $subQuery->whereIn('id', $class::softBounced()->select('id'))
+                            ->orWhereIn('id', $class::hardBounced()->select('id'));
                     });
-                })),
+                }),
 
             'unsent' => Tab::make()
                 ->label(__('Unsent'))
                 ->badgeColor('gray')
                 ->icon('heroicon-o-x-circle')
-                ->badge(Mail::unsent()->count())
-                ->modifyQueryUsing(function (Builder $query): Builder {
-                    /** @var Mail $model */
-                    $model = $query->getModel();
-
-                    return $model->unsent();
+                ->badge($class::unsent()->count())
+                ->modifyQueryUsing(function (Builder $query) use ($class): Builder {
+                    return $class->unsent();
                 }),
         ];
     }

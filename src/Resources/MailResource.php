@@ -30,8 +30,6 @@ use Vormkracht10\Mails\Models\MailEvent;
 
 class MailResource extends Resource
 {
-    protected static ?string $model = Mail::class;
-
     protected static ?string $slug = 'mails';
 
     protected static ?string $recordTitleAttribute = 'subject';
@@ -39,6 +37,11 @@ class MailResource extends Resource
     protected static bool $isScopedToTenant = false;
 
     protected static bool $shouldRegisterNavigation = true;
+
+    public static function getModel(): string
+    {
+        return config('mails.models.mail');
+    }
 
     public static function getNavigationGroup(): ?string
     {

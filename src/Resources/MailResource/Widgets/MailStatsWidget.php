@@ -5,7 +5,6 @@ namespace Vormkracht10\FilamentMails\Resources\MailResource\Widgets;
 use Filament\Facades\Filament;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
-use Vormkracht10\Mails\Models\Mail;
 
 class MailStatsWidget extends BaseWidget
 {
@@ -15,12 +14,14 @@ class MailStatsWidget extends BaseWidget
 
     protected function getStats(): array
     {
-        $bouncedMails = Mail::where(fn ($query) => $query->softBounced()->orWhere(fn ($query) => $query->hardBounced()))->count();
-        $openedMails = Mail::opened()->count();
-        $deliveredMails = Mail::delivered()->count();
-        $clickedMails = Mail::clicked()->count();
+        $class = config('mails.models.mail');
 
-        $mailCount = Mail::count();
+        $bouncedMails = $class::where(fn ($query) => $query->softBounced()->orWhere(fn ($query) => $query->hardBounced()))->count();
+        $openedMails = $class::opened()->count();
+        $deliveredMails = $class::delivered()->count();
+        $clickedMails = $class::clicked()->count();
+
+        $mailCount = $class::count();
 
         if ($mailCount === 0) {
             return [];
