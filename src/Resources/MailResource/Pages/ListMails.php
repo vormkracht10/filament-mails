@@ -2,12 +2,12 @@
 
 namespace Vormkracht10\FilamentMails\Resources\MailResource\Pages;
 
-use Vormkracht10\Mails\Models\Mail;
 use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 use Vormkracht10\FilamentMails\Resources\MailResource;
 use Vormkracht10\FilamentMails\Resources\MailResource\Widgets\MailStatsWidget;
+use Vormkracht10\Mails\Models\Mail;
 
 class ListMails extends ListRecords
 {
@@ -75,7 +75,7 @@ class ListMails extends ListRecords
                 ->label(__('Bounced'))
                 ->badgeColor('danger')
                 ->icon('heroicon-o-x-circle')
-                ->badge(fn() => $class::softBounced()->count() + $class::hardBounced()->count())
+                ->badge(fn () => $class::softBounced()->count() + $class::hardBounced()->count())
                 ->modifyQueryUsing(function (Builder $query) use ($class): Builder {
                     return $query->where(function (Builder $subQuery) use ($class) {
                         return $subQuery->whereIn('id', $class::softBounced()->select('id'))
