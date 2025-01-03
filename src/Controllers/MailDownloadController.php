@@ -13,7 +13,7 @@ class MailDownloadController extends Controller
         /** @var MailAttachment $attachment */
         $attachment = MailAttachment::find($attachment);
 
-        $file = Storage::disk($attachment->disk)->path($attachment->uuid);
+        $file = Storage::disk($attachment->disk)->path($attachment->storagePath);
 
         return response()->download(
             file: $file,
