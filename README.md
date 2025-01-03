@@ -61,6 +61,14 @@ Optionally, you can publish the views using
 php artisan vendor:publish --tag="filament-mails-views"
 ```
 
+Add the routes to your `web.php` file:
+
+```php
+use Vormkracht10\FilamentMails\Facades\FilamentMails;
+
+FilamentMails::routes();
+```
+
 Then add the plugin to your `PanelProvider`
 
 ```php
@@ -70,6 +78,22 @@ public function panel(Panel $panel): Panel
 {
     return $panel
         ->plugin(FilamentMailsPlugin::make());
+}
+```
+
+### Tenant middleware / route protection
+
+If you want to protect the mail routes with your (tenant) middleware, you can do so by adding the routes to the `tenantRoutes`:
+
+```php
+use Vormkracht10\FilamentMails\FilamentMailsPlugin;
+use Vormkracht10\FilamentMails\Facades\FilamentMails;
+
+public function panel(Panel $panel): Panel
+{
+    return $panel
+        ->plugin(FilamentMailsPlugin::make())
+        ->tenantRoutes(fn() => FilamentMails::routes());
 }
 ```
 

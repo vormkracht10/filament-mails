@@ -2,20 +2,25 @@
 
 namespace Vormkracht10\FilamentMails\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
 use Vormkracht10\Mails\Models\MailAttachment;
 
 class MailDownloadController extends Controller
 {
-    public function __invoke(Request $request)
+    public function __invoke(string $tenant, string $mail, string $attachment, string $filename)
     {
         /** @var MailAttachment $attachment */
-        $attachment = MailAttachment::find($request->attachment);
+        $attachment = MailAttachment::find($attachment);
 
-        $file = Storage::disk($attachment->disk)->get($attachment->uuid);
+        $file = Storage::disk($attachment->disk)->path($attachment->uuid);
 
-        return response()->download($file);
+        return response()->download(
+            file: $file,
+            name: $filename,
+            headers: [
+                'Content-Type' => $attachment->mime,
+            ]
+        );
     }
 }
