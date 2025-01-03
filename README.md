@@ -22,7 +22,7 @@ Filament Mails can collect everything you might want to track about the mails th
 
 ## Upcoming features
 
--   We're currently in the process of writing mail events support for other popular email service providers like Mailgun, Resend, SendGrid, Amazon SES and Mailtrap.
+-   We're currently in the process of writing mail events support for other popular email service providers like Resend, SendGrid, Amazon SES and Mailtrap.
 -   Relate emails being send in Laravel directly to Eloquent models, for example the order confirmation email attached to an Order model.
 
 ## Why this package
