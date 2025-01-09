@@ -64,17 +64,17 @@ class SuppressionResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('mail.to')
                     ->label(__('Email address'))
-                    ->formatStateUsing(fn(MailEvent $record) => key($record->mail->to))
+                    ->formatStateUsing(fn (MailEvent $record) => key($record->mail->to))
                     ->searchable(['to']),
                 Tables\Columns\TextColumn::make('occurred_at')
                     ->label(__('Suppressed At'))
                     ->dateTime('d-m-Y H:i')
                     ->since()
-                    ->tooltip(fn(MailEvent $record) => $record->occurred_at->format('d-m-Y H:i'))
+                    ->tooltip(fn (MailEvent $record) => $record->occurred_at->format('d-m-Y H:i'))
                     ->sortable()
                     ->searchable(),
             ])
-            ->modifyQueryUsing(fn($query) => $query->where('type', EventType::HARD_BOUNCED))
+            ->modifyQueryUsing(fn ($query) => $query->where('type', EventType::HARD_BOUNCED))
             ->filters([
                 //
             ])
