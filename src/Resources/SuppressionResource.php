@@ -2,9 +2,11 @@
 
 namespace Vormkracht10\FilamentMails\Resources;
 
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Vormkracht10\FilamentMails\Resources\SuppressionResource\Pages\ListSuppressions;
 use Vormkracht10\FilamentMails\Resources\SuppressionResource\Pages\ViewSuppression;
 use Vormkracht10\Mails\Enums\EventType;
@@ -55,50 +57,57 @@ class SuppressionResource extends Resource
         return 'heroicon-o-no-symbol';
     }
 
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->where('type', EventType::HARD_BOUNCED)
+            ->whereNull('unsuppressed_at')
+            ->orWhere('unsuppressed_at', '')
+            ->latest('occurred_at')
+            ->orderBy('occurred_at', 'desc');
+    }
+
     public static function table(Table $table): Table
     {
         return $table
-            ->recordAction('view')
-            ->recordUrl(null)
-            ->defaultSort('created_at', 'desc')
+            ->defaultSort('occurred_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('mail.to')
                     ->label(__('Email address'))
-                    ->formatStateUsing(fn (MailEvent $record) => key($record->mail->to))
+                    ->formatStateUsing(fn(MailEvent $record) => key($record->mail->to))
                     ->searchable(['to']),
+
                 Tables\Columns\TextColumn::make('occurred_at')
+                    ->badge()
                     ->label(__('Suppressed At'))
                     ->dateTime('d-m-Y H:i')
                     ->since()
-                    ->tooltip(fn (MailEvent $record) => $record->occurred_at->format('d-m-Y H:i'))
+                    ->tooltip(fn(MailEvent $record) => $record->occurred_at->format('d-m-Y H:i'))
                     ->sortable()
                     ->searchable(),
             ])
-            ->modifyQueryUsing(fn ($query) => $query->where('type', EventType::HARD_BOUNCED))
-            ->filters([
-                //
-            ])
             ->actions([
+                Tables\Actions\Action::make('unsupress')
+                    ->action(function (MailEvent $record) {
+                        $record->unsuppressed_at = now();
+                        $record->save();
+                    }),
+
                 Tables\Actions\ViewAction::make()
                     ->url(null)
                     ->modal()
                     ->slideOver()
                     ->label(__('View'))
                     ->hiddenLabel()
-                    ->tooltip(__('View')),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                    ->tooltip(__('View'))
+                    ->infolist(fn(Infolist $infolist) => EventResource::infolist($infolist)),
             ]);
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => ListSuppressions::route('/'),
-            'view' => ViewSuppression::route('/{record}/view'),
+            'index' => ListSuppressions::route('/')
         ];
     }
 }

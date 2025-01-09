@@ -23,7 +23,7 @@
         "php": "^8.1",
         "filament/filament": "^3.0",
         "spatie/laravel-package-tools": "^1.15.0",
-        "vormkracht10/laravel-mails": "^1.0"
+        "vormkracht10/laravel-mails": "dev-feature/suppressions-list"
     },
     "require-dev": {
         "laravel/pint": "^1.0",
@@ -74,5 +74,11 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": {
+        "laravel-mails": {
+            "type": "path",
+            "url": "/var/www/laravel-mails"
+        }
+    }
 }
