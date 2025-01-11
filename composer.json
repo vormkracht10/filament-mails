@@ -74,11 +74,5 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "repositories": {
-        "laravel-mails": {
-            "type": "path",
-            "url": "/var/www/laravel-mails"
-        }
-    }
+    "prefer-stable": true
 }

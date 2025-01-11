@@ -5,8 +5,11 @@ namespace Vormkracht10\FilamentMails\Resources;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Mail;
 use Vormkracht10\FilamentMails\Resources\SuppressionResource\Pages\ListSuppressions;
 use Vormkracht10\FilamentMails\Resources\SuppressionResource\Pages\ViewSuppression;
 use Vormkracht10\Mails\Enums\EventType;
@@ -61,8 +64,12 @@ class SuppressionResource extends Resource
     {
         return parent::getEloquentQuery()
             ->where('type', EventType::HARD_BOUNCED)
-            ->whereNull('unsuppressed_at')
-            ->orWhere('unsuppressed_at', '')
+            ->where(function ($query) {
+                $query->whereNull('unsuppressed_at')
+                    ->orWhere('unsuppressed_at', '');
+            })
+            ->latest('occurred_at')
+            ->orderBy('occurred_at', 'desc')
             ->latest('occurred_at')
             ->orderBy('occurred_at', 'desc');
     }
@@ -70,6 +77,7 @@ class SuppressionResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->headerActions([Action::make('clean')->action(fn() => Artisan::call('app:clean-unsupressions'))])
             ->defaultSort('occurred_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('mail.to')
@@ -88,10 +96,7 @@ class SuppressionResource extends Resource
             ])
             ->actions([
                 Tables\Actions\Action::make('unsupress')
-                    ->action(function (MailEvent $record) {
-                        $record->unsuppressed_at = now();
-                        $record->save();
-                    }),
+                    ->action(fn(MailEvent $record) => $record->unSuppress()),
 
                 Tables\Actions\ViewAction::make()
                     ->url(null)
