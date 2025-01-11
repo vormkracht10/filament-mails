@@ -5,10 +5,8 @@ namespace Vormkracht10\FilamentMails\Resources;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Actions\Action;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Artisan;
 use Vormkracht10\FilamentMails\Resources\SuppressionResource\Pages\ListSuppressions;
 use Vormkracht10\Mails\Enums\EventType;
 use Vormkracht10\Mails\Models\MailEvent;
@@ -79,7 +77,7 @@ class SuppressionResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('mail.to')
                     ->label(__('Email address'))
-                    ->formatStateUsing(fn(MailEvent $record) => key($record->mail->to))
+                    ->formatStateUsing(fn (MailEvent $record) => key($record->mail->to))
                     ->searchable(['to']),
 
                 Tables\Columns\TextColumn::make('occurred_at')
@@ -87,13 +85,13 @@ class SuppressionResource extends Resource
                     ->label(__('Suppressed At'))
                     ->dateTime('d-m-Y H:i')
                     ->since()
-                    ->tooltip(fn(MailEvent $record) => $record->occurred_at->format('d-m-Y H:i'))
+                    ->tooltip(fn (MailEvent $record) => $record->occurred_at->format('d-m-Y H:i'))
                     ->sortable()
                     ->searchable(),
             ])
             ->actions([
                 Tables\Actions\Action::make('unsupress')
-                    ->action(fn(MailEvent $record) => $record->unSuppress()),
+                    ->action(fn (MailEvent $record) => $record->unSuppress()),
 
                 Tables\Actions\ViewAction::make()
                     ->url(null)
@@ -102,7 +100,7 @@ class SuppressionResource extends Resource
                     ->label(__('View'))
                     ->hiddenLabel()
                     ->tooltip(__('View'))
-                    ->infolist(fn(Infolist $infolist) => EventResource::infolist($infolist)),
+                    ->infolist(fn (Infolist $infolist) => EventResource::infolist($infolist)),
             ]);
     }
 
