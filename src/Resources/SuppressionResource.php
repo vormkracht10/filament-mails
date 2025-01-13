@@ -7,8 +7,10 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Table;
+use Illuminate\Contracts\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 use Vormkracht10\FilamentMails\Resources\SuppressionResource\Pages\ListSuppressions;
 use Vormkracht10\Mails\Enums\EventType;
 use Vormkracht10\Mails\Models\MailEvent;
@@ -61,13 +63,16 @@ class SuppressionResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
+            ->join('mails', 'mail_events.mail_id', '=', 'mails.id')
             ->where('type', EventType::HARD_BOUNCED)
-            ->where(function ($query) {
-                $query->whereNull('unsuppressed_at')
-                    ->orWhere('unsuppressed_at', '');
+            ->whereNull('unsuppressed_at')
+            ->whereIn('mails.to', function ($query) {
+                $query->select('to')
+                    ->from('mail_events')
+                    ->where('type', EventType::HARD_BOUNCED)
+                    ->whereNull('unsuppressed_at')
+                    ->groupBy('to');
             })
-            ->latest('occurred_at')
-            ->orderBy('occurred_at', 'desc')
             ->latest('occurred_at')
             ->orderBy('occurred_at', 'desc');
     }
