@@ -8,12 +8,15 @@ use Vormkracht10\Mails\Models\MailAttachment;
 
 class MailDownloadController extends Controller
 {
-    public function __invoke(
-        ?string $tenant,
-        string $mail,
-        string $attachment,
-        string $filename
-    ) {
+    public function __invoke(...$arguments)
+    {
+        if (count($arguments) === 4) {
+            [$tenant, $mail, $attachment, $filename] = $arguments;
+        } else {
+            [$mail, $attachment, $filename] = $arguments;
+            $tenant = null;
+        }
+
         /** @var MailAttachment $attachment */
         $attachment = MailAttachment::find($attachment);
 
