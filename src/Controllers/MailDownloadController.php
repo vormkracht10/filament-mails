@@ -9,7 +9,7 @@ use Vormkracht10\Mails\Models\MailAttachment;
 class MailDownloadController extends Controller
 {
     public function __invoke(
-        string|null $tenant,
+        ?string $tenant,
         string $mail,
         string $attachment,
         string $filename
