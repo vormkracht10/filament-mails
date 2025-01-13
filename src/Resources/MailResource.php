@@ -19,6 +19,7 @@ use Filament\Tables\Actions\Action;
 use Filament\Tables\Table;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\HtmlString;
 use Illuminate\View\View;
 use Vormkracht10\FilamentMails\Resources\MailResource\Pages\ListMails;
 use Vormkracht10\FilamentMails\Resources\MailResource\Pages\ViewMail;
@@ -269,6 +270,7 @@ class MailResource extends Resource
                                             ->copyMessage('Copied!')
                                             ->copyMessageDuration(1500)
                                             ->label(__('Text Content'))
+                                            ->formatStateUsing(fn (string $state): HtmlString => new HtmlString(nl2br(e($state))))
                                             ->columnSpanFull(),
                                     ]),
                             ])->columnSpanFull(),
