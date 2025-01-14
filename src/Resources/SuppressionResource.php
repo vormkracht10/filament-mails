@@ -116,9 +116,9 @@ class SuppressionResource extends Resource
             ])
             ->actions([
                 Tables\Actions\Action::make('unsuppress')
-                ->label(__('Unsuppress'))
+                    ->label(__('Unsuppress'))
                     ->action(function (MailEvent $record) {
-                        event(new MailUnsuppressed(key($record->to), $record->mail->driver, $record->mail->stream_id ?? null)); 
+                        event(new MailUnsuppressed(key($record->to), $record->mail->driver, $record->mail->stream_id ?? null));
                     }),
 
                 Tables\Actions\ViewAction::make()
