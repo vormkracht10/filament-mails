@@ -9,6 +9,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Vormkracht10\FilamentMails\Resources\SuppressionResource\Pages\ListSuppressions;
 use Vormkracht10\Mails\Enums\EventType;
+use Vormkracht10\Mails\Events\MailUnsuppressed;
 use Vormkracht10\Mails\Models\MailEvent;
 
 class SuppressionResource extends Resource
@@ -114,8 +115,11 @@ class SuppressionResource extends Resource
                     ->searchable(),
             ])
             ->actions([
-                Tables\Actions\Action::make('unsupress')
-                    ->action(fn (MailEvent $record) => $record->unSuppress()),
+                Tables\Actions\Action::make('unsuppress')
+                ->label(__('Unsuppress'))
+                    ->action(function (MailEvent $record) {
+                        event(new MailUnsuppressed(key($record->to), $record->mail->driver, $record->mail->stream_id ?? null)); 
+                    }),
 
                 Tables\Actions\ViewAction::make()
                     ->url(null)
