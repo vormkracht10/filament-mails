@@ -13,9 +13,4 @@ class ListSuppressions extends ListRecords
     {
         return __('Suppressions');
     }
-
-    protected function getActions(): array
-    {
-        return [];
-    }
 }
