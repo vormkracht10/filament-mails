@@ -386,9 +386,9 @@ class MailResource extends Resource
                     ->form(self::getResendForm())
                     ->fillForm(function (Mail $record) {
                         return [
-                            'to' => array_keys($record->to),
-                            'cc' => array_keys($record->cc),
-                            'bcc' => array_keys($record->bcc),
+                            'to' => array_keys($record->to ?: []),
+                            'cc' => array_keys($record->cc ?: []),
+                            'bcc' => array_keys($record->bcc ?: []),
                         ];
                     })
                     ->action(function (Mail $record, array $data) {
