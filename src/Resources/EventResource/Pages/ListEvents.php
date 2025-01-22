@@ -12,7 +12,10 @@ use Vormkracht10\Mails\Models\MailEvent;
 
 class ListEvents extends ListRecords
 {
-    protected static string $resource = EventResource::class;
+    public static function getResource(): string
+    {
+        return config('filament-mails.resources.mail', EventResource::class);
+    }
 
     public function getTitle(): string
     {
