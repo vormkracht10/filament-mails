@@ -7,5 +7,8 @@ use Vormkracht10\FilamentMails\Resources\MailResource;
 
 class ViewMail extends ViewRecord
 {
-    protected static string $resource = MailResource::class;
+    public static function getResource(): string
+    {
+        return config('filament-mails.resources.mail', MailResource::class);
+    }
 }

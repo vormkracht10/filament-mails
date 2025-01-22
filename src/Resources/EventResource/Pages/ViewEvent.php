@@ -7,5 +7,8 @@ use Vormkracht10\FilamentMails\Resources\EventResource;
 
 class ViewEvent extends ViewRecord
 {
-    protected static string $resource = EventResource::class;
+    public static function getResource(): string
+    {
+        return config('filament-mails.resources.mail', EventResource::class);
+    }
 }

@@ -11,7 +11,10 @@ use Vormkracht10\Mails\Models\Mail;
 
 class ListMails extends ListRecords
 {
-    protected static string $resource = MailResource::class;
+    public static function getResource(): string
+    {
+        return config('filament-mails.resources.mail', MailResource::class);
+    }
 
     public function getTitle(): string
     {
