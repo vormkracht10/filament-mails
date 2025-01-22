@@ -2,6 +2,23 @@
 
 All notable changes to `filament-mails` will be documented in this file.
 
+## v2.1.0 - 2025-01-22
+
+### What's Changed
+
+* [Fix] Format text to prevent stripping line breaks by @Baspa in https://github.com/vormkracht10/filament-mails/pull/14
+* [Fix] Define nullable parameter as nullable by @Baspa in https://github.com/vormkracht10/filament-mails/pull/15
+* fix: Dynamically determine if tenant is set by @Baspa in https://github.com/vormkracht10/filament-mails/pull/16
+* [Fix] Return empty array when $record's to, cc or bcc is empty (#18) by @vincentvankekerix in https://github.com/vormkracht10/filament-mails/pull/19
+* Update Pages to reflect configured resource class name by @Skullbock in https://github.com/vormkracht10/filament-mails/pull/20
+
+### New Contributors
+
+* @vincentvankekerix made their first contribution in https://github.com/vormkracht10/filament-mails/pull/19
+* @Skullbock made their first contribution in https://github.com/vormkracht10/filament-mails/pull/20
+
+**Full Changelog**: https://github.com/vormkracht10/filament-mails/compare/v2.0.0...v2.1.0
+
 ## v2.0.0 - 2025-01-03
 
 ### Breaking changes
