@@ -2,6 +2,18 @@
 
 All notable changes to `filament-mails` will be documented in this file.
 
+## New feature: Suppressions list with option to unsupress email addresses - 2025-01-23
+
+### What's Changed
+
+* Suppressions list by @markvaneijk in https://github.com/vormkracht10/filament-mails/pull/11
+
+### New Contributors
+
+* @markvaneijk made their first contribution in https://github.com/vormkracht10/filament-mails/pull/11
+
+**Full Changelog**: https://github.com/vormkracht10/filament-mails/compare/v2.1.0...v2.2.0
+
 ## v2.1.0 - 2025-01-22
 
 ### What's Changed
