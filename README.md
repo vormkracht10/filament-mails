@@ -109,6 +109,7 @@ return [
     'resources' => [
         'mail' => \App\Filament\Resources\MailResource::class,
         'event' => \App\Filament\Resources\EventResource::class,
+        'suppressions' => \App\Filament\Resources\SuppressionResource::class
     ],
 ];
 ```

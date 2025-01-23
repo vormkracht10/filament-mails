@@ -22,6 +22,7 @@ class FilamentMailsPlugin implements Plugin
             ->resources([
                 config('filament-mails.resources.mail'),
                 config('filament-mails.resources.event'),
+                config('filament-mails.resources.suppressions'),
             ]);
     }
 
