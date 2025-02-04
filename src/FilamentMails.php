@@ -8,9 +8,17 @@ use Vormkracht10\FilamentMails\Controllers\MailPreviewController;
 
 class FilamentMails
 {
-    public static function routes()
+    public static function routes(?string $prefix = null)
     {
-        Route::get('mails/{mail}/preview', MailPreviewController::class)->name('mails.preview');
-        Route::get('mails/{mail}/attachment/{attachment}/{filename}', MailDownloadController::class)->name('mails.attachment.download');
+        $routeGroup = function () {
+            Route::get('mails/{mail}/preview', MailPreviewController::class)->name('mails.preview');
+            Route::get('mails/{mail}/attachment/{attachment}/{filename}', MailDownloadController::class)->name('mails.attachment.download');
+        };
+
+        if ($prefix) {
+            Route::prefix($prefix)->group($routeGroup);
+        } else {
+            $routeGroup();
+        }
     }
 }
