@@ -66,8 +66,18 @@ Add the routes to your `web.php` file:
 ```php
 use Vormkracht10\FilamentMails\Facades\FilamentMails;
 
+// Basic usage - uses default Filament panel path and name
 FilamentMails::routes();
+
+// Prefix routes with path and/or name
+FilamentMails::routes(
+    path: 'panel-path',
+    name: 'filament.panel'
+);
 ```
+
+> [!NOTE]
+> By default, the path will be set to your Filament panel's path and the name will be 'filament.' followed by your panel's ID. You only need to customize these if you want different values.
 
 Then add the plugin to your `PanelProvider`
 
