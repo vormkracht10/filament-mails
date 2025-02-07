@@ -69,13 +69,11 @@ use Vormkracht10\FilamentMails\Facades\FilamentMails;
 // Basic usage - uses default Filament panel path and name
 FilamentMails::routes();
 
-// Custom path and name
-FilamentMails::routes('custom-path', 'custom.name');
-
-// Or set path and name separately
-FilamentMails::setPath('custom-path');
-FilamentMails::setName('custom.name');
-FilamentMails::routes();
+// Prefix routes with path and/or name
+FilamentMails::routes(
+    path: 'custom-path',
+    name: 'custom.name'
+);
 ```
 
 > [!NOTE]
