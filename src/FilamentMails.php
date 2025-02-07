@@ -19,7 +19,7 @@ class FilamentMails
 
     public static function setName(?string $name = null): void
     {
-        static::$name = $name ?? 'filament.' . filament()->getDefaultPanel()->getId();
+        static::$name = $name ?? 'filament.' . filament()->getDefaultPanel()->getId() . '.';
     }
 
     public static function routes(?string $path = null, ?string $name = null): void
