@@ -8,17 +8,29 @@ use Vormkracht10\FilamentMails\Controllers\MailPreviewController;
 
 class FilamentMails
 {
-    public static function routes(?string $prefix = null)
-    {
-        $routeGroup = function () {
-            Route::get('mails/{mail}/preview', MailPreviewController::class)->name('mails.preview');
-            Route::get('mails/{mail}/attachment/{attachment}/{filename}', MailDownloadController::class)->name('mails.attachment.download');
-        };
+    protected static string $path;
+    protected static string $name;
 
-        if ($prefix) {
-            Route::prefix($prefix)->group($routeGroup);
-        } else {
-            $routeGroup();
-        }
+    public static function setPath(?string $path = null): void
+    {
+        static::$path = $path ?? filament()->getDefaultPanel()->getPath();
+    }
+
+    public static function setName(?string $name = null): void
+    {
+        static::$name = $name ?? 'filament.' . filament()->getDefaultPanel()->getId();
+    }
+
+    public static function routes(?string $path = null, ?string $name = null): void
+    {
+        static::setPath($path);
+        static::setName($name);
+
+        Route::prefix(static::$path)
+            ->name(static::$name)
+            ->group(function () {
+                Route::get('mails/{mail}/preview', MailPreviewController::class)->name('mails.preview');
+                Route::get('mails/{mail}/attachment/{attachment}/{filename}', MailDownloadController::class)->name('mails.attachment.download');
+            });
     }
 }
