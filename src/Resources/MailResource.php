@@ -320,6 +320,7 @@ class MailResource extends Resource
                 Tables\Columns\TextColumn::make('status')
                     ->label(__('Status'))
                     ->sortable()
+                    ->searchable(false)
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         __('Soft Bounced') => 'warning',
@@ -341,6 +342,7 @@ class MailResource extends Resource
                 Tables\Columns\IconColumn::make('attachments')
                     ->label('')
                     ->alignLeft()
+                    ->searchable(false)
                     ->getStateUsing(fn (Mail $record) => $record->attachments->count() > 0)
                     ->icon(fn (string $state): string => $state ? 'heroicon-o-paper-clip' : ''),
                 Tables\Columns\TextColumn::make('to')
