@@ -9,6 +9,7 @@ use Vormkracht10\FilamentMails\Controllers\MailPreviewController;
 class FilamentMails
 {
     protected static string $path;
+
     protected static string $name;
 
     public static function setPath(?string $path = null): void
