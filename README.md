@@ -71,8 +71,8 @@ FilamentMails::routes();
 
 // Prefix routes with path and/or name
 FilamentMails::routes(
-    path: 'custom-path',
-    name: 'custom.name'
+    path: 'panel-path',
+    name: 'filament.panel'
 );
 ```
 
