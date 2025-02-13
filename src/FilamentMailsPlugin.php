@@ -20,9 +20,9 @@ class FilamentMailsPlugin implements Plugin
                 'clicked' => Color::Purple,
             ])
             ->resources([
-                config('filament-mails.resources.mail'),
-                config('filament-mails.resources.event'),
-                config('filament-mails.resources.suppressions'),
+                config('filament-mails.resources.mail', \Vormkracht10\FilamentMails\Resources\MailResource::class),
+                config('filament-mails.resources.event', \Vormkracht10\FilamentMails\Resources\EventResource::class),
+                config('filament-mails.resources.suppressions', \Vormkracht10\FilamentMails\Resources\SuppressionResource::class),
             ]);
     }
 
