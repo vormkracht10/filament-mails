@@ -22,7 +22,7 @@ class FilamentMailsPlugin implements Plugin
             ->resources([
                 config('filament-mails.resources.mail', \Vormkracht10\FilamentMails\Resources\MailResource::class),
                 config('filament-mails.resources.event', \Vormkracht10\FilamentMails\Resources\EventResource::class),
-                config('filament-mails.resources.suppressions', \Vormkracht10\FilamentMails\Resources\SuppressionResource::class),
+                config('filament-mails.resources.suppression', \Vormkracht10\FilamentMails\Resources\SuppressionResource::class),
             ]);
     }
 

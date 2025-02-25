@@ -8,6 +8,6 @@ return [
     'resources' => [
         'mail' => MailResource::class,
         'event' => EventResource::class,
-        'suppressions' => SuppressionResource::class,
+        'suppression' => SuppressionResource::class,
     ],
 ];
