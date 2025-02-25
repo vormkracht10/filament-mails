@@ -14,12 +14,12 @@ class FilamentMails
 
     public static function setPath(?string $path = null): void
     {
-        static::$path = $path ?? filament()->getPanel()?->getPath() ?? filament()->getDefaultPanel()->getPath();
+        static::$path = $path ?? filament()->getCurrentPanel()?->getPath() ?? filament()->getDefaultPanel()->getPath();
     }
 
     public static function setName(?string $name = null): void
     {
-        static::$name = $name ?? 'filament.' . (filament()->getPanel()?->getId() ?? filament()->getDefaultPanel()->getId()) . '.';
+        static::$name = $name ?? 'filament.' . (filament()->getCurrentPanel()?->getId() ?? filament()->getDefaultPanel()->getId()) . '.';
     }
 
     public static function routes(?string $path = null, ?string $name = null): void
