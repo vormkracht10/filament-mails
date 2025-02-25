@@ -40,6 +40,15 @@ class ListMails extends ListRecords
                 ->icon('heroicon-o-inbox')
                 ->badge($class::count()),
 
+            'unsent' => Tab::make()
+                ->label(__('Unsent'))
+                ->badgeColor('gray')
+                ->icon('heroicon-o-x-circle')
+                ->badge($class::unsent()->count())
+                ->modifyQueryUsing(function (Builder $query) use ($class): Builder {
+                    return $class->unsent();
+                }),
+
             'sent' => Tab::make()
                 ->label(__('Sent'))
                 ->badgeColor('info')
@@ -88,13 +97,13 @@ class ListMails extends ListRecords
                     });
                 }),
 
-            'unsent' => Tab::make()
-                ->label(__('Unsent'))
+            'complained' => Tab::make()
+                ->label(__('Complained'))
                 ->badgeColor('gray')
                 ->icon('heroicon-o-x-circle')
-                ->badge($class::unsent()->count())
+                ->badge($class::complained()->count())
                 ->modifyQueryUsing(function (Builder $query) use ($class): Builder {
-                    return $class->unsent();
+                    return $class->complained();
                 }),
         ];
     }
