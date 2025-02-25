@@ -47,12 +47,12 @@ class MailResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return __('Mails');
+        return __('Emails');
     }
 
     public static function getNavigationLabel(): string
     {
-        return __('Mails');
+        return __('Emails');
     }
 
     public static function getLabel(): ?string
@@ -67,7 +67,7 @@ class MailResource extends Resource
 
     public function getTitle(): string
     {
-        return __('Mails');
+        return __('Emails');
     }
 
     public static function infolist(Infolist $infolist): Infolist

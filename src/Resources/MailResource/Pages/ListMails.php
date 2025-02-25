@@ -18,7 +18,7 @@ class ListMails extends ListRecords
 
     public function getTitle(): string
     {
-        return __('Mails');
+        return __('Emails');
     }
 
     protected function getActions(): array
