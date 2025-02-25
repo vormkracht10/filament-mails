@@ -17,6 +17,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
@@ -367,6 +368,9 @@ class MailResource extends Resource
                     ->sortable()
                     ->searchable(),
             ])
+            ->modifyQueryUsing(
+                fn (Builder $query) => $query->with('attachments')
+            )
             ->filters([
                 //
             ])
