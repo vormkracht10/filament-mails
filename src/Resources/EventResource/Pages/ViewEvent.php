@@ -9,6 +9,6 @@ class ViewEvent extends ViewRecord
 {
     public static function getResource(): string
     {
-        return config('filament-mails.resources.mail', EventResource::class);
+        return config('filament-mails.resources.event', EventResource::class);
     }
 }
