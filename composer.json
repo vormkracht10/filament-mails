@@ -39,8 +39,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Vormkracht10\\FilamentMails\\": "src/",
-            "Vormkracht10\\FilamentMails\\Database\\Factories\\": "database/factories/"
+            "Vormkracht10\\FilamentMails\\": "src/"
         }
     },
     "autoload-dev": {

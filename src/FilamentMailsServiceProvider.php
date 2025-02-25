@@ -44,10 +44,6 @@ class FilamentMailsServiceProvider extends PackageServiceProvider
             $package->hasConfigFile();
         }
 
-        if (file_exists($package->basePath('/../database/migrations'))) {
-            $package->hasMigrations($this->getMigrations());
-        }
-
         if (file_exists($package->basePath('/../resources/lang'))) {
             $package->hasTranslations();
             $this->loadJsonTranslationsFrom($package->basePath('/../resources/lang'));

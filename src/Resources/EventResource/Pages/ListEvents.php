@@ -39,16 +39,9 @@ class ListEvents extends ListRecords
             'delivered' => Tab::make()
                 ->label(__('Delivered'))
                 ->badgeColor('success')
-                ->icon('heroicon-o-check-circle')
+                ->icon('heroicon-o-inbox-arrow-down')
                 ->badge(MailEvent::where('type', EventType::DELIVERED)->count())
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('type', EventType::DELIVERED)),
-
-            'clicked' => Tab::make()
-                ->label(__('Clicked'))
-                ->badgeColor('clicked')
-                ->icon('heroicon-o-cursor-arrow-rays')
-                ->badge(MailEvent::where('type', EventType::CLICKED)->count())
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', EventType::CLICKED)),
 
             'opened' => Tab::make()
                 ->label(__('Opened'))
@@ -57,16 +50,17 @@ class ListEvents extends ListRecords
                 ->badge(MailEvent::where('type', EventType::OPENED)->count())
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('type', EventType::OPENED)),
 
-            'soft_bounce' => Tab::make()
-                ->label(__('Soft Bounced'))
-                ->icon('heroicon-o-x-circle')
-                ->badge(MailEvent::where('type', EventType::SOFT_BOUNCED)->count())
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', EventType::SOFT_BOUNCED)),
+            'clicked' => Tab::make()
+                ->label(__('Clicked'))
+                ->badgeColor('clicked')
+                ->icon('heroicon-o-cursor-arrow-rays')
+                ->badge(MailEvent::where('type', EventType::CLICKED)->count())
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', EventType::CLICKED)),
 
             'bounced' => Tab::make()
                 ->label(__('Bounced'))
                 ->badgeColor('danger')
-                ->icon('heroicon-o-x-circle')
+                ->icon('heroicon-o-arrow-path-rounded-square')
                 ->badge(fn () => MailEvent::where('type', EventType::SOFT_BOUNCED)->count() + MailEvent::where('type', EventType::HARD_BOUNCED)->count())
                 ->modifyQueryUsing(fn (Builder $query) => $query->where(function ($query) {
                     $query->where('type', EventType::SOFT_BOUNCED)
@@ -76,7 +70,7 @@ class ListEvents extends ListRecords
             'complained' => Tab::make()
                 ->label(__('Complained'))
                 ->badgeColor('warning')
-                ->icon('heroicon-o-exclamation-circle')
+                ->icon('heroicon-o-face-frown')
                 ->badge(MailEvent::where('type', EventType::COMPLAINED)->count())
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('type', EventType::COMPLAINED)),
         ];
