@@ -31,12 +31,12 @@ class EventResource extends Resource
 
     public static function getNavigationParentItem(): ?string
     {
-        return __('Emails');
+        return MailResource::getNavigationLabel();
     }
 
     public static function getNavigationGroup(): ?string
     {
-        return __('Emails');
+        return MailResource::getNavigationGroup();
     }
 
     public static function getNavigationLabel(): string

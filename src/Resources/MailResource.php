@@ -57,7 +57,7 @@ class MailResource extends Resource
 
     public static function getLabel(): ?string
     {
-        return __('Mail');
+        return __('Email');
     }
 
     public static function getNavigationIcon(): string
