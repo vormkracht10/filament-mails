@@ -72,7 +72,7 @@ FilamentMails::routes();
 // Prefix routes with path and/or name
 FilamentMails::routes(
     path: 'panel-path',
-    name: 'filament.panel'
+    name: 'panel-id'
 );
 ```
 
