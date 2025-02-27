@@ -18,11 +18,14 @@ class EventResource extends Resource
 {
     protected static ?string $model = MailEvent::class;
 
-    protected static ?string $slug = 'mails/events';
-
     protected static bool $isScopedToTenant = false;
 
     protected static bool $shouldRegisterNavigation = true;
+
+    public static function getSlug(): string
+    {
+        return config('filament-mails.resources.mail')::getSlug() . '/events';
+    }
 
     public function getTitle(): string
     {
@@ -31,12 +34,12 @@ class EventResource extends Resource
 
     public static function getNavigationParentItem(): ?string
     {
-        return MailResource::getNavigationLabel();
+        return config('filament-mails.resources.mail')::getNavigationLabel();
     }
 
     public static function getNavigationGroup(): ?string
     {
-        return MailResource::getNavigationGroup();
+        return config('filament-mails.resources.mail')::getNavigationGroup();
     }
 
     public static function getNavigationLabel(): string

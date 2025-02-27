@@ -16,7 +16,10 @@ class SuppressionResource extends Resource
 {
     protected static ?string $model = MailEvent::class;
 
-    protected static ?string $slug = 'mails/suppressions';
+    public static function getSlug(): string
+    {
+        return config('filament-mails.resources.mail')::getSlug() . '/suppressions';
+    }
 
     protected static bool $isScopedToTenant = false;
 
@@ -29,12 +32,12 @@ class SuppressionResource extends Resource
 
     public static function getNavigationParentItem(): ?string
     {
-        return MailResource::getNavigationLabel();
+        return config('filament-mails.resources.mail')::getNavigationLabel();
     }
 
     public static function getNavigationGroup(): ?string
     {
-        return MailResource::getNavigationGroup();
+        return config('filament-mails.resources.mail')::getNavigationGroup();
     }
 
     public static function getNavigationLabel(): string
