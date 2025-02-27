@@ -10,4 +10,8 @@ return [
         'event' => EventResource::class,
         'suppression' => SuppressionResource::class,
     ],
+
+    'navigation' => [
+        'group' => null,
+    ],
 ];
