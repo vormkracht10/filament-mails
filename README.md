@@ -66,7 +66,6 @@ Add the routes to your `routes/web.php` file:
 ```php
 use Vormkracht10\FilamentMails\Facades\FilamentMails;
 
-// Basic usage - uses default Filament panel path and name
 FilamentMails::routes();
 ```
 
