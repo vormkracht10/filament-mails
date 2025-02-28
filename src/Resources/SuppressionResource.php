@@ -14,16 +14,19 @@ use Vormkracht10\Mails\Models\MailEvent;
 
 class SuppressionResource extends Resource
 {
-    protected static ?string $model = MailEvent::class;
+    protected static bool $isScopedToTenant = false;
+
+    protected static bool $shouldRegisterNavigation = true;
 
     public static function getSlug(): string
     {
         return config('filament-mails.resources.mail')::getSlug() . '/suppressions';
     }
 
-    protected static bool $isScopedToTenant = false;
-
-    protected static bool $shouldRegisterNavigation = true;
+    public static function getModel(): string
+    {
+        return config('mails.models.event');
+    }
 
     public function getTitle(): string
     {

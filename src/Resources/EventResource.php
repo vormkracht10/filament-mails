@@ -16,8 +16,6 @@ use Vormkracht10\Mails\Models\MailEvent;
 
 class EventResource extends Resource
 {
-    protected static ?string $model = MailEvent::class;
-
     protected static bool $isScopedToTenant = false;
 
     protected static bool $shouldRegisterNavigation = true;
@@ -30,6 +28,11 @@ class EventResource extends Resource
     public function getTitle(): string
     {
         return __('Events');
+    }
+
+    public static function getModel(): string
+    {
+        return config('mails.models.event');
     }
 
     public static function getNavigationParentItem(): ?string

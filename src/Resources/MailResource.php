@@ -177,7 +177,7 @@ class MailResource extends Resource
                                                 TextEntry::make('type')
                                                     ->label(__('Type'))
                                                     ->badge()
-                                                    ->url(function (Mail $record) {
+                                                    ->url(function (MailEvent $record) {
                                                         $panel = Filament::getCurrentPanel();
                                                         $tenant = Filament::getTenant();
 
@@ -376,7 +376,7 @@ class MailResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make()
-                    ->url(null)
+                    // ->url(null)
                     ->modal()
                     ->slideOver()
                     ->label(__('View'))
@@ -457,7 +457,7 @@ class MailResource extends Resource
     {
         return collect($emails)
             ->mapWithKeys(fn ($value, $key) => [$key => $value ?? $key])
-            ->map(fn ($value, $key) => $mailOnly ? $key : ($value == null ? $key : "$value <$key>"))
+            ->map(fn ($value, $key) => $mailOnly ? $key : ($value == null ? $key : ($value !== $key ? "$value <$key>" : $key)))
             ->implode(', ');
     }
 
