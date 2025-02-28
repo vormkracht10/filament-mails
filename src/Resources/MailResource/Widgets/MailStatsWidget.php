@@ -37,14 +37,15 @@ class MailStatsWidget extends BaseWidget
 
             return route('filament.' . $panel->getId() . '.resources.mails.index', [
                 'activeTab' => $activeTab,
-                'tenant' => $tenant->getKey(),
+                'tenant' => $tenant,
             ]);
         };
 
         $widgets[] = Stat::make(__('Delivered'), number_format(($deliveredMails / $mailCount) * 100, 1) . '%')
             ->label(__('Delivered'))
             ->description($deliveredMails . ' ' . __('of') . ' ' . $mailCount . ' ' . __('emails'))
-            ->color('success');
+            ->color('success')
+            ->url($generateUrl('delivered'));
 
         $widgets[] = Stat::make(__('Opened'), number_format(($openedMails / $mailCount) * 100, 1) . '%')
             ->label(__('Opened'))
@@ -55,7 +56,8 @@ class MailStatsWidget extends BaseWidget
         $widgets[] = Stat::make(__('Clicked'), number_format(($clickedMails / $mailCount) * 100, 1) . '%')
             ->label(__('Clicked'))
             ->description($clickedMails . ' ' . __('of') . ' ' . $mailCount . ' ' . __('emails'))
-            ->color('clicked');
+            ->color('clicked')
+            ->url($generateUrl('clicked'));
 
         $widgets[] = Stat::make(__('Bounced'), number_format(($bouncedMails / $mailCount) * 100, 1) . '%')
             ->label(__('Bounced'))
