@@ -212,7 +212,7 @@ class MailResource extends Resource
                                                             return null;
                                                         }
 
-                                                        return route('filament.' . $panel->getId() . '.resources.mails.events.view', [
+                                                        return route('filament.' . $panel->getId() . '.resources.mails.view', [
                                                             'record' => $record,
                                                             'tenant' => $tenant->getKey(),
                                                         ]);
