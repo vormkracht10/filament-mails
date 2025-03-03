@@ -2,7 +2,7 @@
 
 All notable changes to `filament-mails` will be documented in this file.
 
-## New feature: Suppressions list with option to unsupress email addresses - 2025-01-23
+## New feature: Suppressions list with option to unsuppress email addresses - 2025-01-23
 
 ### What's Changed
 
