@@ -64,12 +64,12 @@ php artisan vendor:publish --tag="filament-mails-views"
 Add the routes to the PanelProvider using the `routes()` method, like this:
 
 ```php
-use Vormkracht10\FilamentMails\FilamentMailsPlugin;
+use Vormkracht10\FilamentMails\Facades\FilamentMails;
 
 public function panel(Panel $panel): Panel
 {
     return $panel
-        ->routes(Filament::routes());
+        ->routes(FilamentMails::routes());
 }
 ```
 
