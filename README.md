@@ -61,15 +61,7 @@ Optionally, you can publish the views using
 php artisan vendor:publish --tag="filament-mails-views"
 ```
 
-Add the routes to your `routes/web.php` file:
-
-```php
-use Vormkracht10\FilamentMails\Facades\FilamentMails;
-
-FilamentMails::routes();
-```
-
-Or add them to your PanelProvider using the `routes()` method, like this:
+Add the routes to the PanelProvider using the `routes()` method, like this:
 
 ```php
 use Vormkracht10\FilamentMails\FilamentMailsPlugin;
