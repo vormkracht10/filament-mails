@@ -61,23 +61,17 @@ Optionally, you can publish the views using
 php artisan vendor:publish --tag="filament-mails-views"
 ```
 
-Add the routes to your `web.php` file:
+Add the routes to the PanelProvider using the `routes()` method, like this:
 
 ```php
 use Vormkracht10\FilamentMails\Facades\FilamentMails;
 
-// Basic usage - uses default Filament panel path and name
-FilamentMails::routes();
-
-// Prefix routes with path and/or name
-FilamentMails::routes(
-    path: 'panel-path',
-    name: 'panel-id'
-);
+public function panel(Panel $panel): Panel
+{
+    return $panel
+        ->routes(FilamentMails::routes());
+}
 ```
-
-> [!NOTE]
-> By default, the path will be set to your Filament panel's path and the name will be 'filament.' followed by your panel's ID. You only need to customize these if you want different values.
 
 Then add the plugin to your `PanelProvider`
 
@@ -91,7 +85,7 @@ public function panel(Panel $panel): Panel
 }
 ```
 
-### Tenant middleware / route protection
+### Tenant middleware and route protection
 
 If you want to protect the mail routes with your (tenant) middleware, you can do so by adding the routes to the `tenantRoutes`:
 
