@@ -429,17 +429,24 @@ class MailResource extends Resource
             ]);
     }
 
+    protected static function getResendFormRules():array{
+        return [];
+    }
+
     private static function getResendForm(): array
     {
         return [
             TagsInput::make('to')
+                ->nestedRecursiveRules(static::getResendFormRules())
                 ->placeholder(__('Recipient(s)'))
                 ->label(__('Recipient(s)'))
                 ->required(),
             TagsInput::make('cc')
+                ->nestedRecursiveRules(static::getResendFormRules())
                 ->placeholder(__('Recipient(s)'))
                 ->label(__('CC')),
             TagsInput::make('bcc')
+                ->nestedRecursiveRules(static::getResendFormRules())
                 ->placeholder(__('Recipient(s)'))
                 ->label(__('BCC')),
         ];
