@@ -69,7 +69,7 @@ use Vormkracht10\FilamentMails\Facades\FilamentMails;
 public function panel(Panel $panel): Panel
 {
     return $panel
-        ->routes(FilamentMails::routes());
+        ->routes(fn () => FilamentMails::routes());
 }
 ```
 
