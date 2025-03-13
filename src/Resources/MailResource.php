@@ -443,7 +443,7 @@ class MailResource extends Resource
                 ->rules(['nullable', 'email:rfc,dns']),
             TagsInput::make('bcc')
                 ->placeholder(__('Recipient(s)'))
-                ->label(__('BCC')
+                ->label(__('BCC'))
                 ->rules(['nullable', 'email:rfc,dns']),
         ];
     }
