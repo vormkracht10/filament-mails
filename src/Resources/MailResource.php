@@ -434,7 +434,7 @@ class MailResource extends Resource
         return [
             TagsInput::make('to')
                 ->placeholder(__('Recipient(s)'))
-                ->label(__('Recipient(s)'))
+                ->label(__('To'))
                 ->required()
                 ->rules(['email:rfc,dns']),
             TagsInput::make('cc')
