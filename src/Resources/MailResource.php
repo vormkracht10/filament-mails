@@ -413,7 +413,7 @@ class MailResource extends Resource
                         ->icon('heroicon-o-arrow-uturn-right')
                         ->requiresConfirmation()
                         ->modalDescription(__('Are you sure you want to resend the selected mails?'))
-                        ->form(self::getResendForm())
+                        ->form(fn ($records) => self::getBulkResendForm($records))
                         ->action(function (Collection $records, array $data) {
                             foreach ($records as $record) {
                                 (new ResendMail)->handle($record, $data['to'], $data['cc'] ?? [], $data['bcc'] ?? []);
@@ -445,6 +445,43 @@ class MailResource extends Resource
                 ->placeholder(__('Recipient(s)'))
                 ->label(__('BCC'))
                 ->rules(['nullable', 'email:rfc,dns']),
+        ];
+    }
+
+    private static function getBulkResendForm($records): array
+    {
+        $extractEmails = function ($records, $field) {
+            return collect($records)
+                ->map(fn ($record) => array_keys($record->{$field} ?? []))
+                ->flatten()
+                ->unique()
+                ->toArray();
+        };
+
+
+        $toEmails = $extractEmails($records, 'to');
+        $ccEmails = $extractEmails($records, 'cc');
+        $bccEmails = $extractEmails($records, 'bcc');
+
+        return [
+            TagsInput::make('to')
+                ->placeholder(__('Recipient(s)'))
+                ->label(__('Recipient(s)'))
+                ->default($toEmails)
+                ->required()
+                ->nestedRecursiveRules(['email:rfc,dns']),
+
+            TagsInput::make('cc')
+                ->placeholder(__('CC'))
+                ->label(__('CC'))
+                ->default($ccEmails)
+                ->nestedRecursiveRules(['nullable', 'email:rfc,dns']),
+
+            TagsInput::make('bcc')
+                ->placeholder(__('BCC'))
+                ->label(__('BCC'))
+                ->default($bccEmails)
+                ->nestedRecursiveRules(['nullable', 'email:rfc,dns']),
         ];
     }
 
