@@ -423,7 +423,8 @@ class MailResource extends Resource
                                 ->title(__('Mail will be resent in the background'))
                                 ->success()
                                 ->send();
-                        }),
+                        })
+                        ->deselectRecordsAfterCompletion(),
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
@@ -436,15 +437,15 @@ class MailResource extends Resource
                 ->placeholder(__('Recipient(s)'))
                 ->label(__('To'))
                 ->required()
-                ->rules(['email:rfc,dns']),
+                ->nestedRecursiveRules(['email:rfc,dns']),
             TagsInput::make('cc')
                 ->placeholder(__('Recipient(s)'))
                 ->label(__('CC'))
-                ->rules(['nullable', 'email:rfc,dns']),
+                ->nestedRecursiveRules(['nullable', 'email:rfc,dns']),
             TagsInput::make('bcc')
                 ->placeholder(__('Recipient(s)'))
                 ->label(__('BCC'))
-                ->rules(['nullable', 'email:rfc,dns']),
+                ->nestedRecursiveRules(['nullable', 'email:rfc,dns']),
         ];
     }
 
@@ -457,6 +458,7 @@ class MailResource extends Resource
                 ->unique()
                 ->toArray();
         };
+
 
         $toEmails = $extractEmails($records, 'to');
         $ccEmails = $extractEmails($records, 'cc');
