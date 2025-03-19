@@ -458,7 +458,6 @@ class MailResource extends Resource
                 ->toArray();
         };
 
-
         $toEmails = $extractEmails($records, 'to');
         $ccEmails = $extractEmails($records, 'cc');
         $bccEmails = $extractEmails($records, 'bcc');
