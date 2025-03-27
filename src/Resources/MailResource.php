@@ -60,7 +60,7 @@ class MailResource extends Resource
         return __('Email');
     }
 
-    public static function getNavigationIcon(): string
+    public static function getNavigationIcon(): ?string
     {
         return 'heroicon-o-envelope';
     }
