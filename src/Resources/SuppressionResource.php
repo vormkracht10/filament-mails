@@ -59,7 +59,7 @@ class SuppressionResource extends Resource
         return __('Suppressions');
     }
 
-    public static function getNavigationIcon(): string
+    public static function getNavigationIcon(): ?string
     {
         return 'heroicon-o-no-symbol';
     }
