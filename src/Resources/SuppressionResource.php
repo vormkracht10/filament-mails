@@ -101,14 +101,14 @@ class SuppressionResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('to')
                     ->label(__('Email address'))
-                    ->formatStateUsing(fn($record) => key(json_decode($record->to ?? [])))
+                    ->formatStateUsing(fn ($record) => key(json_decode($record->to ?? [])))
                     ->searchable(['to']),
 
                 Tables\Columns\TextColumn::make('id')
                     ->label(__('Reason'))
                     ->badge()
-                    ->formatStateUsing(fn($record) => $record->type->value == EventType::COMPLAINED->value ? 'Complained' : 'Bounced')
-                    ->color(fn($record): string => match ($record->type->value == EventType::COMPLAINED->value) {
+                    ->formatStateUsing(fn ($record) => $record->type->value == EventType::COMPLAINED->value ? 'Complained' : 'Bounced')
+                    ->color(fn ($record): string => match ($record->type->value == EventType::COMPLAINED->value) {
                         true => 'danger',
                         default => 'gray',
                     }),
@@ -117,7 +117,7 @@ class SuppressionResource extends Resource
                     ->label(__('Occurred At'))
                     ->dateTime('d-m-Y H:i')
                     ->since()
-                    ->tooltip(fn(MailEvent $record) => $record->occurred_at->format('d-m-Y H:i'))
+                    ->tooltip(fn (MailEvent $record) => $record->occurred_at->format('d-m-Y H:i'))
                     ->sortable()
                     ->searchable(),
             ])
@@ -127,7 +127,7 @@ class SuppressionResource extends Resource
                     ->action(function (MailEvent $record) {
                         event(new MailUnsuppressed(is_array($record->to) ? key($record->to) : $record->to, $record->mail->mailer == 'smtp' && filled($record->mail->transport) ? $record->mail->transport : $record->mail->mailer, $record->mail->stream_id ?? null));
                     })
-                    ->visible(fn($record) => Provider::tryFrom($record->mail->mailer == 'smtp' && filled($record->mail->transport) ? $record->mail->transport : $record->mail->mailer)),
+                    ->visible(fn ($record) => Provider::tryFrom($record->mail->mailer == 'smtp' && filled($record->mail->transport) ? $record->mail->transport : $record->mail->mailer)),
 
                 Tables\Actions\ViewAction::make()
                     ->url(null)
@@ -136,7 +136,7 @@ class SuppressionResource extends Resource
                     ->label(__('View'))
                     ->hiddenLabel()
                     ->tooltip(__('View'))
-                    ->infolist(fn(Infolist $infolist) => EventResource::infolist($infolist)),
+                    ->infolist(fn (Infolist $infolist) => EventResource::infolist($infolist)),
             ]);
     }
 
