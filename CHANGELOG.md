@@ -2,6 +2,14 @@
 
 All notable changes to `filament-mails` will be documented in this file.
 
+## v2.3.5 - 2025-04-08
+
+### What's Changed
+
+* Fix issue with navigation icons by @Skullbock in https://github.com/vormkracht10/filament-mails/pull/37
+
+**Full Changelog**: https://github.com/vormkracht10/filament-mails/compare/v2.3.4...v2.3.5
+
 ## New feature: Suppressions list with option to unsuppress email addresses - 2025-01-23
 
 ### What's Changed
