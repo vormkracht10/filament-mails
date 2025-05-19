@@ -3,8 +3,8 @@
 namespace Vormkracht10\FilamentMails\Controllers;
 
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
-use Vormkracht10\Mails\Models\MailAttachment;
 
 class MailDownloadController extends Controller
 {
@@ -17,8 +17,9 @@ class MailDownloadController extends Controller
             $tenant = null;
         }
 
-        /** @var MailAttachment $attachment */
-        $attachment = MailAttachment::find($attachment);
+        $attachmentModel = Config::get('mails.models.attachment');
+        /** @var \Vormkracht10\Mails\Models\MailAttachment $attachment */
+        $attachment = $attachmentModel::find($attachment);
 
         $file = Storage::disk($attachment->disk)->path($attachment->storagePath);
 
