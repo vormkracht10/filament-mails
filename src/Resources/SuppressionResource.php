@@ -125,7 +125,7 @@ class SuppressionResource extends Resource
                 Tables\Actions\Action::make('unsuppress')
                     ->label(__('Unsuppress'))
                     ->action(function (MailEvent $record) {
-                        event(new MailUnsuppressed(key($record->to), $record->mail->mailer == 'smtp' && filled($record->mail->transport) ? $record->mail->transport : $record->mail->mailer, $record->mail->stream_id ?? null));
+                        event(new MailUnsuppressed(key($record->mail->to), $record->mail->mailer == 'smtp' && filled($record->mail->transport) ? $record->mail->transport : $record->mail->mailer, $record->mail->stream_id ?? null));
                     })
                     ->visible(fn ($record) => Provider::tryFrom($record->mail->mailer == 'smtp' && filled($record->mail->transport) ? $record->mail->transport : $record->mail->mailer)),
 
