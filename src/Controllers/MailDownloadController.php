@@ -3,8 +3,8 @@
 namespace Vormkracht10\FilamentMails\Controllers;
 
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Storage;
 
 class MailDownloadController extends Controller
 {
