@@ -21,14 +21,6 @@ class MailDownloadController extends Controller
         /** @var \Vormkracht10\Mails\Models\MailAttachment $attachment */
         $attachment = $attachmentModel::find($attachment);
 
-        $file = Storage::disk($attachment->disk)->path($attachment->storagePath);
-
-        return response()->download(
-            file: $file,
-            name: $filename,
-            headers: [
-                'Content-Type' => $attachment->mime,
-            ]
-        );
+        return $attachment->downloadFileFromStorage();
     }
 }
