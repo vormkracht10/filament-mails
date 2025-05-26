@@ -66,32 +66,36 @@ class SuppressionResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
+        $mailTable = config('mails.database.tables.mails');   // 'for change mails package table name...'
+        $eventTable = config('mails.database.tables.events'); // 'for change mails package table name...'
+
         return parent::getEloquentQuery()
-            ->join('mails', 'mail_events.mail_id', '=', 'mails.id')
+            ->from("$eventTable as events") // 💡 alias
+            ->join("$mailTable as mails", 'events.mail_id', '=', 'mails.id') // 💡 alias
             ->where(function ($query) {
-                $query->where('type', EventType::HARD_BOUNCED)
-                    ->orWhere('type', EventType::COMPLAINED);
+                $query->where('events.type', EventType::HARD_BOUNCED)
+                    ->orWhere('events.type', EventType::COMPLAINED);
             })
-            ->whereNull('unsuppressed_at')
-            ->whereIn('mails.to', function ($query) {
+            ->whereNull('events.unsuppressed_at')
+            ->whereIn('mails.to', function ($query) use ($eventTable) {
                 $query->select('to')
-                    ->from('mail_events')
+                    ->from($eventTable)
                     ->where('type', EventType::HARD_BOUNCED)
                     ->whereNull('unsuppressed_at')
                     ->groupBy('to');
             })
-            ->select('mail_events.*', 'mails.to')
+            ->select('events.*', 'mails.to')
             ->addSelect([
                 'has_complained' => MailEvent::select('m.id')
-                    ->from('mail_events AS me')
-                    ->leftJoin('mails As m', function ($join) {
+                    ->from("$eventTable as me")
+                    ->leftJoin("$mailTable as m", function ($join) {
                         $join->on('me.mail_id', '=', 'm.id')
                             ->where('me.type', '=', EventType::COMPLAINED);
                     })
                     ->take(1),
             ])
-            ->latest('occurred_at')
-            ->orderBy('occurred_at', 'desc');
+            ->latest('events.occurred_at')
+            ->orderBy('events.occurred_at', 'desc');
     }
 
     public static function table(Table $table): Table
