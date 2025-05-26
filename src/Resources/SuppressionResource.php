@@ -66,12 +66,12 @@ class SuppressionResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        $mailTable = config('mails.database.tables.mails');   // 'for change mails package table name...'
-        $eventTable = config('mails.database.tables.events'); // 'for change mails package table name...'
+        $mailTable = config('mails.database.tables.mails');
+        $eventTable = config('mails.database.tables.events');
 
         return parent::getEloquentQuery()
-            ->from("$eventTable as events") // 💡 alias
-            ->join("$mailTable as mails", 'events.mail_id', '=', 'mails.id') // 💡 alias
+            ->from("$eventTable as events")
+            ->join("$mailTable as mails", 'events.mail_id', '=', 'mails.id')
             ->where(function ($query) {
                 $query->where('events.type', EventType::HARD_BOUNCED)
                     ->orWhere('events.type', EventType::COMPLAINED);
@@ -105,14 +105,14 @@ class SuppressionResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('to')
                     ->label(__('Email address'))
-                    ->formatStateUsing(fn ($record) => key(json_decode($record->to ?? [])))
+                    ->formatStateUsing(fn($record) => key(json_decode($record->to ?? [])))
                     ->searchable(['to']),
 
                 Tables\Columns\TextColumn::make('id')
                     ->label(__('Reason'))
                     ->badge()
-                    ->formatStateUsing(fn ($record) => $record->type->value == EventType::COMPLAINED->value ? 'Complained' : 'Bounced')
-                    ->color(fn ($record): string => match ($record->type->value == EventType::COMPLAINED->value) {
+                    ->formatStateUsing(fn($record) => $record->type->value == EventType::COMPLAINED->value ? 'Complained' : 'Bounced')
+                    ->color(fn($record): string => match ($record->type->value == EventType::COMPLAINED->value) {
                         true => 'danger',
                         default => 'gray',
                     }),
@@ -121,7 +121,7 @@ class SuppressionResource extends Resource
                     ->label(__('Occurred At'))
                     ->dateTime('d-m-Y H:i')
                     ->since()
-                    ->tooltip(fn (MailEvent $record) => $record->occurred_at->format('d-m-Y H:i'))
+                    ->tooltip(fn(MailEvent $record) => $record->occurred_at->format('d-m-Y H:i'))
                     ->sortable()
                     ->searchable(),
             ])
@@ -131,7 +131,7 @@ class SuppressionResource extends Resource
                     ->action(function (MailEvent $record) {
                         event(new MailUnsuppressed(key($record->mail->to), $record->mail->mailer == 'smtp' && filled($record->mail->transport) ? $record->mail->transport : $record->mail->mailer, $record->mail->stream_id ?? null));
                     })
-                    ->visible(fn ($record) => Provider::tryFrom($record->mail->mailer == 'smtp' && filled($record->mail->transport) ? $record->mail->transport : $record->mail->mailer)),
+                    ->visible(fn($record) => Provider::tryFrom($record->mail->mailer == 'smtp' && filled($record->mail->transport) ? $record->mail->transport : $record->mail->mailer)),
 
                 Tables\Actions\ViewAction::make()
                     ->url(null)
@@ -140,7 +140,7 @@ class SuppressionResource extends Resource
                     ->label(__('View'))
                     ->hiddenLabel()
                     ->tooltip(__('View'))
-                    ->infolist(fn (Infolist $infolist) => EventResource::infolist($infolist)),
+                    ->infolist(fn(Infolist $infolist) => EventResource::infolist($infolist)),
             ]);
     }
 
